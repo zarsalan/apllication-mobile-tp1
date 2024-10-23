@@ -29,3 +29,5 @@ Notes:
 - Tous les listes ont:
 	- Des optionalités de triage (nom, catégorie, quantité, prix)
 	- Un toolbar avec les optionalités de la page
+
+image + Nom + qt +  bouton edit quantity + checkmark + poubelle
