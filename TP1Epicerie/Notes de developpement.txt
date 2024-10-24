@@ -1,0 +1,33 @@
+- Home page: Liste de listes (Produits, Favoris) + (listes personnalisés)
+	- Création de nouvelles listes
+	- Affichage des listes existantes
+	- En cliquant une liste, elle s'affiche
+
+- Page d'un produit: Affiche les détails du produit
+	- Titre, description
+	- Catégorie (Sélectionner une catégorie parmis un dropdown)
+	- Image + 2 boutton pour ajouter/prendre photo
+	- Boutton favoris pour ajouter dans la liste de favoris
+	- Quantité avec boutons +/- et bouton pour ajouter à une autre liste (ajout vers listes personnalisés seulement)
+	
+- Page de liste de produits: Liste de tous les produits
+	- Affiche tous les produits existants dans la BD
+	- Optionalité d'ajout d'un nouveau produit
+	- En cliquant sur un produit existant, page du produit s'ouvre
+
+- Page de liste de favoris:
+	- Affiche les items en favoris dans la liste
+	- En cliquant sur un produit existant, page du produit s'ouvre
+
+- Page de liste personalisé avec quantité* (ex: mon panier)
+	- Affiche les produits dans la liste
+	- Chaque produit a une quantité affiché
+	- Chaque produit a un bouton pour l'enlever de la liste
+	- En cliquant un produit, page du produit s'ouvre
+
+Notes:
+- Tous les listes ont:
+	- Des optionalités de triage (nom, catégorie, quantité, prix)
+	- Un toolbar avec les optionalités de la page
+
+image + Nom + qt +  bouton edit quantity + checkmark + poubelle
