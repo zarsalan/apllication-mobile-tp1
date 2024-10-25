@@ -34,7 +34,7 @@ abstract class ListItemDao {
     abstract suspend fun upsertAListItem(listItemEntity: ListItem)
 
     @Delete
-    abstract suspend fun deleteAListItem(listItemEntity: Category)
+    abstract suspend fun deleteAListItem(listItemEntity: ListItem)
 
     @Query("Select * from `listItem-table` WHERE id=:id")
     abstract fun getAListItemById(id: Int): Flow<ListItem>
