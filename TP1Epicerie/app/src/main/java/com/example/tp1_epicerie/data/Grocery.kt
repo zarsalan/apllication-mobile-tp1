@@ -14,7 +14,7 @@ import com.google.gson.reflect.TypeToken
         ForeignKey(
             entity = Category::class,
             parentColumns = ["id"],
-            childColumns = ["category_id"],
+            childColumns = ["groceryItem-category_id"],
             onDelete = ForeignKey.SET_NULL
         )
     ]
@@ -29,7 +29,7 @@ data class GroceryItem(
     @ColumnInfo(name = "groceryItem-category_id")
     val category_id: Int? = 0,
     @ColumnInfo(name = "groceryItem-isFavorite")
-    val isFavorite: Boolean = false,
+    val isFavorite: Int = 0,
     @ColumnInfo(name = "groceryItem-picture")
     val picture: String= ""
 )
@@ -40,7 +40,7 @@ data class GroceryItem(
         ForeignKey(
             entity = GroceryItem::class,
             parentColumns = ["id"],
-            childColumns = ["item_id"],
+            childColumns = ["listItem-item_id"],
             onDelete = ForeignKey.CASCADE
         )
     ]
@@ -53,7 +53,7 @@ data class ListItem(
     @ColumnInfo(name = "listItem-quantity")
     val quantity: Int = 0,
     @ColumnInfo(name = "listItem-isCrossed")
-    val isCrossed: Boolean = false
+    val isCrossed: Int = 0
 )
 
 @Entity(tableName = "category_table")
@@ -64,7 +64,7 @@ data class Category(
     val title: String = ""
 )
 
-@Entity(tableName = "groceryList-table")
+@Entity(tableName = "groceryList_table")
 data class GroceryList(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
