@@ -13,7 +13,7 @@ abstract class GroceryItemDao {
     abstract suspend fun upsertAGroceryItem(groceryItemEntity: GroceryItem)
 
     //Pour avoir la liste des éléments favories
-    @Query("Select * from `groceryItem_table` WHERE `groceryItem-isFavorite` = 1")
+    @Query("Select * from `groceryItem_table` WHERE `groceryItem_isFavorite` = 1")
     abstract fun getFavoriteGroceryItems(): Flow<List<GroceryItem>>
 
     @Delete
@@ -36,7 +36,7 @@ abstract class ListItemDao {
     @Delete
     abstract suspend fun deleteAListItem(listItemEntity: ListItem)
 
-    @Query("Select * from `listItem-table` WHERE id=:id")
+    @Query("Select * from `listItem_table` WHERE id=:id")
     abstract fun getAListItemById(id: Int): Flow<ListItem>
 }
 
