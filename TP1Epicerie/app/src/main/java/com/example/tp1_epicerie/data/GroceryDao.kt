@@ -49,9 +49,6 @@ abstract class CategoryDao {
     @Delete
     abstract suspend fun deleteACategory(categoryEntity: Category)
 
-    @Query("Select * from `category_table` WHERE id=:id")
-    abstract fun getACategoryById(id: Int): Flow<Category>
-
     //Pour avoir la liste de tous les éléments
     @Query("Select * from `category_table`")
     abstract fun getAllCategories(): Flow<List<Category>>
