@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun HomeView(navController: NavController, viewModel: GroceryViewModel) {
+fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
     Scaffold(topBar = { AppBarView(title = Screen.HomeScreen.title) },
         floatingActionButton = {
             FloatingActionButton(
@@ -33,7 +33,7 @@ fun HomeView(navController: NavController, viewModel: GroceryViewModel) {
                 contentColor = Color.White,
                 containerColor = colorResource(id = R.color.app_bar),
                 onClick = {
-                    navController.navigate(Screen.AddScreen.route + "/0L")
+                    navController.navigate(Screen.AddScreen.route)
                 }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)

@@ -22,7 +22,13 @@ fun Navigation(
         modifier = modifier
     ) {
         composable(Screen.HomeScreen.route) {
-            HomeView(navController, viewModel)
+            HomeView(viewModel, navController)
+        }
+        composable(Screen.AllItems.route){
+            AllGroceryItems(viewModel, navController)
+        }
+        composable(Screen.Favorites.route){
+            FavoriteGroceryItems(viewModel, navController)
         }
     }
 }
