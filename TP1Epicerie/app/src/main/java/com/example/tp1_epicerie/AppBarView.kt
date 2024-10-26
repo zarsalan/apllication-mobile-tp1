@@ -35,7 +35,7 @@ fun AppBarView(
         title = { Text(text = title, color = colorResource(id = R.color.white)) },
         navigationIcon = navigationIcon,
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = colorResource(id = R.color.app_bar_color),
+            containerColor = colorResource(id = R.color.app_bar),
         )
     )
 }
