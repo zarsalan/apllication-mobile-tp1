@@ -8,7 +8,9 @@ import androidx.navigation.NavController
 fun FavoriteGroceryItems(viewModel: GroceryViewModel, navController: NavController) {
     Scaffold(
         topBar = {
-            AppBarView(title = Screen.Favorites.title, onBackNavClicked = { navController.popBackStack() })
+            AppBarView(
+                title = Screen.Favorites.title,
+                onBackNavClicked = { navController.popBackStack() })
         }
-    ) {  }
+    ) { }
 }
