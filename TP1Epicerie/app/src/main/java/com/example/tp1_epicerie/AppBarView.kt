@@ -10,10 +10,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.tooling.preview.Preview
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AppBar(
+fun AppBarView(
     title: String,
     onBackNavClicked: () -> Unit = {}
 ) {
@@ -30,7 +32,16 @@ fun AppBar(
     }
 
     TopAppBar(
-        title = { Text(text = title) },
+        title = { Text(text = title, color = colorResource(id = R.color.white)) },
         navigationIcon = navigationIcon,
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = colorResource(id = R.color.app_bar_color),
+        )
     )
+}
+
+@Preview(showBackground = true)
+@Composable
+fun AppBarPreview() {
+    AppBarView(title = Screen.HomeScreen.title)
 }
