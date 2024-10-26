@@ -69,5 +69,5 @@ class GroceryRepository(
         return groceryListDao.getAGroceryListById(id)
     }
 
-    fun getAllGroceryList(): Flow<List<GroceryList>> = groceryListDao.getAllGroceryList()
+    fun getAllGroceryLists(): Flow<List<GroceryList>> = groceryListDao.getAllGroceryLists()
 }

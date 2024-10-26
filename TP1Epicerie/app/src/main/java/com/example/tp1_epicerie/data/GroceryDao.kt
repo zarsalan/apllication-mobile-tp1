@@ -67,6 +67,6 @@ abstract class GroceryListDao {
 
     //Pour avoir la liste de tous les éléments
     @Query("Select * from `groceryList_table`")
-    abstract fun getAllGroceryList(): Flow<List<GroceryList>>
+    abstract fun getAllGroceryLists(): Flow<List<GroceryList>>
 }
 
