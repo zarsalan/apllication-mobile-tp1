@@ -12,21 +12,26 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
 class GroceryViewModel(
-    private val groceryRepository: GroceryRepository
+    private val groceryRepository: GroceryRepository = Graph.groceryRepository
 ): ViewModel() {
-
-    //Section pour les GroceryItems
-    fun upsertAGroceryItem(groceryItem: GroceryItem){
-        viewModelScope.launch(Dispatchers.IO) {
-            groceryRepository.upsertAGroceryItem(groceryItem = groceryItem)
+    //Section pour les GroceryItems -------------------------------------
+    lateinit var getAllGroceryItems: Flow<List<GroceryItem>>
+    init{
+        viewModelScope.launch {
+            getAllGroceryItems = groceryRepository.getAllGroceryItems()
         }
     }
 
     lateinit var getFavoriteGroceryItems: Flow<List<GroceryItem>>
-
     init{
         viewModelScope.launch {
             getFavoriteGroceryItems = groceryRepository.getFavoriteGroceryItems()
+        }
+    }
+
+    fun upsertAGroceryItem(groceryItem: GroceryItem){
+        viewModelScope.launch(Dispatchers.IO) {
+            groceryRepository.upsertAGroceryItem(groceryItem = groceryItem)
         }
     }
 
@@ -40,16 +45,7 @@ class GroceryViewModel(
         return groceryRepository.getAGroceryItemById(id)
     }
 
-    lateinit var getAllGroceryItems: Flow<List<GroceryItem>>
-
-    init{
-        viewModelScope.launch {
-            getAllGroceryItems = groceryRepository.getAllGroceryItems()
-        }
-    }
-
-
-    //Section pour les ListItem
+    //Section pour les ListItem -------------------------------------
     fun upsertAListItem(listItem: ListItem){
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.upsertAListItem(listItem = listItem)
@@ -94,7 +90,6 @@ class GroceryViewModel(
 
     //Section pour les GroceryLists
     lateinit var getAllGroceryLists: Flow<List<GroceryList>>
-
     init{
         viewModelScope.launch {
             getAllGroceryLists = groceryRepository.getAllGroceryLists()
