@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-    // Componse
+    // Compose
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
@@ -50,7 +50,7 @@ dependencies {
     implementation(libs.androidx.room.common)
     implementation(libs.androidx.room.ktx)
 
-    //Conversion de list en gson
+    // Conversion de list en gson
     implementation("com.google.code.gson:gson:2.10.1")
 
     // Processeur d'annotations pour Room
