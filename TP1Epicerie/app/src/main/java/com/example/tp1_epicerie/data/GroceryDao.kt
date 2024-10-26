@@ -57,10 +57,10 @@ abstract class CategoryDao {
 abstract class GroceryListDao {
 
     @Upsert
-    abstract suspend fun upsertAGroceryList(GroceryListEntity: GroceryList)
+    abstract suspend fun upsertAGroceryList(groceryListEntity: GroceryList)
 
     @Delete
-    abstract suspend fun deleteAGroceryList(GroceryListEntity: GroceryList)
+    abstract suspend fun deleteAGroceryList(groceryListEntity: GroceryList)
 
     @Query("Select * from `groceryList_table` WHERE id=:id")
     abstract fun getAGroceryListById(id: Int): Flow<GroceryList>
