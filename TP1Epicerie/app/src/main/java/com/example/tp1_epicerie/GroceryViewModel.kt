@@ -83,6 +83,14 @@ class GroceryViewModel(
         return groceryRepository.getACategoryById(id)
     }
 
+    lateinit var getAllCategories: Flow<List<Category>>
+
+    init{
+        viewModelScope.launch {
+            getAllCategories = groceryRepository.getAllCategories()
+        }
+    }
+
 
     //Section pour les GroceryLists
     lateinit var getAllGroceryLists: Flow<List<GroceryList>>

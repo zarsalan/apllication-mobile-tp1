@@ -3,6 +3,7 @@ package com.example.tp1_epicerie.data
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.ForeignKey
+import androidx.room.Index
 import androidx.room.PrimaryKey
 import androidx.room.TypeConverter
 import com.google.gson.Gson
@@ -17,7 +18,8 @@ import com.google.gson.reflect.TypeToken
             childColumns = ["groceryItem_category_id"],
             onDelete = ForeignKey.SET_NULL
         )
-    ]
+    ],
+    indices = [Index(value = ["groceryItem_category_id"])]
 )
 data class GroceryItem(
     @PrimaryKey(autoGenerate = true)
@@ -31,7 +33,7 @@ data class GroceryItem(
     @ColumnInfo(name = "groceryItem_isFavorite")
     val isFavorite: Int = 0,
     @ColumnInfo(name = "groceryItem_picture")
-    val picture: String= ""
+    val picture: String?= null
 )
 
 @Entity(
@@ -43,7 +45,8 @@ data class GroceryItem(
             childColumns = ["listItem_item_id"],
             onDelete = ForeignKey.CASCADE
         )
-    ]
+    ],
+    indices = [Index(value = ["listItem_item_id"])]
 )
 data class ListItem(
     @PrimaryKey(autoGenerate = true)
@@ -73,7 +76,7 @@ data class GroceryList(
     @ColumnInfo(name = "groceryList_description")
     val description: String = "",
     @ColumnInfo(name = "groceryList_listItem")
-    val listItem: List<Int>//TypeConverter
+    val listItems: List<Int>//TypeConverter
 )
 
 // Permet la conversion de list pour le stockage dans SQLite
