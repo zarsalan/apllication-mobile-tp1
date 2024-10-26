@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TP1-Epicerie</string>
+    <string name="addlist_button">Créer la liste</string>
 </resources>

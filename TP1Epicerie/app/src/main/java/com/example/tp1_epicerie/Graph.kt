@@ -4,8 +4,12 @@ import android.content.Context
 import androidx.room.Room
 import com.example.tp1_epicerie.data.GroceryDatabase
 import com.example.tp1_epicerie.data.GroceryRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 object Graph {
+    private val applicationScope = CoroutineScope(SupervisorJob())
+
     lateinit var database: GroceryDatabase
 
     val groceryRepository by lazy {
@@ -18,6 +22,6 @@ object Graph {
     }
 
     fun provide(context: Context) {
-        database = Room.databaseBuilder(context, GroceryDatabase::class.java, "grocery.db").build()
+        database = GroceryDatabase.getDatabase(context, applicationScope)
     }
 }

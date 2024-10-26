@@ -1,4 +1,4 @@
-package com.example.tp1_epicerie
+package com.example.tp1_epicerie.ui.common
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import com.example.tp1_epicerie.R
+import com.example.tp1_epicerie.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -76,7 +76,7 @@ data class GroceryList(
     @ColumnInfo(name = "groceryList_description")
     val description: String = "",
     @ColumnInfo(name = "groceryList_listItem")
-    val listItems: List<Int>//TypeConverter
+    val listItems: List<Int>?//TypeConverter
 )
 
 // Permet la conversion de list pour le stockage dans SQLite

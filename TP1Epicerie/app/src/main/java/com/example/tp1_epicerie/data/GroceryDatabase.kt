@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -32,6 +32,7 @@ abstract class GroceryDatabase : RoomDatabase(){
                     GroceryDatabase::class.java,
                     "grocery_database"
                 )
+                    .fallbackToDestructiveMigration()
                     .addCallback(GroceryDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
@@ -122,7 +123,7 @@ abstract class GroceryDatabase : RoomDatabase(){
             val groceryList = GroceryList(
                 id = 1,
                 title = "Liste d'exemple",
-                description = "Liste d'exmple",
+                description = "Liste d'exemple",
                 listItems = listItemIds
             )
 

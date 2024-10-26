@@ -1,9 +1,11 @@
-package com.example.tp1_epicerie
+package com.example.tp1_epicerie.ui.home
 
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -19,10 +21,18 @@ import androidx.navigation.NavController
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.tp1_epicerie.GroceryViewModel
+import com.example.tp1_epicerie.R
+import com.example.tp1_epicerie.Screen
+import com.example.tp1_epicerie.ui.common.AppBarView
+import com.example.tp1_epicerie.ui.common.CardInfo
+import com.example.tp1_epicerie.ui.common.CustomCard
 
 @Composable
 fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
@@ -33,7 +43,7 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
                 contentColor = Color.White,
                 containerColor = colorResource(id = R.color.app_bar),
                 onClick = {
-                    navController.navigate(Screen.AddScreen.route)
+                    navController.navigate(Screen.AddListScreen.route)
                 }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
@@ -64,6 +74,23 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
                     )
                 )
             }
+
+            item {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp, bottom = 10.dp)
+                ) {
+                    HorizontalDivider(
+                        thickness = 2.dp,
+                        color = Color.Gray,
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .width(150.dp)
+                    )
+                }
+            }
+
             items(groceryList.value) { grocery ->
                 CustomCard(
                     CardInfo(
@@ -75,36 +102,5 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
                 )
             }
         }
-    }
-}
-
-// Carte personnalisée
-data class CardInfo(
-    val title: String,
-    val description: String,
-    val onClick: () -> Unit,
-    val containerColor: Color
-)
-
-@Composable
-fun CustomCard(cardInfo: CardInfo) {
-    Card(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 4.dp, start = 4.dp, end = 8.dp)
-            .clickable { cardInfo.onClick() },
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, pressedElevation = 4.dp),
-        colors = CardDefaults.cardColors(
-            containerColor = cardInfo.containerColor,
-            contentColor = Color.Black
-        )
-    ) {
-        Text(
-            text = cardInfo.title,
-            color = Color.Black,
-            fontSize = 20.sp,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(8.dp)
-        )
     }
 }
