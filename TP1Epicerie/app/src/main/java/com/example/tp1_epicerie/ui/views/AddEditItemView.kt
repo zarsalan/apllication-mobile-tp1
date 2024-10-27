@@ -67,7 +67,7 @@ fun AddEditItemView(
     groceryItem?.let {
         name = it.name
         description = it.description
-        categoryId = it.categoryId!!
+        categoryId = it.categoryId
         selectedCategory = categories.find { category -> category.id == it.categoryId }?.title ?: ""
         isFavorite = it.isFavorite == 1
         imageUri = Uri.parse(it.imagePath)
