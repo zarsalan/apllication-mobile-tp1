@@ -24,6 +24,9 @@ abstract class GroceryItemDao {
     @Upsert
     abstract suspend fun upsertGroceryItem(groceryItemEntity: GroceryItem)
 
+    @Update
+    abstract suspend fun updateGroceryItem(groceryItemEntity: GroceryItem)
+
     @Delete
     abstract suspend fun deleteGroceryItem(groceryItemEntity: GroceryItem)
 }

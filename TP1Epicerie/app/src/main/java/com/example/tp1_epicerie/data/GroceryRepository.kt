@@ -15,6 +15,10 @@ class GroceryRepository(
         groceryItemDao.upsertGroceryItem(groceryItem)
     }
 
+    suspend fun updateGroceryItem(groceryItem: GroceryItem){
+        groceryItemDao.updateGroceryItem(groceryItem)
+    }
+
     fun getFavoriteGroceryItems(): Flow<List<GroceryItem>> = groceryItemDao.getFavoriteGroceryItems()
 
     suspend fun deleteGroceryItem(groceryItem: GroceryItem){

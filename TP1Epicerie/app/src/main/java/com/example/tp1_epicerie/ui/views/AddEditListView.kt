@@ -38,7 +38,7 @@ fun AddEditListView(
     var description by remember { mutableStateOf("") }
     val groceryList = viewModel.getGroceryListById(id)
         .takeIf { id != 0L }
-        ?.collectAsState(GroceryList(0L, "", "", emptyList()))
+        ?.collectAsState(GroceryList())
         ?.value
 
     title = ""
@@ -52,16 +52,16 @@ fun AddEditListView(
     Scaffold(
         topBar = {
             AppBarView(
-                title = Screen.AddEditListScreen.title,
+                title = if (groceryList != null) Screen.AddEditListScreen.title2 else Screen.AddEditListScreen.title,
                 onBackNavClicked = { navHostController.popBackStack() })
-        }
+        },
     ) {
         Column(
             modifier = Modifier
-                .padding(it)
+                .padding(it).padding(top = 15.dp)
                 .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)
+            verticalArrangement = Arrangement.Center
         ) {
             CustomTextField(
                 label = "Titre",
@@ -79,7 +79,7 @@ fun AddEditListView(
             )
 
             if (id != 0L) {
-                Button(modifier = Modifier.padding(top = 25.dp),
+                Button(modifier = Modifier.padding(top = 15.dp),
                     onClick = {
                         if (groceryList != null) {
                             viewModel.updateGroceryList(
@@ -112,7 +112,7 @@ fun AddEditListView(
                     )
                 }
             } else {
-                Button(modifier = Modifier.padding(top = 25.dp),
+                Button(modifier = Modifier.padding(top = 15.dp),
                     onClick = {
                         viewModel.upsertGroceryList(
                             GroceryList(

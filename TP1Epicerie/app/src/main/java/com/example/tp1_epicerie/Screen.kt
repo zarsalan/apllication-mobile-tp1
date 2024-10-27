@@ -1,22 +1,27 @@
 package com.example.tp1_epicerie
 
-sealed class Screen(val route: String, val title: String) {
+sealed class Screen(val route: String, val title: String, val title2: String = "") {
     // Page d'accueil
     data object HomeScreen :
         Screen("home_screen", "Mes listes d'articles d'épicerie") // Affichage de tous les listes
 
     data object AddEditListScreen :
-        Screen("add_list_screen", "Ajouter une liste d'articles d'épicerie") // Ajout d'une liste
+        Screen(
+            "add_edit_list_screen",
+            "Ajouter une liste d'articles d'épicerie",
+            "Modifier une liste d'articles d'épicerie"
+        ) // Ajout d'une liste
 
     // Page pours les articles d'épicerie de base
     data object AllItems :
         Screen("all_items", "Les articles") // Affichage des items d'épicerie de base
 
-    data object AddItem :
-        Screen("add_item", "Ajouter un article") // Ajout d'un item d'épicerie de base
-
-    data object EditItem :
-        Screen("edit_item", "Éditer un article") // Modification d'un item d'épicerie de base
+    data object AddEditItem :
+        Screen(
+            "add_edit_item",
+            "Ajouter un article",
+            "Modifier un article"
+        ) // Ajout d'un item d'épicerie de base
 
     // Page favoris
     data object Favorites : Screen("favorites", "Articles favoris") // Affichage des items favoris

@@ -1,13 +1,12 @@
 package com.example.tp1_epicerie.ui.common
 
-import android.widget.NumberPicker.OnValueChangeListener
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.foundation.text.input.InputTransformation.Companion.keyboardOptions
-import androidx.compose.material.OutlinedTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,14 +27,11 @@ fun CustomTextField(
         value = value,
         onValueChange = onValueChanged,
         label = { Text(text = label, color = Color.Black) },
-        modifier = Modifier.fillMaxWidth().padding(8.dp),
+        modifier = Modifier.fillMaxWidth().padding(start = 6.dp, end = 6.dp, top = 3.dp, bottom = 3.dp),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-        colors = TextFieldDefaults.outlinedTextFieldColors(
-            textColor = colorResource(id = R.color.black),
-            unfocusedBorderColor = colorResource(id = R.color.black),
-            cursorColor = colorResource(id = R.color.black),
-            focusedLabelColor = colorResource(id = R.color.black),
-            unfocusedLabelColor = colorResource(id = R.color.black)
+        colors = OutlinedTextFieldDefaults.colors(
+            unfocusedBorderColor = Color.Black,
+            focusedBorderColor = colorResource(id = R.color.app_bar),
         )
     )
 }
@@ -43,5 +39,8 @@ fun CustomTextField(
 @Preview
 @Composable
 fun CustomTextFieldPrev(){
-    CustomTextField(label = "text", value = "text", onValueChanged = {})
+    Column(modifier = Modifier.fillMaxWidth()) {
+        CustomTextField(label = "text", value = "text", onValueChanged = {})
+        CustomTextField(label = "text", value = "text", onValueChanged = {})
+    }
 }

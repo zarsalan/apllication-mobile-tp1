@@ -33,7 +33,7 @@ data class GroceryItem(
     @ColumnInfo(name = "groceryItem_isFavorite")
     val isFavorite: Int = 0,
     @ColumnInfo(name = "groceryItem_picture")
-    val picture: String?= null
+    val imagePath: String?= null
 )
 
 @Entity(
@@ -76,7 +76,7 @@ data class GroceryList(
     @ColumnInfo(name = "groceryList_description")
     val description: String = "",
     @ColumnInfo(name = "groceryList_listItem")
-    val listItems: List<Long>?//TypeConverter
+    val listItems: List<Long>? = emptyList()//TypeConverter
 )
 
 // Permet la conversion de list pour le stockage dans SQLite

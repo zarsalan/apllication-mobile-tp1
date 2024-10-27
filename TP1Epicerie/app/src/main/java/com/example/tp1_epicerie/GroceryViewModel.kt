@@ -35,6 +35,12 @@ class GroceryViewModel(
         }
     }
 
+    fun updateGroceryItem(groceryItem: GroceryItem){
+        viewModelScope.launch(Dispatchers.IO) {
+            groceryRepository.updateGroceryItem(groceryItem = groceryItem)
+        }
+    }
+
     fun deleteGroceryItem(groceryItem: GroceryItem){
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.deleteGroceryItem(groceryItem = groceryItem)
@@ -80,7 +86,6 @@ class GroceryViewModel(
     }
 
     lateinit var getAllCategories: Flow<List<Category>>
-
     init{
         viewModelScope.launch {
             getAllCategories = groceryRepository.getAllCategories()

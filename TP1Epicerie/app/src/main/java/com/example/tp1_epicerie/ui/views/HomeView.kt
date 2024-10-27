@@ -19,7 +19,6 @@ import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
@@ -48,7 +47,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                 appBarMenuInfo = AppBarMenuInfo(menus = listOf(
                     AppBarMenu(
                         title = "Ajouter un article",
-                        onClick = { navHostController.navigate(Screen.AllItems.route) }
+                        onClick = { navHostController.navigate(Screen.AddEditItem.route + "/0L") }
                     ),
                     AppBarMenu(
                         title = "Ajouter une liste",
@@ -108,7 +107,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, bottom = 10.dp)
+                        .padding(top = 16.dp, bottom = 6.dp)
                 ) {
                     HorizontalDivider(
                         thickness = 2.dp,

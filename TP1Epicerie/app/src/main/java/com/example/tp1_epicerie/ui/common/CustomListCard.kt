@@ -55,7 +55,7 @@ fun CustomListCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 4.dp, start = 4.dp, end = 8.dp)
+            .padding(top = 8.dp, start = 4.dp, end = 8.dp)
             .clickable { cardInfo.onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, pressedElevation = 4.dp),
         colors = CardDefaults.cardColors(

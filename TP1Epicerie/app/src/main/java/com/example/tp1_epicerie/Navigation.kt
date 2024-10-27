@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.example.tp1_epicerie.ui.views.AddEditItemView
 import com.example.tp1_epicerie.ui.views.AddEditListView
 import com.example.tp1_epicerie.ui.views.HomeView
 import com.example.tp1_epicerie.ui.views.AllGroceryItemsView
@@ -52,6 +53,15 @@ fun Navigation(
         ) {
             val id = it.arguments?.getLong("id") ?: 0L
             CustomGroceryListView(id, viewModel, navHostController)
+        }
+        composable(
+            Screen.AddEditItem.route + "/{id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.LongType; defaultValue = 0L; nullable
+            })
+        ) {
+            val id = it.arguments?.getLong("id") ?: 0L
+            AddEditItemView(id, viewModel, navHostController)
         }
     }
 }

@@ -59,6 +59,9 @@ dependencies {
     // Material2
     implementation(libs.androidx.material)
 
+    // Pour les images
+    implementation(libs.coil.compose)
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
