@@ -51,6 +51,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             .padding(it)) {
             item {
                 CustomListCard(
+                    viewModel,
                     CustomListCardInfo(
                         title = "Tous les articles",
                         description = "Voir tous les articles",
@@ -61,6 +62,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             }
             item {
                 CustomListCard(
+                    viewModel,
                     CustomListCardInfo(
                         title = "Favoris",
                         description = "Voir les articles favoris",
@@ -88,6 +90,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
 
             items(groceryList.value) { grocery ->
                 CustomListCard(
+                    viewModel,
                     CustomListCardInfo(
                         listId = grocery.id,
                         title = grocery.title,
@@ -95,7 +98,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         onClick = { navHostController.navigate(Screen.GroceryList.route + "/${grocery.id}") },
                         containerColor = Color.White,
                         canEdit = true,
-                        canDelete = true
+                        canDelete = true,
+                        groceryList = grocery,
                     )
                 )
             }

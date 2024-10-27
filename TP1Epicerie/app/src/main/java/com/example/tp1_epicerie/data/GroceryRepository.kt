@@ -64,7 +64,7 @@ class GroceryRepository(
     }
 
     suspend fun deleteGroceryList(groceryList: GroceryList){
-        groceryListDao.deleteGroceryList(groceryList)
+        groceryListDao.deleteGroceryList(groceryList, listItemDao)
     }
 
     fun getGroceryListById(id: Long): Flow<GroceryList>{
