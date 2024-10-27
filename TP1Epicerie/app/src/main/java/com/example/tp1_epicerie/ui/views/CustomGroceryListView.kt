@@ -27,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -166,6 +167,21 @@ fun CustomGroceryListView(
                             )
                         )
                     }
+                }
+                item{
+                    ListItemCard(
+                        ListItemCardInfo(
+                            listItem = ListItem(
+                                id = 100L,
+                                itemId = 1L,
+                                quantity = 3,
+                                isCrossed = 0
+                            ),
+                            viewModel = viewModel,
+                            onClick = { /*Lien vers la page de l'item*/ },
+                            containerColor = Color.White
+                        )
+                    )
                 }
             }
         }

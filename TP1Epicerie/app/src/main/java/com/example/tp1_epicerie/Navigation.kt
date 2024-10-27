@@ -12,9 +12,8 @@ import androidx.navigation.navArgument
 import com.example.tp1_epicerie.ui.views.AddEditItemView
 import com.example.tp1_epicerie.ui.views.AddEditListView
 import com.example.tp1_epicerie.ui.views.HomeView
-import com.example.tp1_epicerie.ui.views.AllGroceryItemsView
 import com.example.tp1_epicerie.ui.views.CustomGroceryListView
-import com.example.tp1_epicerie.ui.views.FavoriteGroceryItemsView
+import com.example.tp1_epicerie.ui.views.GroceryItemsView
 
 @Composable
 fun Navigation(
@@ -31,10 +30,10 @@ fun Navigation(
             HomeView(viewModel, navHostController)
         }
         composable(Screen.AllItems.route) {
-            AllGroceryItemsView(viewModel, navHostController)
+            GroceryItemsView(viewModel, navHostController, true)
         }
         composable(Screen.Favorites.route) {
-            FavoriteGroceryItemsView(viewModel, navHostController)
+            GroceryItemsView(viewModel, navHostController, false)
         }
         composable(
             Screen.AddEditListScreen.route + "/{id}",

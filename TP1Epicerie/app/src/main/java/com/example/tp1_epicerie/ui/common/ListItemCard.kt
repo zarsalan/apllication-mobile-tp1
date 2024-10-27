@@ -2,10 +2,15 @@ package com.example.tp1_epicerie.ui.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Delete
@@ -68,20 +73,29 @@ fun ListItemCard(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Column(modifier = Modifier.padding(12.dp)) {
-                Text(text = groceryItem.name, fontWeight = FontWeight.ExtraBold, fontSize = 14.sp)
+                Text(text = groceryItem.name, fontWeight = FontWeight.ExtraBold, fontSize = 18.sp)
                 Text(text = groceryItem.description)
             }
-
-            Row {
+            Row(
+                modifier = Modifier.fillMaxHeight(),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 Text(text = quantity.toString())
-                Column() {
+                if(groceryItem.imagePath != null){
+                    //TODO
+                }
+                Column(
+                    verticalArrangement = Arrangement.spacedBy(3.dp,
+                    Alignment.CenterVertically)
+                ) {
                     IconButton(onClick = {
                         cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id,  quantity = listItem.quantity + 1))
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowUp,
                             contentDescription = "Add",
-                            tint = Color.White
+                            tint = Color.Black
                         )
                     }
                     IconButton(onClick = {
@@ -94,7 +108,7 @@ fun ListItemCard(
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowDown,
                             contentDescription = "Substract",
-                            tint = Color.White
+                            tint = Color.Black
                         )
                     }
                 }
@@ -111,36 +125,35 @@ fun ListItemCard(
                         tint = Color.Black
                     )
                 }
-            }
-            if(groceryItem.picture != null){
-                //TODO
-            }
-            IconButton(onClick = {
-                if(groceryItem.isFavorite > 0){
-                    cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 0))
-                }else{
-                    cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 1))
+
+                IconButton(onClick = {
+                    if(groceryItem.isFavorite > 0){
+                        cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 0))
+                    }else{
+                        cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 1))
+                    }
+                }) {
+                    Icon(
+                        imageVector = if (groceryItem.isFavorite < 0) {
+                            Icons.Default.Favorite
+                        } else {
+                            Icons.Default.FavoriteBorder
+                        },
+                        contentDescription = "Favorite",
+                        tint = if (groceryItem.isFavorite > 0) Color.Red else Color.Black,
+                    )
                 }
-            }) {
-                Icon(
-                    imageVector = if (groceryItem.isFavorite < 0) {
-                        Icons.Default.Favorite
-                    } else {
-                        Icons.Default.FavoriteBorder
-                    },
-                    contentDescription = "Favorite",
-                    tint = if (groceryItem.isFavorite > 0) Color.Red else Color.Black,
-                )
+                IconButton(onClick = {
+                    cardInfo.viewModel.deleteListItem(listItem)
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete",
+                        tint = Color.Black
+                    )
+                }
             }
-            IconButton(onClick = {
-                cardInfo.viewModel.deleteListItem(listItem)
-            }) {
-                Icon(
-                    imageVector = Icons.Default.Delete,
-                    contentDescription = "Delete",
-                    tint = Color.Black
-                )
-            }
+
         }
     }
 
