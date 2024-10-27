@@ -183,6 +183,15 @@ fun AddEditItemView(
 
                 Button(
                     onClick = {
+                        if (name.isEmpty() || description.isEmpty() || categoryId == 0L) {
+                            Toast.makeText(
+                                currentContext,
+                                "Veuillez remplir tous les champs",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                            return@Button
+                        }
+
                         if (groceryItem != null) {
                             viewModel.updateGroceryItem(
                                 GroceryItem(
@@ -191,7 +200,7 @@ fun AddEditItemView(
                                     description = description.trim(),
                                     categoryId = categoryId,
                                     isFavorite = isFavorite.compareTo(false),
-                                    imagePath = imageUri.toString()
+                                    imagePath = imageUri?.toString()
                                 )
                             )
                         } else {
@@ -201,7 +210,7 @@ fun AddEditItemView(
                                     description = description.trim(),
                                     categoryId = categoryId,
                                     isFavorite = isFavorite.compareTo(false),
-                                    imagePath = imageUri.toString()
+                                    imagePath = imageUri?.toString()
                                 )
                             )
                         }
