@@ -3,6 +3,8 @@ package com.example.tp1_epicerie.data
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
+import androidx.room.Transaction
+import androidx.room.Update
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
@@ -22,6 +24,9 @@ abstract class GroceryItemDao {
     @Upsert
     abstract suspend fun upsertGroceryItem(groceryItemEntity: GroceryItem)
 
+    @Update
+    abstract suspend fun updateGroceryItem(groceryItemEntity: GroceryItem)
+
     @Delete
     abstract suspend fun deleteGroceryItem(groceryItemEntity: GroceryItem)
 }
@@ -36,6 +41,9 @@ abstract class ListItemDao {
 
     @Delete
     abstract suspend fun deleteListItem(listItemEntity: ListItem)
+
+    @Query ("DELETE FROM `listItem_table` WHERE id=:id")
+    abstract suspend fun deleteListItemById(id: Long)
 }
 
 @Dao
@@ -55,7 +63,7 @@ abstract class CategoryDao {
 }
 
 @Dao
-abstract class GroceryListDao {
+abstract class GroceryListDao() {
     //Pour avoir la liste de tous les éléments
     @Query("Select * from `groceryList_table`")
     abstract fun getAllGroceryLists(): Flow<List<GroceryList>>
@@ -66,7 +74,18 @@ abstract class GroceryListDao {
     @Upsert
     abstract suspend fun upsertAGroceryList(groceryListEntity: GroceryList)
 
+    @Update
+    abstract suspend fun updateGroceryList(groceryListEntity: GroceryList)
+
+    @Transaction
+    open suspend fun deleteGroceryList(groceryListEntity: GroceryList, listItemDao: ListItemDao) {
+        groceryListEntity.listItems?.forEach {
+            listItemDao.deleteListItemById(it)
+        }
+        deleteGroceryListEntity(groceryListEntity)
+    }
+
     @Delete
-    abstract suspend fun deleteGroceryList(groceryListEntity: GroceryList)
+    protected abstract suspend fun deleteGroceryListEntity(groceryListEntity: GroceryList) // Peut être exécuté par seulement GroceryListDao
 }
 

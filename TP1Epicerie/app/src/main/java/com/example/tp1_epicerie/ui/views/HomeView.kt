@@ -18,27 +18,54 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavHostController
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
+import com.example.tp1_epicerie.ui.common.AppBarMenu
+import com.example.tp1_epicerie.ui.common.AppBarMenuInfo
 import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomListCardInfo
 import com.example.tp1_epicerie.ui.common.CustomListCard
 
 @Composable
 fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) {
-    Scaffold(topBar = { AppBarView(title = Screen.HomeScreen.title) },
+    var showAboutDialog by remember { mutableStateOf(false) }
+
+    Scaffold(
+        topBar = {
+            AppBarView(title = Screen.HomeScreen.title,
+                appBarMenuInfo = AppBarMenuInfo(menus = listOf(
+                    AppBarMenu(
+                        title = "Ajouter un article",
+                        onClick = { navHostController.navigate(Screen.AddEditItem.route + "/0L") }
+                    ),
+                    AppBarMenu(
+                        title = "Ajouter une liste",
+                        onClick = { navHostController.navigate(Screen.AddEditListScreen.route + "/0L") }
+                    ),
+                    AppBarMenu(
+                        title = "À propos",
+                        onClick = { showAboutDialog = true }
+                    )
+                )))
+        },
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(all = 20.dp),
                 contentColor = Color.White,
                 containerColor = colorResource(id = R.color.app_bar),
                 onClick = {
-                    navHostController.navigate(Screen.AddEditListScreen.route)
+                    navHostController.navigate(Screen.AddEditListScreen.route + "/0L")
                 }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
@@ -47,11 +74,15 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
     ) {
 
         val groceryList = viewModel.getAllGroceryLists.collectAsState(initial = emptyList())
-        LazyColumn(modifier = Modifier
-            .fillMaxSize()
-            .padding(it)) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+        ) {
             item {
                 CustomListCard(
+                    viewModel,
+                    navHostController,
                     CustomListCardInfo(
                         title = "Tous les articles",
                         description = "Voir tous les articles",
@@ -62,6 +93,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             }
             item {
                 CustomListCard(
+                    viewModel,
+                    navHostController,
                     CustomListCardInfo(
                         title = "Favoris",
                         description = "Voir les articles favoris",
@@ -75,7 +108,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, bottom = 10.dp)
+                        .padding(top = 16.dp, bottom = 6.dp)
                 ) {
                     HorizontalDivider(
                         thickness = 2.dp,
@@ -89,6 +122,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
 
             items(groceryList.value) { grocery ->
                 CustomListCard(
+                    viewModel,
+                    navHostController,
                     CustomListCardInfo(
                         listId = grocery.id,
                         title = grocery.title,
@@ -96,10 +131,32 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         onClick = { navHostController.navigate(Screen.GroceryList.route + "/${grocery.id}") },
                         containerColor = Color.White,
                         canEdit = true,
-                        canDelete = true
+                        canDelete = true,
+                        groceryList = grocery,
                     )
                 )
             }
         }
+    }
+
+    // Dialogue d'à propos
+    if (showAboutDialog) {
+        AlertDialog(
+            onDismissRequest = { showAboutDialog = false },
+            title = { Text("À propos") },
+            text = {
+                Text(
+                    text = "Cette application a été développée par Arsalan et Antoine.",
+                    modifier = Modifier.padding(top = 20.dp)
+                )
+            },
+            confirmButton = {
+                Button(
+                    onClick = { showAboutDialog = false }
+                ) {
+                    Text("Fermer")
+                }
+            },
+        )
     }
 }

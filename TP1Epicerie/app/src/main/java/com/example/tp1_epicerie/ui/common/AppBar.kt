@@ -2,6 +2,9 @@ package com.example.tp1_epicerie.ui.common
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -9,6 +12,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,8 +26,11 @@ import com.example.tp1_epicerie.Screen
 @Composable
 fun AppBarView(
     title: String,
-    onBackNavClicked: () -> Unit = {}
+    onBackNavClicked: () -> Unit = {},
+    appBarMenuInfo: AppBarMenuInfo = AppBarMenuInfo(emptyList())
 ) {
+    var menuExpanded by remember { mutableStateOf(false) }
+
     val navigationIcon: (@Composable () -> Unit) = {
         if (!title.contains(Screen.HomeScreen.title)) {
             IconButton(onClick = { onBackNavClicked() }) {
@@ -30,6 +40,7 @@ fun AppBarView(
                     contentDescription = null
                 )
             }
+
         }
     }
 
@@ -38,9 +49,45 @@ fun AppBarView(
         navigationIcon = navigationIcon,
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = colorResource(id = R.color.app_bar),
-        )
+        ),
+        actions = {
+            if (appBarMenuInfo.menus.isNotEmpty()) {
+                IconButton(onClick = { menuExpanded = true }) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "Options",
+                        tint = Color.White
+                    )
+                }
+
+                // Affichage des menus
+                DropdownMenu(
+                    expanded = menuExpanded,
+                    onDismissRequest = { menuExpanded = false }
+                ) {
+                    appBarMenuInfo.menus.forEach { menu ->
+                        DropdownMenuItem(
+                            onClick = {
+                                menu.onClick.invoke()
+                                menuExpanded = false
+                            },
+                            text = { Text(text = menu.title) }
+                        )
+                    }
+                }
+            }
+        }
     )
 }
+
+data class AppBarMenu(
+    val title: String,
+    val onClick: () -> Unit
+)
+
+data class AppBarMenuInfo(
+    val menus: List<AppBarMenu>
+)
 
 @Preview(showBackground = true)
 @Composable

@@ -15,6 +15,10 @@ class GroceryRepository(
         groceryItemDao.upsertGroceryItem(groceryItem)
     }
 
+    suspend fun updateGroceryItem(groceryItem: GroceryItem){
+        groceryItemDao.updateGroceryItem(groceryItem)
+    }
+
     fun getFavoriteGroceryItems(): Flow<List<GroceryItem>> = groceryItemDao.getFavoriteGroceryItems()
 
     suspend fun deleteGroceryItem(groceryItem: GroceryItem){
@@ -63,8 +67,12 @@ class GroceryRepository(
         groceryListDao.upsertAGroceryList(groceryList)
     }
 
+    suspend fun updateGroceryList(groceryList: GroceryList){
+        groceryListDao.updateGroceryList(groceryList)
+    }
+
     suspend fun deleteGroceryList(groceryList: GroceryList){
-        groceryListDao.deleteGroceryList(groceryList)
+        groceryListDao.deleteGroceryList(groceryList, listItemDao)
     }
 
     fun getGroceryListById(id: Long): Flow<GroceryList>{
