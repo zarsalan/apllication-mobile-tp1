@@ -62,6 +62,10 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         onClick = { navHostController.navigate(Screen.Categories.route) }
                     ),
                     AppBarMenu(
+                        title = "Paramètres",
+                        onClick = { navHostController.navigate(Screen.Settings.route) }
+                    ),
+                    AppBarMenu(
                         title = "À propos",
                         onClick = { showAboutDialog = true }
                     )
@@ -78,7 +82,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
             }
-        }
+        },
     ) {
 
         val groceryList = viewModel.getAllGroceryLists.collectAsState(initial = emptyList())

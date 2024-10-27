@@ -42,7 +42,7 @@ abstract class ListItemDao {
     @Delete
     abstract suspend fun deleteListItem(listItemEntity: ListItem)
 
-    @Query ("DELETE FROM `listItem_table` WHERE id=:id")
+    @Query("DELETE FROM `listItem_table` WHERE id=:id")
     abstract suspend fun deleteListItemById(id: Long)
 }
 
@@ -66,7 +66,7 @@ abstract class CategoryDao {
 }
 
 @Dao
-abstract class GroceryListDao() {
+abstract class GroceryListDao {
     //Pour avoir la liste de tous les éléments
     @Query("Select * from `groceryList_table`")
     abstract fun getAllGroceryLists(): Flow<List<GroceryList>>
@@ -90,5 +90,17 @@ abstract class GroceryListDao() {
 
     @Delete
     protected abstract suspend fun deleteGroceryListEntity(groceryListEntity: GroceryList) // Peut être exécuté par seulement GroceryListDao
+}
+
+@Dao
+abstract class SettingsDao {
+    @Query("Select * from `settings_table` WHERE id==1")
+    abstract fun getSettings(): Flow<Settings?>
+
+    @Upsert
+    abstract suspend fun upsertSettings(settingsEntity: Settings)
+
+    @Update
+    abstract suspend fun updateSettings(settingsEntity: Settings)
 }
 

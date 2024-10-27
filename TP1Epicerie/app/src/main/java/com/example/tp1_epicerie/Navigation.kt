@@ -16,6 +16,8 @@ import com.example.tp1_epicerie.ui.views.HomeView
 import com.example.tp1_epicerie.ui.views.CategoriesView
 import com.example.tp1_epicerie.ui.views.CustomGroceryListView
 import com.example.tp1_epicerie.ui.views.GroceryItemsView
+import com.example.tp1_epicerie.ui.views.FavoriteGroceryItemsView
+import com.example.tp1_epicerie.ui.views.SettingsView
 
 @Composable
 fun Navigation(
@@ -89,6 +91,11 @@ fun Navigation(
         // Affichage de tous les catégories
         composable(Screen.Categories.route) {
             CategoriesView(viewModel, navHostController)
+        }
+
+        // Paramètres
+        composable(Screen.Settings.route) {
+            SettingsView(viewModel, navHostController)
         }
     }
 }
