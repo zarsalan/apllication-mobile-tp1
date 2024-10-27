@@ -16,7 +16,6 @@ import com.example.tp1_epicerie.ui.views.HomeView
 import com.example.tp1_epicerie.ui.views.CategoriesView
 import com.example.tp1_epicerie.ui.views.CustomGroceryListView
 import com.example.tp1_epicerie.ui.views.GroceryItemsView
-import com.example.tp1_epicerie.ui.views.FavoriteGroceryItemsView
 import com.example.tp1_epicerie.ui.views.SettingsView
 
 @Composable
