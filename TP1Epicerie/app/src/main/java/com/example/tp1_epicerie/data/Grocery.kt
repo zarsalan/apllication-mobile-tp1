@@ -23,13 +23,13 @@ import com.google.gson.reflect.TypeToken
 )
 data class GroceryItem(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0L,
     @ColumnInfo(name = "groceryItem_name")
     val name: String = "",
     @ColumnInfo(name = "groceryItem_description")
     val description: String = "",
     @ColumnInfo(name = "groceryItem_category_id")
-    val category_id: Int? = 0,
+    val categoryId: Long? = 0L,
     @ColumnInfo(name = "groceryItem_isFavorite")
     val isFavorite: Int = 0,
     @ColumnInfo(name = "groceryItem_picture")
@@ -50,9 +50,9 @@ data class GroceryItem(
 )
 data class ListItem(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0L,
     @ColumnInfo(name = "listItem_item_id")
-    val item_id: Int = 0,
+    val itemId: Long = 0L,
     @ColumnInfo(name = "listItem_quantity")
     val quantity: Int = 0,
     @ColumnInfo(name = "listItem_isCrossed")
@@ -62,7 +62,7 @@ data class ListItem(
 @Entity(tableName = "category_table")
 data class Category(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0L,
     @ColumnInfo(name = "category_title")
     val title: String = ""
 )
@@ -70,25 +70,25 @@ data class Category(
 @Entity(tableName = "groceryList_table")
 data class GroceryList(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
+    val id: Long = 0L,
     @ColumnInfo(name = "groceryList_title")
     val title: String = "",
     @ColumnInfo(name = "groceryList_description")
     val description: String = "",
     @ColumnInfo(name = "groceryList_listItem")
-    val listItems: List<Int>?//TypeConverter
+    val listItems: List<Long>?//TypeConverter
 )
 
 // Permet la conversion de list pour le stockage dans SQLite
 class Converters {
     @TypeConverter
-    fun fromList(list: List<Int>?): String {
+    fun fromList(list: List<Long>?): String {
         return Gson().toJson(list)
     }
 
     @TypeConverter
-    fun toList(data: String?): List<Int> {
-        val listType = object : TypeToken<List<Int>>() {}.type
+    fun toList(data: String?): List<Long> {
+        val listType = object : TypeToken<List<Long>>() {}.type
         return Gson().fromJson(data, listType)
     }
 }

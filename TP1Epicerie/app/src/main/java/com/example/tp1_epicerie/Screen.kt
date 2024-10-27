@@ -5,7 +5,7 @@ sealed class Screen(val route: String, val title: String) {
     data object HomeScreen :
         Screen("home_screen", "Mes listes d'articles d'épicerie") // Affichage de tous les listes
 
-    data object AddListScreen :
+    data object AddEditListScreen :
         Screen("add_list_screen", "Ajouter une liste d'articles d'épicerie") // Ajout d'une liste
 
     // Page pours les articles d'épicerie de base

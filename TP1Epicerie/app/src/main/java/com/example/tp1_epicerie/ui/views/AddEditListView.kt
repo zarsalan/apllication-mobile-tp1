@@ -6,7 +6,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.material.Button
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -19,7 +19,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.GroceryList
@@ -28,15 +28,15 @@ import com.example.tp1_epicerie.ui.common.CustomTextField
 
 @Composable
 fun AddEditListView(
-    id: Int,
+    id: Long,
     viewModel: GroceryViewModel,
-    navController: NavController
+    navHostController: NavHostController
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
     Scaffold(
-        topBar = { AppBarView(title = Screen.AddListScreen.title) }
+        topBar = { AppBarView(title = Screen.AddEditListScreen.title) }
     ) {
         Column(modifier = Modifier.padding(it).wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
@@ -60,8 +60,8 @@ fun AddEditListView(
             )
             Spacer(modifier = Modifier.height(10.dp))
             Button(onClick={
-                viewModel.upsertGroceryList(GroceryList(title = title, description = description, listItems = null))
-                navController.popBackStack()
+                viewModel.upsertGroceryList(GroceryList(title = title, description = description, listItems = emptyList<Long>()))
+                navHostController.popBackStack()
             }){
                 Text(
                     text = "Creér la liste",

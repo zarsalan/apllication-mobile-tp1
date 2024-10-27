@@ -5,17 +5,19 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
+import androidx.room.migration.Migration
+import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Database(
     entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class],
-    version = 2,
+    version = 5,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
-abstract class GroceryDatabase : RoomDatabase(){
+abstract class GroceryDatabase : RoomDatabase() {
     abstract fun groceryItemDao(): GroceryItemDao
     abstract fun listItemDao(): ListItemDao
     abstract fun categoryDao(): CategoryDao
@@ -33,101 +35,161 @@ abstract class GroceryDatabase : RoomDatabase(){
                     "grocery_database"
                 )
                     .fallbackToDestructiveMigration()
+                    .addMigrations(GENERAL_MIGRATION)
                     .addCallback(GroceryDatabaseCallback(scope))
                     .build()
                 INSTANCE = instance
                 instance
             }
         }
-    }
 
-    private class GroceryDatabaseCallback(
-        private val scope: CoroutineScope
-    ) : RoomDatabase.Callback() {
-        override fun onCreate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
-            super.onCreate(db)
-            INSTANCE?.let { database ->
-                scope.launch(Dispatchers.IO) {
-                    populateDatabase(database.categoryDao(), database.groceryItemDao(), database.listItemDao(), database.groceryListDao())
+        val GENERAL_MIGRATION = object : Migration(4, Int.MAX_VALUE) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                INSTANCE?.let { dbInstance ->
+                    CoroutineScope(Dispatchers.IO).launch {
+                        populateDatabase(dbInstance.categoryDao(), dbInstance.groceryItemDao())
+                    }
                 }
             }
         }
-        //Populer la bd
-        suspend fun populateDatabase(categoryDao: CategoryDao, groceryItemDao: GroceryItemDao, listItemDao: ListItemDao, groceryListDao: GroceryListDao) {
 
-            //Les catégories de base
+        private class GroceryDatabaseCallback(
+            private val scope: CoroutineScope
+        ) : RoomDatabase.Callback() {
+            override fun onCreate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
+                super.onCreate(db)
+                INSTANCE?.let { database ->
+                    scope.launch(Dispatchers.IO) {
+                        populateDatabase(
+                            database.categoryDao(),
+                            database.groceryItemDao()
+                        )
+                    }
+                }
+            }
+        }
+
+        // Populer la bd
+        suspend fun populateDatabase(
+            categoryDao: CategoryDao,
+            groceryItemDao: GroceryItemDao,
+        ) {
+            // Les catégories de base
             val categories = listOf(
-                Category(id = 1, title = "Pain"),
-                Category(id = 2, title = "Fruit"),
-                Category(id = 3, title = "Légume"),
-                Category(id = 4, title = "Produits Laitiers"),
-                Category(id = 5, title = "Viande"),
-                Category(id = 6, title = "Poisson"),
-                Category(id = 7, title = "Epices"),
-                Category(id = 8, title = "Boisson"),
-                Category(id = 9, title = "Collations"),
-                Category(id = 10, title = "Desserts"),
-                Category(id = 11, title = "Céréales"),
-                Category(id = 12, title = "Pâtes"),
-                Category(id = 13, title = "Sauces"),
-                Category(id = 14, title = "Conserves"),
-                Category(id = 15, title = "Charcuterie"),
-                Category(id = 16, title = "Huile"),
-                Category(id = 17, title = "Noix"),
-                Category(id = 18, title = "Café"),
-                Category(id = 19, title = "Légumineuses"),
-                Category(id = 20, title = "Produits Congelés"),
-                Category(id = 21, title = "Pâtisserie")
+                Category(id = 0L, title = "Pain"),
+                Category(id = 1L, title = "Fruit"),
+                Category(id = 2L, title = "Légume"),
+                Category(id = 3L, title = "Produits Laitiers"),
+                Category(id = 4L, title = "Viande"),
+                Category(id = 5L, title = "Poisson"),
+                Category(id = 6L, title = "Epices"),
+                Category(id = 7L, title = "Boisson"),
+                Category(id = 8L, title = "Collations"),
+                Category(id = 9L, title = "Desserts"),
+                Category(id = 10L, title = "Céréales"),
+                Category(id = 11L, title = "Pâtes"),
+                Category(id = 12L, title = "Sauces"),
+                Category(id = 13L, title = "Conserves"),
+                Category(id = 14L, title = "Charcuterie"),
+                Category(id = 15L, title = "Huile"),
+                Category(id = 16L, title = "Noix"),
+                Category(id = 17L, title = "Café"),
+                Category(id = 18L, title = "Légumineuses"),
+                Category(id = 19L, title = "Produits Congelés"),
+                Category(id = 20L, title = "Pâtisserie")
             )
 
             categories.forEach { category ->
-                categoryDao.upsertACategory(category)
+                categoryDao.upsertCategory(category)
             }
 
-
-            //Les groceryItems de base
+            // Les articles d'épicerie de base
             val groceryItems = listOf(
-                GroceryItem(id = 1, name = "Baguette", description = "Pain français", category_id = 1, isFavorite = 1, picture = null),
-                GroceryItem(id = 2, name = "Banane", description = "Fruit tropical", category_id = 2, isFavorite = 0, picture = null),
-                GroceryItem(id = 3, name = "Carotte", description = "Légume frais riche en vitamines", category_id = 3, isFavorite = 1, picture = null),
-                GroceryItem(id = 4, name = "Yaourt nature", description = "Produit laitier sans sucre", category_id = 4, isFavorite = 0, picture = null),
-                GroceryItem(id = 5, name = "Steak de boeuf", description = "Viande rouge", category_id = 5, isFavorite = 0, picture = null),
-                GroceryItem(id = 6, name = "Saumon fumé", description = "Poisson riche en oméga-3", category_id = 6, isFavorite = 1, picture = null),
-                GroceryItem(id = 7, name = "Poivre noir", description = "Epice pour relever le goût", category_id = 7, isFavorite = 0, picture = null),
-                GroceryItem(id = 8, name = "Jus d'orange", description = "Boisson vitaminée sans sucre ajouté", category_id = 8, isFavorite = 1, picture = null),
-                GroceryItem(id = 9, name = "Chips", description = "Collation croustillante salée", category_id = 9, isFavorite = 0, picture = null),
-                GroceryItem(id = 10, name = "Tarte aux pommes", description = "Dessert pâtissier aux pommes", category_id = 10, isFavorite = 1, picture = null)
+                GroceryItem(
+                    id = 0L,
+                    name = "Baguette",
+                    description = "Pain français",
+                    categoryId = 0L,
+                    isFavorite = 1,
+                    picture = null
+                ),
+                GroceryItem(
+                    id = 1L,
+                    name = "Banane",
+                    description = "Fruit tropical",
+                    categoryId = 1L,
+                    isFavorite = 0,
+                    picture = null
+                ),
+                GroceryItem(
+                    id = 2L,
+                    name = "Carotte",
+                    description = "Légume frais riche en vitamines",
+                    categoryId = 2L,
+                    isFavorite = 1,
+                    picture = null
+                ),
+                GroceryItem(
+                    id = 3L,
+                    name = "Yaourt nature",
+                    description = "Produit laitier sans sucre",
+                    categoryId = 3L,
+                    isFavorite = 0,
+                    picture = null
+                ),
+                GroceryItem(
+                    id = 4L,
+                    name = "Steak de boeuf",
+                    description = "Viande rouge",
+                    categoryId = 4L,
+                    isFavorite = 0,
+                    picture = null
+                ),
+                GroceryItem(
+                    id = 5L,
+                    name = "Saumon fumé",
+                    description = "Poisson riche en oméga-3",
+                    categoryId = 5L,
+                    isFavorite = 1,
+                    picture = null
+                ),
+                GroceryItem(
+                    id = 6L,
+                    name = "Poivre noir",
+                    description = "Epice pour relever le goût",
+                    categoryId = 6L,
+                    isFavorite = 0,
+                    picture = null
+                ),
+                GroceryItem(
+                    id = 7L,
+                    name = "Jus d'orange",
+                    description = "Boisson vitaminée sans sucre ajouté",
+                    categoryId = 7L,
+                    isFavorite = 1,
+                    picture = null
+                ),
+                GroceryItem(
+                    id = 8L,
+                    name = "Chips",
+                    description = "Collation croustillante salée",
+                    categoryId = 8L,
+                    isFavorite = 0,
+                    picture = null
+                ),
+                GroceryItem(
+                    id = 9L,
+                    name = "Tarte aux pommes",
+                    description = "Dessert pâtissier aux pommes",
+                    categoryId = 9L,
+                    isFavorite = 1,
+                    picture = null
+                )
             )
 
             groceryItems.forEach { groceryItem ->
-                groceryItemDao.upsertAGroceryItem(groceryItem)
+                groceryItemDao.upsertGroceryItem(groceryItem)
             }
-
-
-            //Les listItems de base
-            val listItems = listOf(
-                ListItem(id = 1, item_id = 1, quantity = 2, isCrossed = 0),
-                ListItem(id = 2, item_id = 3, quantity = 8, isCrossed = 0),
-                ListItem(id = 3, item_id = 5, quantity = 1, isCrossed = 1),
-                ListItem(id = 4, item_id = 9, quantity = 1, isCrossed = 0)
-            )
-
-            listItems.forEach{ listItem ->
-                listItemDao.upsertAListItem(listItem)
-            }
-
-
-            //La GroceryList de base
-            val listItemIds = listItems.map{ it.id }
-
-            val groceryList = GroceryList(
-                id = 1,
-                title = "Liste d'exemple",
-                description = "Liste d'exemple",
-                listItems = listItemIds
-            )
-
-            groceryListDao.upsertAGroceryList(groceryList)
         }
     }
 }

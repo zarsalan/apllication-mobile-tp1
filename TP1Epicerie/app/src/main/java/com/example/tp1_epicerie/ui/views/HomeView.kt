@@ -16,10 +16,11 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
@@ -29,7 +30,7 @@ import com.example.tp1_epicerie.ui.common.CustomListCardInfo
 import com.example.tp1_epicerie.ui.common.CustomListCard
 
 @Composable
-fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
+fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) {
     Scaffold(topBar = { AppBarView(title = Screen.HomeScreen.title) },
         floatingActionButton = {
             FloatingActionButton(
@@ -37,7 +38,7 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
                 contentColor = Color.White,
                 containerColor = colorResource(id = R.color.app_bar),
                 onClick = {
-                    navController.navigate(Screen.AddListScreen.route)
+                    navHostController.navigate(Screen.AddEditListScreen.route)
                 }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
@@ -53,7 +54,7 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
                     CustomListCardInfo(
                         "Tous les articles",
                         "Voir tous les articles",
-                        { navController.navigate(Screen.AllItems.route) },
+                        { navHostController.navigate(Screen.AllItems.route) },
                         colorResource(id = R.color.all_items)
                     )
                 )
@@ -63,7 +64,7 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
                     CustomListCardInfo(
                         "Favoris",
                         "Voir les articles favoris",
-                        { navController.navigate(Screen.Favorites.route) },
+                        { navHostController.navigate(Screen.Favorites.route) },
                         colorResource(id = R.color.favorite_items)
                     )
                 )
@@ -90,7 +91,7 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
                     CustomListCardInfo(
                         grocery.title,
                         grocery.description,
-                        { navController.navigate(Screen.GroceryList.route + "/${grocery.id}") },
+                        { navHostController.navigate(Screen.GroceryList.route + "/${grocery.id}") },
                         Color.White
                     )
                 )

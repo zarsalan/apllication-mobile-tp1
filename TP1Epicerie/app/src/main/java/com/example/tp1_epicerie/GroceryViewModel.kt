@@ -29,54 +29,54 @@ class GroceryViewModel(
         }
     }
 
-    fun upsertAGroceryItem(groceryItem: GroceryItem){
+    fun upsertGroceryItem(groceryItem: GroceryItem){
         viewModelScope.launch(Dispatchers.IO) {
-            groceryRepository.upsertAGroceryItem(groceryItem = groceryItem)
+            groceryRepository.upsertGroceryItem(groceryItem = groceryItem)
         }
     }
 
-    fun deleteAGroceryItem(groceryItem: GroceryItem){
+    fun deleteGroceryItem(groceryItem: GroceryItem){
         viewModelScope.launch(Dispatchers.IO) {
-            groceryRepository.deleteAGroceryItem(groceryItem = groceryItem)
+            groceryRepository.deleteGroceryItem(groceryItem = groceryItem)
         }
     }
 
-    fun getAGroceryItemById(id: Int): Flow<GroceryItem>{
-        return groceryRepository.getAGroceryItemById(id)
+    fun getGroceryItemById(id: Long): Flow<GroceryItem>{
+        return groceryRepository.getGroceryItemById(id)
     }
 
     //Section pour les ListItem -------------------------------------
-    fun upsertAListItem(listItem: ListItem){
+    fun upsertListItem(listItem: ListItem){
         viewModelScope.launch(Dispatchers.IO) {
-            groceryRepository.upsertAListItem(listItem = listItem)
+            groceryRepository.upsertListItem(listItem = listItem)
         }
     }
 
-    fun deleteAListItem(listItem: ListItem){
+    fun deleteListItem(listItem: ListItem){
         viewModelScope.launch(Dispatchers.IO) {
-           groceryRepository.deleteAListItem(listItem = listItem)
+           groceryRepository.deleteListItem(listItem = listItem)
         }
     }
 
-    fun getAListItemById(id: Int): Flow<ListItem>{
-        return groceryRepository.getAListItemById(id)
+    fun getListItemById(id: Long): Flow<ListItem>{
+        return groceryRepository.getListItemById(id)
     }
 
     //Section pour les Categories
-    fun upsertACategory(category: Category){
+    fun upsertCategory(category: Category){
         viewModelScope.launch(Dispatchers.IO) {
-            groceryRepository.upsertACategory(category = category)
+            groceryRepository.upsertCategory(category = category)
         }
     }
 
-    fun deleteACategory(category: Category){
+    fun deleteCategory(category: Category){
         viewModelScope.launch(Dispatchers.IO) {
-            groceryRepository.deleteACategory(category = category)
+            groceryRepository.deleteCategory(category = category)
         }
     }
 
-    fun getACategoryById(id: Int): Flow<Category>{
-        return groceryRepository.getACategoryById(id)
+    fun getCategoryById(id: Long): Flow<Category>{
+        return groceryRepository.getCategoryById(id)
     }
 
     lateinit var getAllCategories: Flow<List<Category>>
@@ -96,8 +96,8 @@ class GroceryViewModel(
         }
     }
 
-    fun getAGroceryListById(id: Int): Flow<GroceryList>{
-        return groceryRepository.getAGroceryListById(id)
+    fun getGroceryListById(id: Long): Flow<GroceryList>{
+        return groceryRepository.getGroceryListById(id)
     }
 
     fun upsertGroceryList(groceryList: GroceryList){
@@ -106,9 +106,9 @@ class GroceryViewModel(
         }
     }
 
-    fun deleteAGroceryList(groceryList: GroceryList){
+    fun deleteGroceryList(groceryList: GroceryList){
         viewModelScope.launch(Dispatchers.IO) {
-            groceryRepository.deleteAGroceryList(groceryList = groceryList)
+            groceryRepository.deleteGroceryList(groceryList = groceryList)
         }
     }
 }
