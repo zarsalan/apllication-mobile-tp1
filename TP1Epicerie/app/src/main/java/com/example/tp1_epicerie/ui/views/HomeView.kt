@@ -1,6 +1,5 @@
-package com.example.tp1_epicerie.ui.home
+package com.example.tp1_epicerie.ui.views
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -19,20 +18,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.navigation.NavController
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Text
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.ui.common.AppBarView
-import com.example.tp1_epicerie.ui.common.CardInfo
-import com.example.tp1_epicerie.ui.common.CustomCard
+import com.example.tp1_epicerie.ui.common.CustomListCardInfo
+import com.example.tp1_epicerie.ui.common.CustomListCard
 
 @Composable
 fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
@@ -55,8 +49,8 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
             .fillMaxSize()
             .padding(it)) {
             item {
-                CustomCard(
-                    CardInfo(
+                CustomListCard(
+                    CustomListCardInfo(
                         "Tous les articles",
                         "Voir tous les articles",
                         { navController.navigate(Screen.AllItems.route) },
@@ -65,8 +59,8 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
                 )
             }
             item {
-                CustomCard(
-                    CardInfo(
+                CustomListCard(
+                    CustomListCardInfo(
                         "Favoris",
                         "Voir les articles favoris",
                         { navController.navigate(Screen.Favorites.route) },
@@ -92,8 +86,8 @@ fun HomeView(viewModel: GroceryViewModel, navController: NavController) {
             }
 
             items(groceryList.value) { grocery ->
-                CustomCard(
-                    CardInfo(
+                CustomListCard(
+                    CustomListCardInfo(
                         grocery.title,
                         grocery.description,
                         { navController.navigate(Screen.GroceryList.route + "/${grocery.id}") },

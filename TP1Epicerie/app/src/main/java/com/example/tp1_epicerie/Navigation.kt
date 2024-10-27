@@ -7,9 +7,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.compose.ui.Modifier
-import com.example.tp1_epicerie.ui.home.HomeView
-import com.example.tp1_epicerie.ui.list.AllGroceryItems
-import com.example.tp1_epicerie.ui.list.FavoriteGroceryItems
+import com.example.tp1_epicerie.ui.views.HomeView
+import com.example.tp1_epicerie.ui.views.AllGroceryItems
+import com.example.tp1_epicerie.ui.views.FavoriteGroceryItems
 
 @Composable
 fun Navigation(

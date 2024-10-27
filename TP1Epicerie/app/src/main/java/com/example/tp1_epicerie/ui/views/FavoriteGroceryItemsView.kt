@@ -1,4 +1,4 @@
-package com.example.tp1_epicerie.ui.list
+package com.example.tp1_epicerie.ui.views
 
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable

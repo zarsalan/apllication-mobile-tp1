@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 // Carte personnalisée
-data class CardInfo(
+data class CustomListCardInfo(
     val title: String,
     val description: String,
     val onClick: () -> Unit,
@@ -22,7 +22,7 @@ data class CardInfo(
 )
 
 @Composable
-fun CustomCard(cardInfo: CardInfo) {
+fun CustomListCard(cardInfo: CustomListCardInfo) {
     Card(
         modifier = Modifier
             .fillMaxWidth()

@@ -1,4 +1,4 @@
-package com.example.tp1_epicerie
+package com.example.tp1_epicerie.ui.views
 
 import androidx.compose.runtime.Composable
 

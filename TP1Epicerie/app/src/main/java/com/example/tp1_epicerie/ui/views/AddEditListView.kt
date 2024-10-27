@@ -1,4 +1,4 @@
-package com.example.tp1_epicerie.ui.list
+package com.example.tp1_epicerie.ui.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,20 +16,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.tp1_epicerie.GroceryViewModel
-import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.GroceryList
 import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomTextField
 
 @Composable
-fun AddListView(
+fun AddEditListView(
     id: Int,
     viewModel: GroceryViewModel,
     navController: NavController
