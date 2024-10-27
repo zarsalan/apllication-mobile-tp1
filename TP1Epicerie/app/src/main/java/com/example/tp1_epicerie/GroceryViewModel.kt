@@ -75,6 +75,12 @@ class GroceryViewModel(
         }
     }
 
+    fun updateCategory(category: Category){
+        viewModelScope.launch(Dispatchers.IO) {
+            groceryRepository.updateCategory(category = category)
+        }
+    }
+
     fun deleteCategory(category: Category){
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.deleteCategory(category = category)

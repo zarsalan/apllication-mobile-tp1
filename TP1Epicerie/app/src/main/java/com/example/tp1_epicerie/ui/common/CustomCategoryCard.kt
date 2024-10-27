@@ -2,7 +2,6 @@ package com.example.tp1_epicerie.ui.common
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -24,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -31,24 +31,22 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.Screen
+import com.example.tp1_epicerie.data.Category
 import com.example.tp1_epicerie.data.GroceryList
 
-// Carte personnalisée
-data class CustomListCardInfo(
-    val listId: Long = 0L,
+data class CustomCategoryCardInfo(
+    val categoryId: Long = 0L,
+    val category: Category,
     val title: String,
-    val description: String,
     val onClick: () -> Unit,
     val containerColor: Color,
-    val canEdit: Boolean = false,
-    val canDelete: Boolean = false,
-    val groceryList: GroceryList? = null
 )
 
 @Composable
-fun CustomListCard(
-    viewModel: GroceryViewModel = viewModel(), navHostController: NavHostController,
-    cardInfo: CustomListCardInfo
+fun CustomCategoryCard(
+    viewModel: GroceryViewModel = viewModel(),
+    navHostController: NavHostController,
+    cardInfo: CustomCategoryCardInfo
 ) {
     var showDeleteDialog by remember { mutableStateOf(false) }
 
@@ -64,37 +62,35 @@ fun CustomListCard(
         )
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier.padding(16.dp)) {
-                Text(text = cardInfo.title, fontWeight = FontWeight.ExtraBold, fontSize = 20.sp)
-                Text(text = cardInfo.description)
-            }
+            Text(
+                text = cardInfo.title,
+                fontWeight = FontWeight.ExtraBold,
+                fontSize = 20.sp,
+                modifier = Modifier.padding(start = 16.dp)
+            )
 
-            if (cardInfo.canDelete || cardInfo.canEdit) {
-                Row {
-                    if (cardInfo.canEdit) {
-                        IconButton(onClick = {
-                            navHostController.navigate(Screen.AddEditListScreen.route + "/${cardInfo.listId}")
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.Edit,
-                                contentDescription = "Edit Icon",
-                                tint = Color.Black
-                            )
-                        }
-                    }
-                    if (cardInfo.canDelete) {
-                        IconButton(onClick = { showDeleteDialog = true }) {
-                            Icon(
-                                imageVector = Icons.Default.Delete,
-                                contentDescription = "Delete Icon",
-                                tint = Color.Black
-                            )
-                        }
-                    }
+            Row {
+                IconButton(onClick = {
+                    navHostController.navigate(Screen.AddEditCategory.route + "/${cardInfo.categoryId}")
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit Icon",
+                        tint = Color.Black
+                    )
+                }
+                IconButton(onClick = { showDeleteDialog = true }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete Icon",
+                        tint = Color.Black
+                    )
                 }
             }
         }
@@ -104,14 +100,12 @@ fun CustomListCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Supprimer la liste ${cardInfo.title} ?") },
-            text = { Text("Êtes-vous sûr de vouloir supprimer cette liste?") },
+            title = { Text("Supprimer le catégorie ${cardInfo.title}?") },
+            text = { Text("Êtes-vous sûr de vouloir supprimer cette catégorie?") },
             confirmButton = {
                 Button(
                     onClick = {
-                        cardInfo.groceryList?.let {
-                            viewModel.deleteGroceryList(it)
-                        }
+                        viewModel.deleteCategory(cardInfo.category)
                         showDeleteDialog = false
                     }) {
                     Text("Oui")

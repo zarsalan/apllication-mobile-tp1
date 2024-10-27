@@ -43,7 +43,6 @@ import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenu
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenus
 import com.example.tp1_epicerie.ui.common.CustomTextField
-import coil.compose.rememberImagePainter
 
 @Composable
 fun AddEditItemView(
@@ -67,7 +66,7 @@ fun AddEditItemView(
     groceryItem?.let {
         name = it.name
         description = it.description
-        categoryId = it.categoryId!!
+        categoryId = it.categoryId
         selectedCategory = categories.find { category -> category.id == it.categoryId }?.title ?: ""
         isFavorite = it.isFavorite == 1
         imageUri = Uri.parse(it.imagePath)

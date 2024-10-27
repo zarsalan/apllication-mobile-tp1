@@ -51,6 +51,10 @@ class GroceryRepository(
         categoryDao.upsertCategory(category)
     }
 
+    suspend fun updateCategory(category: Category){
+        categoryDao.updateCategory(category)
+    }
+
     suspend fun deleteCategory(category: Category){
         categoryDao.deleteCategory(category)
     }

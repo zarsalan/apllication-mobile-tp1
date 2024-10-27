@@ -16,7 +16,7 @@ import com.google.gson.reflect.TypeToken
             entity = Category::class,
             parentColumns = ["id"],
             childColumns = ["groceryItem_category_id"],
-            onDelete = ForeignKey.SET_NULL
+            onDelete = ForeignKey.SET_DEFAULT
         )
     ],
     indices = [Index(value = ["groceryItem_category_id"])]
@@ -29,7 +29,7 @@ data class GroceryItem(
     @ColumnInfo(name = "groceryItem_description")
     val description: String = "",
     @ColumnInfo(name = "groceryItem_category_id")
-    val categoryId: Long? = 0L,
+    val categoryId: Long = 0L,
     @ColumnInfo(name = "groceryItem_isFavorite")
     val isFavorite: Int = 0,
     @ColumnInfo(name = "groceryItem_picture")

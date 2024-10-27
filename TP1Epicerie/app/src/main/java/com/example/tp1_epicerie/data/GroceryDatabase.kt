@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class],
-    version = 11,
+    version = 12,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -80,6 +80,7 @@ abstract class GroceryDatabase : RoomDatabase() {
 
         suspend fun populateCategories(categoryDao: CategoryDao) {
             val categories = listOf(
+                Category(id = 0L, title = "Non défini"),
                 Category(id = 1L, title = "Pain"),
                 Category(id = 2L, title = "Fruit"),
                 Category(id = 3L, title = "Légume"),
