@@ -45,6 +45,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             }
         }
     ) {
+
         val groceryList = viewModel.getAllGroceryLists.collectAsState(initial = emptyList())
         LazyColumn(modifier = Modifier
             .fillMaxSize()
