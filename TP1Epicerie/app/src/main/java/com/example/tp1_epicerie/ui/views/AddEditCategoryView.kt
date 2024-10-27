@@ -3,8 +3,6 @@ package com.example.tp1_epicerie.ui.views
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
@@ -24,41 +22,39 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.Screen
-import com.example.tp1_epicerie.data.GroceryList
+import com.example.tp1_epicerie.data.Category
 import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomTextField
 
 @Composable
-fun AddEditListView(
+fun AddEditCategoryView(
     id: Long = 0L,
     viewModel: GroceryViewModel,
     navHostController: NavHostController
 ) {
     var title by remember { mutableStateOf("") }
-    var description by remember { mutableStateOf("") }
-    val groceryList = viewModel.getGroceryListById(id)
+    val category = viewModel.getCategoryById(id)
         .takeIf { id != 0L }
-        ?.collectAsState(GroceryList())
+        ?.collectAsState(Category())
         ?.value
 
     title = ""
-    description = ""
 
-    groceryList?.let {
+    category?.let {
         title = it.title
-        description = it.description
     }
 
     Scaffold(
         topBar = {
             AppBarView(
-                title = if (groceryList != null) Screen.AddEditListScreen.title2 else Screen.AddEditListScreen.title,
+                title = if (category != null) Screen.AddEditCategory.title2 else Screen.AddEditCategory.title,
                 onBackNavClicked = { navHostController.popBackStack() })
         },
     ) {
         Column(
             modifier = Modifier
-                .padding(it).padding(top = 15.dp)
+                .padding(it)
+                .padding(top = 15.dp)
                 .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -70,42 +66,33 @@ fun AddEditListView(
                     title = newValue
                 }
             )
-            CustomTextField(
-                label = "Description",
-                value = description,
-                onValueChanged = { newValue ->
-                    description = newValue
-                }
-            )
 
             if (id != 0L) {
                 Button(modifier = Modifier.padding(top = 15.dp),
                     onClick = {
-                        if (groceryList != null) {
-                            viewModel.updateGroceryList(
-                                GroceryList(
-                                    id = id,
+                        if (category != null) {
+                            viewModel.updateCategory(
+                                Category(
+                                    id = category.id,
                                     title = title.trim(),
-                                    description = description.trim(),
-                                    listItems = groceryList.listItems
                                 )
                             )
                             Toast.makeText(
                                 navHostController.context,
-                                "Liste mise à jour",
+                                "Catégorie mise à jour",
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
                             Toast.makeText(
                                 navHostController.context,
-                                "Liste introuvable",
+                                "Catégorie introuvable",
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                         navHostController.popBackStack()
                     }) {
                     Text(
-                        text = "Mettre à jour la liste",
+                        text = "Enregistrer",
                         style = TextStyle(
                             fontSize = 18.sp
                         )
@@ -114,22 +101,20 @@ fun AddEditListView(
             } else {
                 Button(modifier = Modifier.padding(top = 15.dp),
                     onClick = {
-                        viewModel.upsertGroceryList(
-                            GroceryList(
+                        viewModel.upsertCategory(
+                            Category(
                                 title = title.trim(),
-                                description = description.trim(),
-                                listItems = emptyList<Long>()
                             )
                         )
                         Toast.makeText(
                             navHostController.context,
-                            "Liste ajoutée",
+                            "Catégorie ajoutée",
                             Toast.LENGTH_SHORT
                         ).show()
                         navHostController.popBackStack()
                     }) {
                     Text(
-                        text = "Ajouter une liste",
+                        text = "Ajouter",
                         style = TextStyle(
                             fontSize = 18.sp
                         )
@@ -139,5 +124,3 @@ fun AddEditListView(
         }
     }
 }
-
-

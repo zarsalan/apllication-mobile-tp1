@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.navArgument
+import com.example.tp1_epicerie.ui.views.AddEditCategoryView
 import com.example.tp1_epicerie.ui.views.AddEditItemView
 import com.example.tp1_epicerie.ui.views.AddEditListView
 import com.example.tp1_epicerie.ui.views.HomeView
@@ -27,24 +28,22 @@ fun Navigation(
         startDestination = Screen.HomeScreen.route,
         modifier = modifier
     ) {
+        // Page principal
         composable(Screen.HomeScreen.route) {
             HomeView(viewModel, navHostController)
         }
+
+        // Affichage de tous les articles
         composable(Screen.AllItems.route) {
             AllGroceryItemsView(viewModel, navHostController)
         }
+
+        // Affichage des articles favoris
         composable(Screen.Favorites.route) {
             FavoriteGroceryItemsView(viewModel, navHostController)
         }
-        composable(
-            Screen.AddEditListScreen.route + "/{id}",
-            arguments = listOf(navArgument("id") {
-                type = NavType.LongType; defaultValue = 0L; nullable
-            })
-        ) {
-            val id = it.arguments?.getLong("id") ?: 0L
-            AddEditListView(id, viewModel, navHostController)
-        }
+
+        // Affichage d'une liste custom
         composable(
             Screen.GroceryList.route + "/{id}",
             arguments = listOf(navArgument("id") {
@@ -54,6 +53,19 @@ fun Navigation(
             val id = it.arguments?.getLong("id") ?: 0L
             CustomGroceryListView(id, viewModel, navHostController)
         }
+
+        // Ajout ou modification d'une liste
+        composable(
+            Screen.AddEditListScreen.route + "/{id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.LongType; defaultValue = 0L; nullable
+            })
+        ) {
+            val id = it.arguments?.getLong("id") ?: 0L
+            AddEditListView(id, viewModel, navHostController)
+        }
+
+        // Ajout ou modification d'un article
         composable(
             Screen.AddEditItem.route + "/{id}",
             arguments = listOf(navArgument("id") {
@@ -62,6 +74,16 @@ fun Navigation(
         ) {
             val id = it.arguments?.getLong("id") ?: 0L
             AddEditItemView(id, viewModel, navHostController)
+        }
+
+        // Ajout ou modification d'une catégorie
+        composable(Screen.AddEditCategory.route + "/{id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.LongType; defaultValue = 0L; nullable
+            })
+        ) {
+            val id = it.arguments?.getLong("id") ?: 0L
+            AddEditCategoryView(id, viewModel, navHostController)
         }
     }
 }

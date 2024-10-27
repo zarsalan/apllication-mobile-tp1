@@ -54,6 +54,9 @@ abstract class CategoryDao {
     @Upsert
     abstract suspend fun upsertCategory(categoryEntity: Category)
 
+    @Update
+    abstract suspend fun updateCategory(categoryEntity: Category)
+
     @Delete
     abstract suspend fun deleteCategory(categoryEntity: Category)
 

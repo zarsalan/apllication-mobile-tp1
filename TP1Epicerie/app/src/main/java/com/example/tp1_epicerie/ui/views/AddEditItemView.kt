@@ -43,7 +43,6 @@ import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenu
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenus
 import com.example.tp1_epicerie.ui.common.CustomTextField
-import coil.compose.rememberImagePainter
 
 @Composable
 fun AddEditItemView(
