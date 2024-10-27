@@ -162,10 +162,7 @@ fun CustomGroceryListView(
                                 listItem = listItem,
                                 viewModel = viewModel,
                                 onClick = { /*Lien vers la page de l'item*/ },
-                                containerColor = Color.White,
-                                canQuantity = true,
-                                canFavorite = true,
-                                canDelete = true
+                                containerColor = Color.White
                             )
                         )
                     }

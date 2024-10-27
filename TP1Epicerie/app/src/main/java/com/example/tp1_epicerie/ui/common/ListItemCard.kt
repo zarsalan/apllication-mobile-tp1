@@ -37,10 +37,7 @@ data class ListItemCardInfo(
     val listItem: ListItem,
     val viewModel: GroceryViewModel,
     val onClick: () -> Unit,
-    val containerColor: Color,
-    val canQuantity: Boolean = false,
-    val canDelete: Boolean = false,
-    val canFavorite: Boolean = false
+    val containerColor: Color
 )
 
 @Composable
@@ -50,8 +47,6 @@ fun ListItemCard(
     val listItem = cardInfo.listItem
     val groceryItem: GroceryItem = cardInfo.viewModel.getGroceryItemById(listItem.itemId)
         .collectAsState(initial = GroceryItem(0L, "", "", 0L, 0, null)).value
-
-    val isFavorite by remember { mutableStateOf(groceryItem.isFavorite) }
 
     val quantity by remember { mutableStateOf(listItem.quantity) }
 
@@ -77,80 +72,74 @@ fun ListItemCard(
                 Text(text = groceryItem.description)
             }
 
-            if (cardInfo.canQuantity) {
-                Row {
-                    Text(text = quantity.toString())
-                    Column() {
-                        IconButton(onClick = {
-                            cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id,  quantity = listItem.quantity + 1))
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowUp,
-                                contentDescription = "Add",
-                                tint = Color.White
-                            )
-                        }
-                        IconButton(onClick = {
-                            if(listItem.quantity > 1){
-                                cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, quantity = listItem.quantity - 1))
-                            }else{
-                                cardInfo.viewModel.deleteListItem(listItem)
-                            }
-                        }) {
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowDown,
-                                contentDescription = "Substract",
-                                tint = Color.White
-                            )
-                        }
+            Row {
+                Text(text = quantity.toString())
+                Column() {
+                    IconButton(onClick = {
+                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id,  quantity = listItem.quantity + 1))
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.KeyboardArrowUp,
+                            contentDescription = "Add",
+                            tint = Color.White
+                        )
                     }
                     IconButton(onClick = {
-                        if(listItem.isCrossed > 0){
-                            cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, isCrossed = 0))
+                        if(listItem.quantity > 1){
+                            cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, quantity = listItem.quantity - 1))
                         }else{
-                            cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, isCrossed = 1))
+                            cardInfo.viewModel.deleteListItem(listItem)
                         }
                     }) {
                         Icon(
-                            imageVector = Icons.Default.Check,
-                            contentDescription = "Checkmark",
-                            tint = Color.Black
+                            imageVector = Icons.Default.KeyboardArrowDown,
+                            contentDescription = "Substract",
+                            tint = Color.White
                         )
                     }
+                }
+                IconButton(onClick = {
+                    if(listItem.isCrossed > 0){
+                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, isCrossed = 0))
+                    }else{
+                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, isCrossed = 1))
+                    }
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Check,
+                        contentDescription = "Checkmark",
+                        tint = Color.Black
+                    )
                 }
             }
             if(groceryItem.picture != null){
                 //TODO
             }
-            if(cardInfo.canFavorite){
-                IconButton(onClick = {
-                    if(groceryItem.isFavorite > 0){
-                        cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 0))
-                    }else{
-                        cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 1))
-                    }
-                }) {
-                    Icon(
-                        imageVector = if (groceryItem.isFavorite < 0) {
-                            Icons.Default.Favorite
-                        } else {
-                            Icons.Default.FavoriteBorder
-                        },
-                        contentDescription = "Favorite",
-                        tint = if (groceryItem.isFavorite > 0) Color.Red else Color.Black,
-                    )
+            IconButton(onClick = {
+                if(groceryItem.isFavorite > 0){
+                    cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 0))
+                }else{
+                    cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 1))
                 }
+            }) {
+                Icon(
+                    imageVector = if (groceryItem.isFavorite < 0) {
+                        Icons.Default.Favorite
+                    } else {
+                        Icons.Default.FavoriteBorder
+                    },
+                    contentDescription = "Favorite",
+                    tint = if (groceryItem.isFavorite > 0) Color.Red else Color.Black,
+                )
             }
-            if(cardInfo.canDelete){
-                IconButton(onClick = {
-                    cardInfo.viewModel.deleteListItem(listItem)
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
-                        tint = Color.Black
-                    )
-                }
+            IconButton(onClick = {
+                cardInfo.viewModel.deleteListItem(listItem)
+            }) {
+                Icon(
+                    imageVector = Icons.Default.Delete,
+                    contentDescription = "Delete",
+                    tint = Color.Black
+                )
             }
         }
     }
