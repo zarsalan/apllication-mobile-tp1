@@ -106,6 +106,12 @@ class GroceryViewModel(
         }
     }
 
+    fun updateGroceryList(groceryList: GroceryList){
+        viewModelScope.launch(Dispatchers.IO) {
+            groceryRepository.updateGroceryList(groceryList = groceryList)
+        }
+    }
+
     fun deleteGroceryList(groceryList: GroceryList){
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.deleteGroceryList(groceryList = groceryList)

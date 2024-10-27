@@ -38,7 +38,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                 contentColor = Color.White,
                 containerColor = colorResource(id = R.color.app_bar),
                 onClick = {
-                    navHostController.navigate(Screen.AddEditListScreen.route)
+                    navHostController.navigate(Screen.AddEditListScreen.route + "/0L")
                 }
             ) {
                 Icon(imageVector = Icons.Default.Add, contentDescription = null)
@@ -51,6 +51,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             .padding(it)) {
             item {
                 CustomListCard(
+                    viewModel,
+                    navHostController,
                     CustomListCardInfo(
                         title = "Tous les articles",
                         description = "Voir tous les articles",
@@ -61,6 +63,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             }
             item {
                 CustomListCard(
+                    viewModel,
+                    navHostController,
                     CustomListCardInfo(
                         title = "Favoris",
                         description = "Voir les articles favoris",
@@ -88,6 +92,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
 
             items(groceryList.value) { grocery ->
                 CustomListCard(
+                    viewModel,
+                    navHostController,
                     CustomListCardInfo(
                         listId = grocery.id,
                         title = grocery.title,
@@ -95,7 +101,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         onClick = { navHostController.navigate(Screen.GroceryList.route + "/${grocery.id}") },
                         containerColor = Color.White,
                         canEdit = true,
-                        canDelete = true
+                        canDelete = true,
+                        groceryList = grocery,
                     )
                 )
             }

@@ -1,5 +1,6 @@
 package com.example.tp1_epicerie.ui.views
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -10,6 +11,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -28,21 +30,39 @@ import com.example.tp1_epicerie.ui.common.CustomTextField
 
 @Composable
 fun AddEditListView(
-    id: Long,
+    id: Long = 0L,
     viewModel: GroceryViewModel,
     navHostController: NavHostController
 ) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
+    val groceryList = viewModel.getGroceryListById(id)
+        .takeIf { id != 0L }
+        ?.collectAsState(GroceryList(0L, "", "", emptyList()))
+        ?.value
+
+    title = ""
+    description = ""
+
+    groceryList?.let {
+        title = it.title
+        description = it.description
+    }
 
     Scaffold(
-        topBar = { AppBarView(title = Screen.AddEditListScreen.title) }
+        topBar = {
+            AppBarView(
+                title = Screen.AddEditListScreen.title,
+                onBackNavClicked = { navHostController.popBackStack() })
+        }
     ) {
-        Column(modifier = Modifier.padding(it).wrapContentSize(),
+        Column(
+            modifier = Modifier
+                .padding(it)
+                .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ){
-            Spacer(modifier = Modifier.height(10.dp))
+            verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)
+        ) {
             CustomTextField(
                 label = "Titre",
                 value = title,
@@ -50,7 +70,6 @@ fun AddEditListView(
                     title = newValue
                 }
             )
-            Spacer(modifier = Modifier.height(10.dp))
             CustomTextField(
                 label = "Description",
                 value = description,
@@ -58,17 +77,65 @@ fun AddEditListView(
                     description = newValue
                 }
             )
-            Spacer(modifier = Modifier.height(10.dp))
-            Button(onClick={
-                viewModel.upsertGroceryList(GroceryList(title = title, description = description, listItems = emptyList<Long>()))
-                navHostController.popBackStack()
-            }){
-                Text(
-                    text = "Creér la liste",
-                    style = TextStyle(
-                        fontSize = 18.sp
+
+            if (id != 0L) {
+                Button(modifier = Modifier.padding(top = 25.dp),
+                    onClick = {
+                        if (groceryList != null) {
+                            viewModel.updateGroceryList(
+                                GroceryList(
+                                    id = id,
+                                    title = title.trim(),
+                                    description = description.trim(),
+                                    listItems = groceryList.listItems
+                                )
+                            )
+                            Toast.makeText(
+                                navHostController.context,
+                                "Liste mise à jour",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            Toast.makeText(
+                                navHostController.context,
+                                "Liste introuvable",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                        navHostController.popBackStack()
+                    }) {
+                    Text(
+                        text = "Mettre à jour la liste",
+                        style = TextStyle(
+                            fontSize = 18.sp
+                        )
                     )
-                )
+                }
+            } else {
+                Button(modifier = Modifier.padding(top = 25.dp),
+                    onClick = {
+                        viewModel.upsertGroceryList(
+                            GroceryList(
+                                id = id,
+                                title = title.trim(),
+                                description = description.trim(),
+                                listItems = emptyList<Long>()
+                            )
+                        )
+                        Toast.makeText(
+                            navHostController.context,
+                            "Liste ajoutée",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        navHostController.popBackStack()
+                    }) {
+                    Text(
+                        text = "Ajouter une liste",
+                        style = TextStyle(
+                            fontSize = 18.sp
+                        )
+                    )
+                }
             }
         }
     }
