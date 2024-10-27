@@ -52,20 +52,20 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             item {
                 CustomListCard(
                     CustomListCardInfo(
-                        "Tous les articles",
-                        "Voir tous les articles",
-                        { navHostController.navigate(Screen.AllItems.route) },
-                        colorResource(id = R.color.all_items)
+                        title = "Tous les articles",
+                        description = "Voir tous les articles",
+                        onClick = { navHostController.navigate(Screen.AllItems.route) },
+                        containerColor = colorResource(id = R.color.all_items)
                     )
                 )
             }
             item {
                 CustomListCard(
                     CustomListCardInfo(
-                        "Favoris",
-                        "Voir les articles favoris",
-                        { navHostController.navigate(Screen.Favorites.route) },
-                        colorResource(id = R.color.favorite_items)
+                        title = "Favoris",
+                        description = "Voir les articles favoris",
+                        onClick = { navHostController.navigate(Screen.Favorites.route) },
+                        containerColor = colorResource(id = R.color.favorite_items)
                     )
                 )
             }
@@ -89,10 +89,13 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             items(groceryList.value) { grocery ->
                 CustomListCard(
                     CustomListCardInfo(
-                        grocery.title,
-                        grocery.description,
-                        { navHostController.navigate(Screen.GroceryList.route + "/${grocery.id}") },
-                        Color.White
+                        listId = grocery.id,
+                        title = grocery.title,
+                        description = grocery.description,
+                        onClick = { navHostController.navigate(Screen.GroceryList.route + "/${grocery.id}") },
+                        containerColor = Color.White,
+                        canEdit = true,
+                        canDelete = true
                     )
                 )
             }
