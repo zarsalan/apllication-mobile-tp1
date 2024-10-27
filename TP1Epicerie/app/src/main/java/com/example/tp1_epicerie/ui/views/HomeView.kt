@@ -58,6 +58,10 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         onClick = { navHostController.navigate(Screen.AddEditCategory.route + "/0L") }
                     ),
                     AppBarMenu(
+                        title = "Modifier les catégories",
+                        onClick = { navHostController.navigate(Screen.Categories.route) }
+                    ),
+                    AppBarMenu(
                         title = "À propos",
                         onClick = { showAboutDialog = true }
                     )

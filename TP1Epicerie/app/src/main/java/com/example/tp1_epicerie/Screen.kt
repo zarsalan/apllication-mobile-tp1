@@ -44,6 +44,10 @@ sealed class Screen(val route: String, val title: String, val title2: String = "
     data object AddEditCategory :
         Screen("add_edit_category", "Créer une catégorie", "Modifier une catégorie") // Création d'une catégorie
 
+    // Affichage de tous les catégories
+    data object Categories :
+        Screen("all_categories", "Les catégories") // Affichage des catégories
+
     // Page pour les paramètres
     data object Settings :
         Screen("settings", "Paramètres") // Affichage des paramètres

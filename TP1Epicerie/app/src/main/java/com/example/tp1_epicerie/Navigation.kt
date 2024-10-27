@@ -14,6 +14,7 @@ import com.example.tp1_epicerie.ui.views.AddEditItemView
 import com.example.tp1_epicerie.ui.views.AddEditListView
 import com.example.tp1_epicerie.ui.views.HomeView
 import com.example.tp1_epicerie.ui.views.AllGroceryItemsView
+import com.example.tp1_epicerie.ui.views.CategoriesView
 import com.example.tp1_epicerie.ui.views.CustomGroceryListView
 import com.example.tp1_epicerie.ui.views.FavoriteGroceryItemsView
 
@@ -84,6 +85,11 @@ fun Navigation(
         ) {
             val id = it.arguments?.getLong("id") ?: 0L
             AddEditCategoryView(id, viewModel, navHostController)
+        }
+
+        // Affichage de tous les catégories
+        composable(Screen.Categories.route) {
+            CategoriesView(viewModel, navHostController)
         }
     }
 }
