@@ -79,6 +79,16 @@ data class GroceryList(
     val listItems: List<Long>? = emptyList()//TypeConverter
 )
 
+@Entity(tableName = "settings_table")
+data class Settings(
+    @PrimaryKey
+    val id: Int = 1,
+    @ColumnInfo(name = "dark_mode")
+    val darkMode: Int = 0,
+    @ColumnInfo(name = "language")
+    val language: String = "Français"
+)
+
 // Permet la conversion de list pour le stockage dans SQLite
 class Converters {
     @TypeConverter

@@ -44,7 +44,7 @@ data class CustomCategoryCardInfo(
 
 @Composable
 fun CustomCategoryCard(
-    viewModel: GroceryViewModel = viewModel(),
+    viewModel: GroceryViewModel,
     navHostController: NavHostController,
     cardInfo: CustomCategoryCardInfo
 ) {

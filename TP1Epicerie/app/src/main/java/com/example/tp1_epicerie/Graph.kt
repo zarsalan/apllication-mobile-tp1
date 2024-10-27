@@ -17,7 +17,8 @@ object Graph {
             groceryItemDao = database.groceryItemDao(),
             listItemDao = database.listItemDao(),
             categoryDao = database.categoryDao(),
-            groceryListDao = database.groceryListDao()
+            groceryListDao = database.groceryListDao(),
+            settingsDao = database.settingsDao()
         )
     }
 

@@ -28,7 +28,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.dp
@@ -95,7 +94,8 @@ fun AddEditItemView(
         ) {
             Column(
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)
             ) {
                 CustomTextField("Nom", name, onValueChanged = { newValue -> name = newValue })
                 CustomTextField(
@@ -111,7 +111,6 @@ fun AddEditItemView(
                 label = "Catégorie:",
                 value = selectedCategory,
                 customDropdownMenus = CustomDropdownMenus(
-                    containerColor = Color.Gray,
                     menus = categories.map { category ->
                         CustomDropdownMenu(
                             text = category.title,
@@ -162,7 +161,8 @@ fun AddEditItemView(
 
             Column(
                 modifier = Modifier
-                    .fillMaxWidth().padding(top = 8.dp),
+                    .fillMaxWidth()
+                    .padding(top = 8.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
             ) {

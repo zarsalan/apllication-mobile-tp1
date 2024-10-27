@@ -7,6 +7,7 @@ import com.example.tp1_epicerie.data.GroceryItem
 import com.example.tp1_epicerie.data.GroceryList
 import com.example.tp1_epicerie.data.GroceryRepository
 import com.example.tp1_epicerie.data.ListItem
+import com.example.tp1_epicerie.data.Settings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -126,6 +127,18 @@ class GroceryViewModel(
     fun deleteGroceryList(groceryList: GroceryList){
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.deleteGroceryList(groceryList = groceryList)
+        }
+    }
+
+
+    //Section pour les Settings
+    fun getSettings(): Flow<Settings?>{
+        return groceryRepository.getSettings()
+    }
+
+    fun updateSettings(settings: Settings){
+        viewModelScope.launch(Dispatchers.IO) {
+            groceryRepository.updateSettings(settings = settings)
         }
     }
 }
