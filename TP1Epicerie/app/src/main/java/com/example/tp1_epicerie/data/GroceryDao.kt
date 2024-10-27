@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Query
 import androidx.room.Transaction
+import androidx.room.Update
 import androidx.room.Upsert
 import kotlinx.coroutines.flow.Flow
 
@@ -69,6 +70,9 @@ abstract class GroceryListDao() {
 
     @Upsert
     abstract suspend fun upsertAGroceryList(groceryListEntity: GroceryList)
+
+    @Update
+    abstract suspend fun updateGroceryList(groceryListEntity: GroceryList)
 
     @Transaction
     open suspend fun deleteGroceryList(groceryListEntity: GroceryList, listItemDao: ListItemDao) {

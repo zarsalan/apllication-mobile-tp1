@@ -35,10 +35,17 @@ fun Navigation(
         composable(Screen.Favorites.route) {
             FavoriteGroceryItemsView(viewModel, navHostController)
         }
-        composable(Screen.AddEditListScreen.route) {
-            AddEditListView(0L, viewModel, navHostController)
+        composable(
+            Screen.AddEditListScreen.route + "/{id}",
+            arguments = listOf(navArgument("id") {
+                type = NavType.LongType; defaultValue = 0L; nullable
+            })
+        ) {
+            val id = it.arguments?.getLong("id") ?: 0L
+            AddEditListView(id, viewModel, navHostController)
         }
-        composable(Screen.GroceryList.route + "/{id}",
+        composable(
+            Screen.GroceryList.route + "/{id}",
             arguments = listOf(navArgument("id") {
                 type = NavType.LongType; defaultValue = 0L; nullable
             })

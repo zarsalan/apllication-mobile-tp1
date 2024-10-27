@@ -28,7 +28,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
+import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.GroceryList
 
 // Carte personnalisée
@@ -44,7 +46,10 @@ data class CustomListCardInfo(
 )
 
 @Composable
-fun CustomListCard(viewModel: GroceryViewModel = viewModel(), cardInfo: CustomListCardInfo) {
+fun CustomListCard(
+    viewModel: GroceryViewModel = viewModel(), navHostController: NavHostController,
+    cardInfo: CustomListCardInfo
+) {
     var showDeleteDialog by remember { mutableStateOf(false) }
 
     Card(
@@ -71,7 +76,9 @@ fun CustomListCard(viewModel: GroceryViewModel = viewModel(), cardInfo: CustomLi
             if (cardInfo.canDelete || cardInfo.canEdit) {
                 Row {
                     if (cardInfo.canEdit) {
-                        IconButton(onClick = { /*TODO*/ }) {
+                        IconButton(onClick = {
+                            navHostController.navigate(Screen.AddEditListScreen.route + "/${cardInfo.listId}")
+                        }) {
                             Icon(
                                 imageVector = Icons.Default.Edit,
                                 contentDescription = "Edit Icon",
