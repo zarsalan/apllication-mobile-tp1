@@ -10,6 +10,9 @@ import com.example.tp1_epicerie.data.ListItem
 import com.example.tp1_epicerie.data.Settings
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 class GroceryViewModel(
@@ -67,6 +70,19 @@ class GroceryViewModel(
 
     fun getListItemById(id: Long): Flow<ListItem>{
         return groceryRepository.getListItemById(id)
+    }
+
+    private val _listItem = MutableStateFlow<ListItem?>(null)
+    val listItem: StateFlow<ListItem?> = _listItem
+
+    fun fetchListItem(groceryListId: Long = 1L, groceryItemId: Long = 1L) {
+        viewModelScope.launch {
+            _listItem.value = getListItemByGroceryListId(groceryListId, groceryItemId).firstOrNull()
+        }
+    }
+
+    private fun getListItemByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem?>{
+        return groceryRepository.getListItemByGroceryListId(groceryListId, groceryItemId)
     }
 
     //Section pour les Categories

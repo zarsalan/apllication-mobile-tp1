@@ -23,13 +23,13 @@ import com.google.gson.reflect.TypeToken
 )
 data class GroceryItem(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 1L,
+    val id: Long = 0L,
     @ColumnInfo(name = "groceryItem_name")
     val name: String = "",
     @ColumnInfo(name = "groceryItem_description")
     val description: String = "",
     @ColumnInfo(name = "groceryItem_category_id")
-    val categoryId: Long = 1L,
+    val categoryId: Long = 0L,
     @ColumnInfo(name = "groceryItem_isFavorite")
     val isFavorite: Int = 0,
     @ColumnInfo(name = "groceryItem_picture")
@@ -50,9 +50,11 @@ data class GroceryItem(
 )
 data class ListItem(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 1L,
+    val id: Long = 0L,
     @ColumnInfo(name = "listItem_item_id")
-    val itemId: Long = 1L,
+    val itemId: Long = 0L,
+    @ColumnInfo(name = "listItem_groceryList_id")
+    val groceryListId: Long = 0L,
     @ColumnInfo(name = "listItem_quantity")
     val quantity: Int = 0,
     @ColumnInfo(name = "listItem_isCrossed")
@@ -62,7 +64,7 @@ data class ListItem(
 @Entity(tableName = "category_table")
 data class Category(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 1L,
+    val id: Long = 0L,
     @ColumnInfo(name = "category_title")
     val title: String = ""
 )
@@ -70,7 +72,7 @@ data class Category(
 @Entity(tableName = "groceryList_table")
 data class GroceryList(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 1L,
+    val id: Long = 0L,
     @ColumnInfo(name = "groceryList_title")
     val title: String = "",
     @ColumnInfo(name = "groceryList_description")

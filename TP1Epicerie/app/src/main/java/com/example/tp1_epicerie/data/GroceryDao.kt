@@ -36,6 +36,9 @@ abstract class ListItemDao {
     @Query("Select * from `listItem_table` WHERE id=:id")
     abstract fun getListItemById(id: Long): Flow<ListItem>
 
+    @Query("SELECT * FROM `listItem_table` WHERE `listItem_groceryList_id` = :groceryListId AND `listItem_item_id` = :groceryItemId LIMIT 1")
+    abstract fun getListItemByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem?>
+
     @Upsert
     abstract suspend fun upsertListItem(listItemEntity: ListItem)
 
