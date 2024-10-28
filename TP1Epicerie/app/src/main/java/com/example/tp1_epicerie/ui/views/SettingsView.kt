@@ -31,6 +31,8 @@ import com.example.tp1_epicerie.ui.common.CustomDropdownMenus
 
 @Composable
 fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostController) {
+    val context = LocalContext.current
+
     var darkMode by remember { mutableStateOf(false) }
 
     val textLanguageFr: String = stringResource(R.string.language_french)
@@ -47,7 +49,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
 
     Scaffold(topBar = {
         AppBarView(
-            title = Screen.AddEditCategory.title,
+            title = Screen.AddEditCategory.title(),
             onBackNavClicked = { navHostController.popBackStack() })
     }) {
         Column(
@@ -59,6 +61,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
             verticalArrangement = Arrangement.Center
         ) {
             val textsettingUpdated: String = stringResource(R.string.settings_toast)
+            /*
             CustomDropdownMenu(
                 modifier = Modifier.padding(start = 25.dp, top = 10.dp, end = 25.dp),
                 label = stringResource(R.string.text_language),
@@ -78,6 +81,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
                                         language = language
                                     )
                                 )
+
                                 Toast.makeText(
                                     currentContext,
                                     textsettingUpdated,
@@ -87,7 +91,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
                         )
                     },
                 )
-            )
+            )*/
 //Nouveau manqué de temps pour le thème
             CustomDropdownMenu(
                 modifier = Modifier.padding(start = 25.dp, top = 10.dp, end = 25.dp),

@@ -1,5 +1,12 @@
 package com.example.tp1_epicerie
 
+import android.content.Context
+import android.content.res.Configuration
+import android.content.res.Resources
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tp1_epicerie.data.Category
@@ -14,10 +21,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
+import java.util.Locale
 
 class GroceryViewModel(
+
     private val groceryRepository: GroceryRepository = Graph.groceryRepository
 ) : ViewModel() {
+
     //Section pour les GroceryItems -------------------------------------
     lateinit var getAllGroceryItems: Flow<List<GroceryItem>>
 
@@ -189,4 +199,5 @@ class GroceryViewModel(
             groceryRepository.upsertSettings(settings = settings)
         }
     }
+
 }
