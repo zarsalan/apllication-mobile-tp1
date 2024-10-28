@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -55,8 +56,7 @@ fun ListItemCard(
     val groceryItem: GroceryItem = cardInfo.viewModel.getGroceryItemById(listItem.itemId)
         .collectAsState(initial = GroceryItem(0L, "", "", 0L, 0, null)).value
 
-    val quantity by remember { mutableStateOf(listItem.quantity) }
-
+    val quantity by remember { mutableIntStateOf(listItem.quantity) }
 
     Card(
         modifier = Modifier

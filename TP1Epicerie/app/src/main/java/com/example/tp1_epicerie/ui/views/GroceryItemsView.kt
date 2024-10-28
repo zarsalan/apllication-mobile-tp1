@@ -51,13 +51,12 @@ fun GroceryItemsView(viewModel: GroceryViewModel, navHostController: NavHostCont
         ) {
             items(groceryItemsList) { groceryItem ->
                 GroceryItemCard(
-                    GroceryItemCardInfo(
+                    viewModel = viewModel,
+                    cardInfo = GroceryItemCardInfo(
                         groceryItem = groceryItem,
                         viewModel = viewModel,
                         onClick = { navHostController.navigate(Screen.AddEditItem.route + "/${groceryItem.id}") },
                         containerColor = Color.White,
-                        canFavorite = true,
-                        canDelete = true
                     )
                 )
             }

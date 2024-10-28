@@ -47,6 +47,9 @@ class GroceryRepository(
         return listItemDao.getListItemById(id)
     }
 
+    fun getListItemByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem?> {
+        return listItemDao.getListItemByGroceryListId(groceryListId, groceryItemId)
+    }
 
     //Section pour le CategoryDao
     suspend fun upsertCategory(category: Category) {

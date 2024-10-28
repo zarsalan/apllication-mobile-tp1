@@ -1,10 +1,12 @@
 package com.example.tp1_epicerie.ui.common
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -27,8 +29,10 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,13 +40,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.tp1_epicerie.GroceryViewModel
+import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.data.GroceryItem
 import com.example.tp1_epicerie.data.GroceryList
 import com.example.tp1_epicerie.data.ListItem
@@ -52,30 +60,33 @@ data class GroceryItemCardInfo(
     val viewModel: GroceryViewModel,
     val onClick: () -> Unit,
     val containerColor: Color,
-    val canFavorite: Boolean = false,
-    val canDelete: Boolean = false
 )
 
 @Composable
 fun GroceryItemCard(
+    viewModel: GroceryViewModel,
     cardInfo: GroceryItemCardInfo
-) 
-{
+) {
     var showDeleteDialog by remember { mutableStateOf(false) }
+    var showQuantityDialog by remember { mutableStateOf(false) }
+    var selectedQuantity by remember { mutableIntStateOf(1) }
+    var selectedGroceryList by remember { mutableStateOf(GroceryList()) }
+    val currentContext = LocalContext.current
+
     var menuExpanded by remember { mutableStateOf(false) }
-    val groceryLists = cardInfo.viewModel.getAllGroceryLists.collectAsState(initial = emptyList()).value
+    val groceryLists =
+        cardInfo.viewModel.getAllGroceryLists.collectAsState(initial = emptyList()).value
+
+
     val appBarMenuInfo: AppBarMenuInfo = AppBarMenuInfo(
         groceryLists.map { groceryList ->
             AppBarMenu(
                 title = groceryList.title,
                 onClick = {
-                    cardInfo.viewModel.upsertListItem(
-                        ListItem(
-                            itemId = cardInfo.groceryItem.id,
-                            quantity = 1,
-                            isCrossed = 0
-                        )
-                    )
+                    selectedGroceryList = groceryList
+                    showQuantityDialog = true
+                    menuExpanded = false
+                    viewModel.fetchListItem(selectedGroceryList.id, cardInfo.groceryItem.id)
                 }
             )
         }
@@ -130,7 +141,8 @@ fun GroceryItemCard(
                         tint = Color.Black
                     )
                 }
-                if(groceryLists.isNotEmpty()){
+
+                if (groceryLists.isNotEmpty()) {
                     DropdownMenu(
                         expanded = menuExpanded,
                         onDismissRequest = { menuExpanded = false }
@@ -139,7 +151,6 @@ fun GroceryItemCard(
                             DropdownMenuItem(
                                 onClick = {
                                     menu.onClick.invoke()
-                                    menuExpanded = false
                                 },
                                 text = { Text(text = menu.title) }
                             )
@@ -147,59 +158,129 @@ fun GroceryItemCard(
                     }
                 }
 
-
-                if (cardInfo.canFavorite) {
-                    IconButton(onClick = {
-                        if (cardInfo.groceryItem.isFavorite > 0) {
-                            cardInfo.viewModel.upsertGroceryItem(
-                                GroceryItem(
-                                    id = cardInfo.groceryItem.id,
-                                    name = cardInfo.groceryItem.name,
-                                    description = cardInfo.groceryItem.description,
-                                    cardInfo.groceryItem.categoryId,
-                                    isFavorite = 0,
-                                    cardInfo.groceryItem.imagePath
-                                )
+                IconButton(onClick = {
+                    if (cardInfo.groceryItem.isFavorite > 0) {
+                        cardInfo.viewModel.upsertGroceryItem(
+                            GroceryItem(
+                                id = cardInfo.groceryItem.id,
+                                name = cardInfo.groceryItem.name,
+                                description = cardInfo.groceryItem.description,
+                                cardInfo.groceryItem.categoryId,
+                                isFavorite = 0,
+                                cardInfo.groceryItem.imagePath
                             )
+                        )
+                    } else {
+                        cardInfo.viewModel.upsertGroceryItem(
+                            GroceryItem(
+                                id = cardInfo.groceryItem.id,
+                                name = cardInfo.groceryItem.name,
+                                description = cardInfo.groceryItem.description,
+                                cardInfo.groceryItem.categoryId,
+                                isFavorite = 1,
+                                cardInfo.groceryItem.imagePath
+                            )
+                        )
+                    }
+                }) {
+                    Icon(
+                        imageVector = if (cardInfo.groceryItem.isFavorite > 0) {
+                            Icons.Filled.Favorite
                         } else {
-                            cardInfo.viewModel.upsertGroceryItem(
-                                GroceryItem(
-                                    id = cardInfo.groceryItem.id,
-                                    name = cardInfo.groceryItem.name,
-                                    description = cardInfo.groceryItem.description,
-                                    cardInfo.groceryItem.categoryId,
-                                    isFavorite = 1,
-                                    cardInfo.groceryItem.imagePath
-                                )
-                            )
-                        }
-                    }) {
-                        Icon(
-                            imageVector = if (cardInfo.groceryItem.isFavorite > 0) {
-                                Icons.Filled.Favorite
-                            } else {
-                                Icons.Default.FavoriteBorder
-                            },
-                            contentDescription = "Favorite",
-                            tint = if (cardInfo.groceryItem.isFavorite > 0) Color.Red else Color.Black,
-                        )
-                    }
+                            Icons.Default.FavoriteBorder
+                        },
+                        contentDescription = "Favorite",
+                        tint = if (cardInfo.groceryItem.isFavorite > 0) Color.Red else Color.Black,
+                    )
                 }
-                if (cardInfo.canDelete) {
-                    IconButton(onClick = {
-                        showDeleteDialog = true
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.Delete,
-                            contentDescription = "Delete",
-                            tint = Color.Black
-                        )
-                    }
+
+                IconButton(onClick = {
+                    showDeleteDialog = true
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Delete,
+                        contentDescription = "Delete",
+                        tint = Color.Black
+                    )
                 }
             }
         }
     }
 
+    // Dialogue pour sélectionner la quantité
+    if (showQuantityDialog) {
+        AlertDialog(
+            onDismissRequest = { showQuantityDialog = false },
+            title = { Text("Sélectionner la quantité") },
+            text = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        modifier = Modifier.widthIn(max = 200.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly,
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        IconButton(onClick = { if (selectedQuantity > 1) selectedQuantity-- }) {
+                            Icon(
+                                painterResource(id = R.drawable.baseline_remove_24),
+                                contentDescription = "Decrease"
+                            )
+                        }
+                        Text(
+                            text = "$selectedQuantity",
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                        IconButton(onClick = { selectedQuantity++ }) {
+                            Icon(Icons.Default.Add, contentDescription = "Increase")
+                        }
+                    }
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    viewModel.listItem.let { it ->
+                        val listItem = it.value
+
+                        if (listItem != null) {
+                            viewModel.upsertListItem(
+                                listItem.copy(quantity = listItem.quantity + selectedQuantity)
+                            )
+                        } else {
+                            viewModel.upsertListItem(
+                                ListItem(
+                                    groceryListId = selectedGroceryList.id,
+                                    itemId = cardInfo.groceryItem.id,
+                                    quantity = selectedQuantity
+                                )
+                            )
+                        }
+
+                        Toast.makeText(
+                            currentContext,
+                            "Article ajouté à la liste ${selectedGroceryList.title}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                    showQuantityDialog = false
+                    selectedQuantity = 1
+                }) {
+                    Text("Ajouter")
+                }
+            },
+            dismissButton = {
+                Button(onClick = { showQuantityDialog = false }) {
+                    Text("Annuler")
+                }
+            }
+        )
+    }
+
+    // Dialogue de suppression
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
