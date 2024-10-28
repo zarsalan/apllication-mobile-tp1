@@ -181,13 +181,14 @@ fun AddEditItemView(
                         modifier = Modifier.size(200.dp)
                     )
                 }
-
+                val textAlert: String = stringResource(R.string.addItem_alert)
+                val textItemSaved: String = stringResource(R.string.text_saveItem)
                 Button(
                     onClick = {
                         if (name.isEmpty() || description.isEmpty() || categoryId == 0L) {
                             Toast.makeText(
                                 currentContext,
-                                "Veuillez remplir tous les champs",
+                                textAlert,
                                 Toast.LENGTH_SHORT
                             ).show()
                             return@Button
@@ -215,12 +216,12 @@ fun AddEditItemView(
                                 )
                             )
                         }
-                        Toast.makeText(currentContext, "Article enregistré", Toast.LENGTH_SHORT)
+                        Toast.makeText(currentContext, textItemSaved, Toast.LENGTH_SHORT)
                             .show()
                         navHostController.popBackStack()
                     }
                 ) {
-                    Text("Enregistrer")
+                    Text(stringResource(R.string.text_save))
                 }
             }
         }

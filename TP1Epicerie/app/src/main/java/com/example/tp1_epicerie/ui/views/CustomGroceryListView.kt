@@ -26,6 +26,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
+import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.Category
 import com.example.tp1_epicerie.data.GroceryList
@@ -113,7 +115,7 @@ fun CustomGroceryListView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Uncrossed",
+                    text = stringResource(R.string.text_uncrossed),
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                     modifier = Modifier
@@ -122,7 +124,7 @@ fun CustomGroceryListView(
                     textDecoration = if (!indexCrossed.value) TextDecoration.Underline else null
                 )
                 Text(
-                    text = "Crossed",
+                    text = stringResource(R.string.text_crossed),
                     fontWeight = FontWeight.Bold,
                     fontSize = 20.sp,
                     modifier = Modifier

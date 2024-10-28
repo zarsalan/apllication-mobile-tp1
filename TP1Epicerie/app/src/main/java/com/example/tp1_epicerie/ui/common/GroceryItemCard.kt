@@ -42,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -206,12 +207,12 @@ fun GroceryItemCard(
             }
         }
     }
-
+    val textItemAdded: String = stringResource(R.string.text_itemAdded)
     // Dialogue pour sélectionner la quantité
     if (showQuantityDialog) {
         AlertDialog(
             onDismissRequest = { showQuantityDialog = false },
-            title = { Text("Sélectionner la quantité") },
+            title = { Text(stringResource(R.string.text_quantitySelection)) },
             text = {
                 Box(
                     modifier = Modifier
@@ -261,7 +262,7 @@ fun GroceryItemCard(
 
                         Toast.makeText(
                             currentContext,
-                            "Article ajouté à la liste ${selectedGroceryList.title}",
+                            textItemAdded + selectedGroceryList.title,
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -269,7 +270,7 @@ fun GroceryItemCard(
                     showQuantityDialog = false
                     selectedQuantity = 1
                 }) {
-                    Text("Ajouter")
+                    Text(stringResource(R.string.text_add))
                 }
             },
             dismissButton = {
@@ -277,7 +278,7 @@ fun GroceryItemCard(
                     showQuantityDialog = false
                     selectedQuantity = 1
                 }) {
-                    Text("Annuler")
+                    Text(stringResource(R.string.text_cancel))
                 }
             }
         )
@@ -287,8 +288,8 @@ fun GroceryItemCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Supprimer l'article ${cardInfo.groceryItem.name} ?") },
-            text = { Text("Êtes-vous sûr de vouloir supprimer cet article?") },
+            title = { Text(stringResource(R.string.text_removeItem) + cardInfo.groceryItem.name +" ?") },
+            text = { Text(stringResource(R.string.text_deleteVerification)) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -296,7 +297,7 @@ fun GroceryItemCard(
                         showDeleteDialog = false
                     }
                 ) {
-                    Text("Oui")
+                    Text(stringResource(R.string.text_yes))
                 }
             },
             dismissButton = {
@@ -305,7 +306,7 @@ fun GroceryItemCard(
                         showDeleteDialog = false
                     }
                 ) {
-                    Text("Non")
+                    Text(stringResource(R.string.text_no))
                 }
             }
         )

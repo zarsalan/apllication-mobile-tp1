@@ -25,6 +25,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -33,6 +34,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
+import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.GroceryList
 
@@ -107,8 +109,8 @@ fun CustomListCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Supprimer la liste ${cardInfo.title} ?") },
-            text = { Text("Êtes-vous sûr de vouloir supprimer cette liste?") },
+            title = { Text(stringResource(R.string.text_removeList) + cardInfo.title + " ?") },
+            text = { Text(stringResource(R.string.text_listVerification)) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -117,7 +119,7 @@ fun CustomListCard(
                         }
                         showDeleteDialog = false
                     }) {
-                    Text("Oui")
+                    Text((stringResource(R.string.text_yes)))
                 }
             },
             dismissButton = {
@@ -125,7 +127,7 @@ fun CustomListCard(
                     onClick = {
                         showDeleteDialog = false
                     }) {
-                    Text("Non")
+                    Text((stringResource(R.string.text_no)))
                 }
             }
         )
