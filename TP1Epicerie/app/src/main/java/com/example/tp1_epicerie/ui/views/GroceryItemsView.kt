@@ -95,7 +95,12 @@ fun GroceryItemsView(
                         title = stringResource(R.string.menu_addItem),
                         onClick = { navHostController.navigate(Screen.AddEditItem.route + "/0L") }
                     )
-                )) else AppBarMenuInfo()
+                )) else AppBarMenuInfo(menus = listOf(
+                    AppBarMenu(
+                        title = stringResource(R.string.menu_addItem),
+                        onClick = { navHostController.navigate(Screen.AllItems.route) }
+                    )
+                ))
             )
         },
         floatingActionButton = {
