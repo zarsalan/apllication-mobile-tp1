@@ -25,6 +25,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -71,10 +72,14 @@ fun CustomCategoryCard(
                 text = cardInfo.title,
                 fontWeight = FontWeight.ExtraBold,
                 fontSize = 20.sp,
-                modifier = Modifier.padding(start = 16.dp)
+                modifier = Modifier
+                    .padding(start = 16.dp)
+                    .weight(1f),
+                maxLines = 2,
+                overflow = TextOverflow.Ellipsis
             )
 
-            Row {
+            Row(modifier = Modifier.padding(end = 3.dp), horizontalArrangement = Arrangement.End) {
                 IconButton(onClick = {
                     navHostController.navigate(Screen.AddEditCategory.route + "/${cardInfo.categoryId}")
                 }) {

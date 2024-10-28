@@ -1,16 +1,14 @@
 package com.example.tp1_epicerie.ui.common
 
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -32,11 +30,9 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -50,9 +46,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
-import coil.compose.rememberAsyncImagePainter
+import coil.ImageLoader
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import coil.util.DebugLogger
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.data.GroceryItem
@@ -108,17 +105,21 @@ fun GroceryItemCard(
         )
     ) {
         Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
+            modifier = Modifier
+                .fillMaxWidth()
+                .fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Row(
                 modifier = Modifier
-                    .padding(start = 15.dp, end = 0.dp, top = 10.dp, bottom = 10.dp)
-                    .widthIn(min = 256.dp, max = 240.dp),
+                    .padding(start = 15.dp, top = 10.dp, bottom = 10.dp)
+                    .fillMaxWidth()
+                    .weight(1.9f),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(modifier = Modifier.weight(1f)) {
+                Column(modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth()) {
                     Text(
                         text = cardInfo.groceryItem.name,
                         fontWeight = FontWeight.ExtraBold,
@@ -132,18 +133,28 @@ fun GroceryItemCard(
                     )
                 }
                 if (cardInfo.groceryItem.imagePath != null) {
-                    Image(
-                        painter = rememberAsyncImagePainter(cardInfo.groceryItem.imagePath),
+                    AsyncImage(
+                        model = ImageRequest.Builder(currentContext)
+                            .data(Uri.parse(cardInfo.groceryItem.imagePath))
+                            .crossfade(true)
+                            .build(),
                         contentDescription = null,
-                        modifier = Modifier.size(50.dp)
+                        modifier = Modifier
+                            .size(50.dp)
+                            .align(Alignment.CenterVertically),
+                        placeholder = painterResource(R.drawable.baseline_image_24),
+                        error = painterResource(R.drawable.baseline_broken_image_24)
                     )
                 }
             }
 
             Row(
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(1f)
+                    .padding(end = 5.dp),
+                horizontalArrangement = Arrangement.End,
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 IconButton(onClick = {
                     menuExpanded = true
