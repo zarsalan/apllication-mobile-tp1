@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -29,6 +30,7 @@ import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.GroceryList
 import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomTextField
+import com.example.tp1_epicerie.ui.theme.submitButtonColors
 
 @Composable
 fun AddEditListView(
@@ -85,6 +87,7 @@ fun AddEditListView(
                 val textNotFound: String = stringResource(R.string.addlist_notFound)
                 val textUpdated: String = stringResource(R.string.addlist_updated)
                 Button(modifier = Modifier.padding(top = 15.dp),
+                    colors = ButtonDefaults.submitButtonColors(),
                     onClick = {
                         if (groceryList != null) {
                             viewModel.updateGroceryList(
@@ -110,14 +113,13 @@ fun AddEditListView(
                     }) {
                     Text(
                         text = stringResource(R.string.addlist_update),
-                        style = TextStyle(
-                            fontSize = 18.sp
-                        )
+                        fontSize = 18.sp
                     )
                 }
             } else {
                 val textToast: String = stringResource(R.string.addlist_toast)
                 Button(modifier = Modifier.padding(top = 15.dp),
+                    colors = ButtonDefaults.submitButtonColors(),
                     onClick = {
                         viewModel.upsertGroceryList(
                             GroceryList(
@@ -134,9 +136,7 @@ fun AddEditListView(
                     }) {
                     Text(
                         text = stringResource(R.string.addlist_button),
-                        style = TextStyle(
-                            fontSize = 18.sp
-                        )
+                        fontSize = 18.sp
                     )
                 }
             }

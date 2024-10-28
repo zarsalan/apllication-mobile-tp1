@@ -17,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -29,9 +31,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -44,6 +49,7 @@ import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenu
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenus
 import com.example.tp1_epicerie.ui.common.CustomTextField
+import com.example.tp1_epicerie.ui.theme.submitButtonColors
 
 @Composable
 fun AddEditItemView(
@@ -184,6 +190,7 @@ fun AddEditItemView(
                 val textAlert: String = stringResource(R.string.addItem_alert)
                 val textItemSaved: String = stringResource(R.string.text_saveItem)
                 Button(
+                    colors = ButtonDefaults.submitButtonColors(),
                     onClick = {
                         if (name.isEmpty() || description.isEmpty() || categoryId == 0L) {
                             Toast.makeText(
@@ -221,7 +228,7 @@ fun AddEditItemView(
                         navHostController.popBackStack()
                     }
                 ) {
-                    Text(stringResource(R.string.text_save))
+                    Text(text = stringResource(R.string.text_save), fontWeight = FontWeight.Bold, fontSize = 24.sp)
                 }
             }
         }

@@ -29,7 +29,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
@@ -60,7 +59,7 @@ fun CustomListCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, start = 4.dp, end = 8.dp, bottom = 1.dp)
+            .padding(start = 6.dp, end = 6.dp, bottom = 6.dp)
             .clickable { cardInfo.onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, pressedElevation = 4.dp),
         colors = CardDefaults.cardColors(
@@ -106,30 +105,19 @@ fun CustomListCard(
     }
 
     // Dialog de suppression
-    if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
-            title = { Text(stringResource(R.string.text_removeList) + cardInfo.title + " ?") },
-            text = { Text(stringResource(R.string.text_listVerification)) },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        cardInfo.groceryList?.let {
-                            viewModel.deleteGroceryList(it)
-                        }
-                        showDeleteDialog = false
-                    }) {
-                    Text((stringResource(R.string.text_yes)))
-                }
-            },
-            dismissButton = {
-                Button(
-                    onClick = {
-                        showDeleteDialog = false
-                    }) {
-                    Text((stringResource(R.string.text_no)))
-                }
+    CustomYesNoDialog(
+        visible = showDeleteDialog,
+        onDismissRequest = { showDeleteDialog = false },
+        title = stringResource(R.string.text_removeList) + " ${cardInfo.title}?",
+        message = stringResource(R.string.text_listVerification),
+        onYes = {
+            cardInfo.groceryList?.let {
+                viewModel.deleteGroceryList(it)
             }
-        )
-    }
+            showDeleteDialog = false
+        },
+        onNo = {
+            showDeleteDialog = false
+        },
+    )
 }

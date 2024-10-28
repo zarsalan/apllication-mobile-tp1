@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -16,6 +18,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -27,6 +31,8 @@ import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.Category
 import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomTextField
+import com.example.tp1_epicerie.ui.theme.submitButtonColors
+import okhttp3.internal.wait
 
 @Composable
 fun AddEditCategoryView(
@@ -105,6 +111,7 @@ fun AddEditCategoryView(
             } else {
                 val textCategoryAdded: String = stringResource(R.string.text_categoryAdded)
                 Button(modifier = Modifier.padding(top = 15.dp),
+                    colors = ButtonDefaults.submitButtonColors(),
                     onClick = {
                         viewModel.upsertCategory(
                             Category(

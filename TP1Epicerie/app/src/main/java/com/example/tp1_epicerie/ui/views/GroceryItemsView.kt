@@ -84,7 +84,7 @@ fun GroceryItemsView(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
+                .padding(it).padding(top = 6.dp)
         ) {
             items(groceryItemsList) { groceryItem ->
                 GroceryItemCard(

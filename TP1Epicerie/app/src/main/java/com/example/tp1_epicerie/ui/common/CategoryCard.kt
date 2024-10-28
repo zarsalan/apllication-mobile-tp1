@@ -24,17 +24,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.Category
-import com.example.tp1_epicerie.data.GroceryList
 
 data class CustomCategoryCardInfo(
     val categoryId: Long = 0L,
@@ -55,7 +52,7 @@ fun CustomCategoryCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 8.dp, start = 4.dp, end = 8.dp, bottom = 1.dp)
+            .padding(start = 6.dp, end = 6.dp, bottom = 6.dp)
             .clickable { cardInfo.onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, pressedElevation = 4.dp),
         colors = CardDefaults.cardColors(
@@ -99,28 +96,17 @@ fun CustomCategoryCard(
     }
 
     // Dialog de suppression
-    if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
-            title = { Text(stringResource(R.string.text_removeCategory) + cardInfo.title + "?") },
-            text = { Text(stringResource(R.string.text_categoryVerification)) },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        viewModel.deleteCategory(cardInfo.category)
-                        showDeleteDialog = false
-                    }) {
-                    Text(stringResource(R.string.text_yes))
-                }
-            },
-            dismissButton = {
-                Button(
-                    onClick = {
-                        showDeleteDialog = false
-                    }) {
-                    Text(stringResource(R.string.text_no))
-                }
-            }
-        )
-    }
+    CustomYesNoDialog(
+        visible = showDeleteDialog,
+        onDismissRequest = { showDeleteDialog = false },
+        title = stringResource(R.string.text_removeCategory) + " ${cardInfo.title}?",
+        message = stringResource(R.string.text_categoryVerification),
+        onYes = {
+            viewModel.deleteCategory(cardInfo.category)
+            showDeleteDialog = false
+        },
+        onNo = {
+            showDeleteDialog = false
+        },
+    )
 }

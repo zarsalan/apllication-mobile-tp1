@@ -17,58 +17,75 @@ import kotlinx.coroutines.launch
 
 class GroceryViewModel(
     private val groceryRepository: GroceryRepository = Graph.groceryRepository
-): ViewModel() {
+) : ViewModel() {
     //Section pour les GroceryItems -------------------------------------
     lateinit var getAllGroceryItems: Flow<List<GroceryItem>>
-    init{
+
+    init {
         viewModelScope.launch {
             getAllGroceryItems = groceryRepository.getAllGroceryItems()
         }
     }
 
     lateinit var getFavoriteGroceryItems: Flow<List<GroceryItem>>
-    init{
+
+    init {
         viewModelScope.launch {
             getFavoriteGroceryItems = groceryRepository.getFavoriteGroceryItems()
         }
     }
 
-    fun upsertGroceryItem(groceryItem: GroceryItem){
+    fun favoriteGroceryItemById(id: Long) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val groceryItem = groceryRepository.getGroceryItemById(id).firstOrNull()
+            groceryItem?.let {
+                groceryRepository.updateGroceryItem(groceryItem.copy(isFavorite = if (groceryItem.isFavorite == 0) 1 else 0))
+            }
+        }
+    }
+
+    fun upsertGroceryItem(groceryItem: GroceryItem) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.upsertGroceryItem(groceryItem = groceryItem)
         }
     }
 
-    fun updateGroceryItem(groceryItem: GroceryItem){
+    fun updateGroceryItem(groceryItem: GroceryItem) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.updateGroceryItem(groceryItem = groceryItem)
         }
     }
 
-    fun deleteGroceryItem(groceryItem: GroceryItem){
+    fun deleteGroceryItem(groceryItem: GroceryItem) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.deleteGroceryItem(groceryItem = groceryItem)
         }
     }
 
-    fun getGroceryItemById(id: Long): Flow<GroceryItem>{
+    fun getGroceryItemById(id: Long): Flow<GroceryItem> {
         return groceryRepository.getGroceryItemById(id)
     }
 
     //Section pour les ListItem -------------------------------------
-    fun upsertListItem(listItem: ListItem){
+    fun upsertListItem(listItem: ListItem) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.upsertListItem(listItem = listItem)
         }
     }
 
-    fun deleteListItem(listItem: ListItem){
+    fun updateListItem(listItem: ListItem) {
         viewModelScope.launch(Dispatchers.IO) {
-           groceryRepository.deleteListItem(listItem = listItem)
+            groceryRepository.updateListItem(listItem = listItem)
         }
     }
 
-    fun getListItemById(id: Long): Flow<ListItem>{
+    fun deleteListItem(listItem: ListItem) {
+        viewModelScope.launch(Dispatchers.IO) {
+            groceryRepository.deleteListItem(listItem = listItem)
+        }
+    }
+
+    fun getListItemById(id: Long): Flow<ListItem> {
         return groceryRepository.getListItemById(id)
     }
 
@@ -81,35 +98,39 @@ class GroceryViewModel(
         }
     }
 
-    private fun getListItemByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem?>{
+    private fun getListItemByGroceryListId(
+        groceryListId: Long,
+        groceryItemId: Long
+    ): Flow<ListItem?> {
         return groceryRepository.getListItemByGroceryListId(groceryListId, groceryItemId)
     }
 
     //Section pour les Categories
-    fun upsertCategory(category: Category){
+    fun upsertCategory(category: Category) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.upsertCategory(category = category)
         }
     }
 
-    fun updateCategory(category: Category){
+    fun updateCategory(category: Category) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.updateCategory(category = category)
         }
     }
 
-    fun deleteCategory(category: Category){
+    fun deleteCategory(category: Category) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.deleteCategory(category = category)
         }
     }
 
-    fun getCategoryById(id: Long): Flow<Category>{
+    fun getCategoryById(id: Long): Flow<Category> {
         return groceryRepository.getCategoryById(id)
     }
 
     lateinit var getAllCategories: Flow<List<Category>>
-    init{
+
+    init {
         viewModelScope.launch {
             getAllCategories = groceryRepository.getAllCategories()
         }
@@ -118,33 +139,34 @@ class GroceryViewModel(
 
     //Section pour les GroceryLists
     lateinit var getAllGroceryLists: Flow<List<GroceryList>>
-    init{
+
+    init {
         viewModelScope.launch {
             getAllGroceryLists = groceryRepository.getAllGroceryLists()
         }
     }
 
-    fun getGroceryListById(id: Long): Flow<GroceryList>{
+    fun getGroceryListById(id: Long): Flow<GroceryList> {
         return groceryRepository.getGroceryListById(id)
     }
 
-    fun getGroceryListItems(id: Long): Flow<List<ListItem>>{
+    fun getGroceryListItems(id: Long): Flow<List<ListItem>> {
         return groceryRepository.getGroceryListItems(id)
     }
 
-    fun upsertGroceryList(groceryList: GroceryList){
+    fun upsertGroceryList(groceryList: GroceryList) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.upsertAGroceryList(groceryList = groceryList)
         }
     }
 
-    fun updateGroceryList(groceryList: GroceryList){
+    fun updateGroceryList(groceryList: GroceryList) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.updateGroceryList(groceryList = groceryList)
         }
     }
 
-    fun deleteGroceryList(groceryList: GroceryList){
+    fun deleteGroceryList(groceryList: GroceryList) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.deleteGroceryList(groceryList = groceryList)
         }
@@ -152,17 +174,17 @@ class GroceryViewModel(
 
 
     //Section pour les Settings
-    fun getSettings(): Flow<Settings?>{
+    fun getSettings(): Flow<Settings?> {
         return groceryRepository.getSettings()
     }
 
-    fun updateSettings(settings: Settings){
+    fun updateSettings(settings: Settings) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.updateSettings(settings = settings)
         }
     }
 
-    fun upsertSettings(settings: Settings){
+    fun upsertSettings(settings: Settings) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.upsertSettings(settings = settings)
         }

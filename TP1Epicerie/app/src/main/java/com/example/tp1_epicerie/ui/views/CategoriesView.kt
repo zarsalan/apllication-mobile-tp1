@@ -50,7 +50,7 @@ fun CategoriesView(viewModel: GroceryViewModel, navHostController: NavHostContro
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
+                .padding(it).padding(top = 6.dp)
         ) {
             items(categoriesList) { category ->
                 CustomCategoryCard(

@@ -47,6 +47,6 @@
     <string name="text_removeCategory">Supprimer le catégorie</string>
     <string name="text_categoryVerification">Êtes-vous sûr de vouloir supprimer cette catégorie?</string>
     <string name="text_nav1">Mes listes d\'articles d\'épicerie</string>
-    <string name="text_crossed">Coché</string>
-    <string name="text_uncrossed">Décoché</string>
+    <string name="text_checked">Cochés</string>
+    <string name="text_unchecked">Non cochés</string>
 </resources>

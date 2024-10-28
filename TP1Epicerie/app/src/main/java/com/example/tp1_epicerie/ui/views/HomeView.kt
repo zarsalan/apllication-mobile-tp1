@@ -90,7 +90,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(it)
+                .padding(it).padding(top = 6.dp)
         ) {
             item {
                 CustomListCard(
@@ -121,7 +121,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 16.dp, bottom = 6.dp)
+                        .padding(top = 12.dp, bottom = 16.dp)
                 ) {
                     HorizontalDivider(
                         thickness = 2.dp,

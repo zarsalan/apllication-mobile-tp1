@@ -42,6 +42,9 @@ abstract class ListItemDao {
     @Upsert
     abstract suspend fun upsertListItem(listItemEntity: ListItem)
 
+    @Update
+    abstract suspend fun updateListItem(listItemEntity: ListItem)
+
     @Delete
     abstract suspend fun deleteListItem(listItemEntity: ListItem)
 

@@ -96,7 +96,7 @@ fun GroceryItemCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(top = 3.dp, start = 3.dp, end = 6.dp)
+            .padding(bottom = 6.dp, start = 6.dp, end = 6.dp)
             .clickable { cardInfo.onClick() },
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp, pressedElevation = 4.dp),
         colors = CardDefaults.cardColors(
@@ -207,6 +207,7 @@ fun GroceryItemCard(
             }
         }
     }
+
     val textItemAdded: String = stringResource(R.string.text_itemAdded)
     // Dialogue pour sélectionner la quantité
     if (showQuantityDialog) {
@@ -284,32 +285,19 @@ fun GroceryItemCard(
         )
     }
 
-    // Dialogue de suppression
-    if (showDeleteDialog) {
-        AlertDialog(
-            onDismissRequest = { showDeleteDialog = false },
-            title = { Text(stringResource(R.string.text_removeItem) + cardInfo.groceryItem.name +" ?") },
-            text = { Text(stringResource(R.string.text_deleteVerification)) },
-            confirmButton = {
-                Button(
-                    onClick = {
-                        cardInfo.viewModel.deleteGroceryItem(cardInfo.groceryItem)
-                        showDeleteDialog = false
-                    }
-                ) {
-                    Text(stringResource(R.string.text_yes))
-                }
-            },
-            dismissButton = {
-                Button(
-                    onClick = {
-                        showDeleteDialog = false
-                    }
-                ) {
-                    Text(stringResource(R.string.text_no))
-                }
-            }
-        )
-    }
+    // Dialog de suppression
+    CustomYesNoDialog(
+        visible = showDeleteDialog,
+        onDismissRequest = { showDeleteDialog = false },
+        title = stringResource(R.string.text_removeItem) + " ${cardInfo.groceryItem.name}?",
+        message = stringResource(R.string.text_deleteVerification),
+        onYes = {
+            cardInfo.viewModel.deleteGroceryItem(cardInfo.groceryItem)
+            showDeleteDialog = false
+        },
+        onNo = {
+            showDeleteDialog = false
+        },
+    )
 }
 

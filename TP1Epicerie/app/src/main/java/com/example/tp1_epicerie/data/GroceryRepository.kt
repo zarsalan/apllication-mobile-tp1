@@ -39,6 +39,10 @@ class GroceryRepository(
         listItemDao.upsertListItem(listItem)
     }
 
+    suspend fun updateListItem(listItem: ListItem) {
+        listItemDao.updateListItem(listItem)
+    }
+
     suspend fun deleteListItem(listItem: ListItem) {
         listItemDao.deleteListItem(listItem)
     }

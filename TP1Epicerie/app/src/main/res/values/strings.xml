@@ -42,10 +42,10 @@
     <string name="text_yes">Yes</string>
     <string name="text_no">No</string>
     <string name="text_removeList">Delete list</string>
-    <string name="text_listVerification">Are you sure you want to delete this list ?</string>
+    <string name="text_listVerification">Are you sure you want to delete this list?</string>
     <string name="text_removeCategory">Delete category</string>
     <string name="text_categoryVerification">Are you sure you want to delete this category?</string>
     <string name="text_nav1">My grocery item lists</string>
-    <string name="text_crossed">Crossed</string>
-    <string name="text_uncrossed">Uncrossed</string>
+    <string name="text_checked">Checked</string>
+    <string name="text_unchecked">Unchecked</string>
 </resources>

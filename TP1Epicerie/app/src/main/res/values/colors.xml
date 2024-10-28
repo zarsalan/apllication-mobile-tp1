@@ -10,4 +10,5 @@
     <color name="app_bar">#FFE6301C</color>
     <color name="all_items">#FFF6D8CE</color>
     <color name="favorite_items">#FFE3F2E1</color>
+    <color name="check_mark">#FF1fbd0d</color>
 </resources>
