@@ -20,6 +20,7 @@
     <string name="menu_settings">Paramètres</string>
     <string name="menu_about">À propos</string>
     <string name="menu_close">Fermer</string>
+    <string name="menu_delete_this_item">Supprimer cet article</string>
     <string name="listCard_allItem">Tous les articles</string>
     <string name="listCard_seeItem">Voir tous les articles</string>
     <string name="listCard_favorites">Favoris</string>
@@ -29,8 +30,10 @@
     <string name="text_category">Catégorie</string>
     <string name="addEdit_favorite">Ajouter dans mes favoris:</string>
     <string name="text_selectImage">Sélectionner une image\"</string>
+    <string name="text_deleteImage">Supprimer l\'image</string>
     <string name="addItem_alert">Veuillez remplir tous les champs</string>
     <string name="text_saveItem">Article enregistré</string>
+    <string name="text_itemDeleted">L\'article a été supprimé</string>
     <string name="text_save">Enregistrer</string>
     <string name="text_categoryUpdated">Catégorie mise à jour</string>
     <string name="text_categoryNotFound">Catégorie introuvable</string>
