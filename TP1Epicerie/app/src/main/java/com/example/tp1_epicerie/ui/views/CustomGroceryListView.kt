@@ -168,21 +168,6 @@ fun CustomGroceryListView(
                         )
                     }
                 }
-                item{
-                    ListItemCard(
-                        ListItemCardInfo(
-                            listItem = ListItem(
-                                id = 100L,
-                                itemId = 1L,
-                                quantity = 3,
-                                isCrossed = 0
-                            ),
-                            viewModel = viewModel,
-                            onClick = { /*Lien vers la page de l'item*/ },
-                            containerColor = Color.White
-                        )
-                    )
-                }
             }
         }
     }

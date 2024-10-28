@@ -31,6 +31,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
@@ -98,9 +99,9 @@ fun AddEditItemView(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)
             ) {
-                CustomTextField("Nom", name, onValueChanged = { newValue -> name = newValue })
+                CustomTextField(stringResource(R.string.text_name), name, onValueChanged = { newValue -> name = newValue })
                 CustomTextField(
-                    "Description",
+                    stringResource(R.string.text_description),
                     description,
                     onValueChanged = { newValue -> description = newValue })
             }
@@ -109,7 +110,7 @@ fun AddEditItemView(
                 modifier = Modifier
                     .width(300.dp)
                     .padding(top = 8.dp),
-                label = "Catégorie:",
+                label = stringResource(R.string.text_category)+ ":",
                 value = selectedCategory,
                 customDropdownMenus = CustomDropdownMenus(
                     menus = categories.map { category ->
@@ -131,7 +132,7 @@ fun AddEditItemView(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Ajouter dans mes favoris:",
+                    text = stringResource(R.string.addEdit_favorite),
                     modifier = Modifier
                         .padding(end = 8.dp),
                     fontSize = 18.sp
@@ -170,7 +171,7 @@ fun AddEditItemView(
                 Button(
                     onClick = { imagePickerLauncher.launch("image/*") },
                 ) {
-                    Text("Sélectionner une image")
+                    Text(stringResource(R.string.text_selectImage))
                 }
 
                 imageUri?.let { uri ->

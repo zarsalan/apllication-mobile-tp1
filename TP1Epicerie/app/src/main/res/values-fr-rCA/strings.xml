@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TP1-Epicerie</string>
+    <string name="addlist_button">Créer la liste</string>
+    <string name="addlist_toast">Liste ajouté</string>
+    <string name="addlist_update">Mettre à jour la liste</string>
+    <string name="addlist_notFound">Liste introuvable</string>
+    <string name="addlist_updated">Liste mise à jour</string>
+    <string name="text_title">Titre</string>
+    <string name="text_description">Description</string>
+    <string name="language_french">Français</string>
+    <string name="text_language">Langue</string>
+    <string name="language_english">Anglais</string>
+    <string name="settings_toast">Vos paramètres ont été mis à jour</string>
+    <string name="menu_addItem">Ajouter un article</string>
+    <string name="menu_addList">Ajouter une liste</string>
+    <string name="menu_addCategory">Ajouter une catégorie</string>
+    <string name="menu_modifyCategories">Modifier les catégories</string>
+    <string name="menu_settings">Paramètres</string>
+    <string name="menu_about">À propos</string>
+    <string name="menu_close">Fermer</string>
+    <string name="listCard_allItem">Tous les articles</string>
+    <string name="listCard_seeItem">Voir tous les articles</string>
+    <string name="listCard_favorites">Favoris</string>
+    <string name="listCard_viewFavorite">Voir les articles favoris</string>
+    <string name="about_text">Cette application a été développée par Arsalan et Antoine.</string>
+    <string name="text_name">Nom</string>
+    <string name="text_category">Catégorie</string>
+    <string name="addEdit_favorite">Ajouter dans mes favoris:</string>
+    <string name="text_selectImage">Sélectionner une image\"</string>
+    <string name="addItem_alert">Veuillez remplir tous les champs</string>
+</resources>

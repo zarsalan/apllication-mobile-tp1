@@ -27,6 +27,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
@@ -46,27 +47,27 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             AppBarView(title = Screen.HomeScreen.title,
                 appBarMenuInfo = AppBarMenuInfo(menus = listOf(
                     AppBarMenu(
-                        title = "Ajouter un article",
+                        title = stringResource(R.string.menu_addItem),
                         onClick = { navHostController.navigate(Screen.AddEditItem.route + "/0L") }
                     ),
                     AppBarMenu(
-                        title = "Ajouter une liste",
+                        title = stringResource(R.string.menu_addList),
                         onClick = { navHostController.navigate(Screen.AddEditListScreen.route + "/0L") }
                     ),
                     AppBarMenu(
-                        title = "Ajouter une catégorie",
+                        title = stringResource(R.string.menu_addCategory),
                         onClick = { navHostController.navigate(Screen.AddEditCategory.route + "/0L") }
                     ),
                     AppBarMenu(
-                        title = "Modifier les catégories",
+                        title = stringResource(R.string.menu_modifyCategories),
                         onClick = { navHostController.navigate(Screen.Categories.route) }
                     ),
                     AppBarMenu(
-                        title = "Paramètres",
+                        title = stringResource(R.string.menu_settings),
                         onClick = { navHostController.navigate(Screen.Settings.route) }
                     ),
                     AppBarMenu(
-                        title = "À propos",
+                        title = stringResource(R.string.menu_about),
                         onClick = { showAboutDialog = true }
                     )
                 )))
@@ -96,8 +97,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                     viewModel,
                     navHostController,
                     CustomListCardInfo(
-                        title = "Tous les articles",
-                        description = "Voir tous les articles",
+                        title = stringResource(R.string.listCard_allItem),
+                        description = stringResource(R.string.listCard_seeItem),
                         onClick = { navHostController.navigate(Screen.AllItems.route) },
                         containerColor = colorResource(id = R.color.all_items)
                     )
@@ -108,8 +109,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                     viewModel,
                     navHostController,
                     CustomListCardInfo(
-                        title = "Favoris",
-                        description = "Voir les articles favoris",
+                        title = stringResource(R.string.listCard_favorites),
+                        description = stringResource(R.string.listCard_viewFavorite),
                         onClick = { navHostController.navigate(Screen.Favorites.route) },
                         containerColor = colorResource(id = R.color.favorite_items)
                     )
@@ -155,10 +156,10 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
     if (showAboutDialog) {
         AlertDialog(
             onDismissRequest = { showAboutDialog = false },
-            title = { Text("À propos") },
+            title = { Text(stringResource(R.string.menu_about)) },
             text = {
                 Text(
-                    text = "Cette application a été développée par Arsalan et Antoine.",
+                    text = stringResource(R.string.about_text),
                     modifier = Modifier.padding(top = 20.dp)
                 )
             },
@@ -166,7 +167,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                 Button(
                     onClick = { showAboutDialog = false }
                 ) {
-                    Text("Fermer")
+                    Text(stringResource(R.string.menu_close))
                 }
             },
         )

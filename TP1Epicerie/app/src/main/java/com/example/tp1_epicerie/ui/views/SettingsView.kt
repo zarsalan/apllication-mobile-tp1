@@ -18,9 +18,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
+import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.Settings
 import com.example.tp1_epicerie.ui.common.AppBarView
@@ -30,7 +32,10 @@ import com.example.tp1_epicerie.ui.common.CustomDropdownMenus
 @Composable
 fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostController) {
     var darkMode by remember { mutableStateOf(false) }
-    var language by remember { mutableStateOf("Français") }
+
+    val textLanguageFr: String = stringResource(R.string.language_french)
+    val textLanguageEng: String = stringResource(R.string.language_english)
+    var language by remember { mutableStateOf(textLanguageFr) }
     val currentContext = LocalContext.current
 
     val settings = viewModel.getSettings().collectAsState(initial = Settings()).value ?: Settings()
@@ -53,14 +58,15 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            val textsettingUpdated: String = stringResource(R.string.settings_toast)
             CustomDropdownMenu(
                 modifier = Modifier.padding(start = 25.dp, top = 10.dp, end = 25.dp),
-                label = "Langue",
+                label = stringResource(R.string.text_language),
                 value = language,
                 customDropdownMenus = CustomDropdownMenus(
                     menus = listOf(
-                        "Français",
-                        "English"
+                        textLanguageFr,
+                        textLanguageEng
                     ).map { it ->
                         CustomDropdownMenu(
                             text = it,
@@ -74,7 +80,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
                                 )
                                 Toast.makeText(
                                     currentContext,
-                                    "Vos paramètres ont été mis à jour",
+                                    textsettingUpdated,
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -82,7 +88,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
                     },
                 )
             )
-
+//Nouveau manqué de temps pour le thème
             CustomDropdownMenu(
                 modifier = Modifier.padding(start = 25.dp, top = 10.dp, end = 25.dp),
                 label = "Thème",
