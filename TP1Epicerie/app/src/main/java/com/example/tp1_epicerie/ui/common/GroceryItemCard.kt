@@ -17,12 +17,18 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,12 +48,14 @@ data class GroceryItemCardInfo(
     val containerColor: Color,
     val canFavorite: Boolean = false,
     val canDelete: Boolean = false
-    )
+)
 
 @Composable
 fun GroceryItemCard(
     cardInfo: GroceryItemCardInfo
-){
+) {
+    var showDeleteDialog by remember { mutableStateOf(false) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,16 +72,24 @@ fun GroceryItemCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier.padding(16.dp).widthIn(max = 200.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .widthIn(max = 200.dp)
+            ) {
                 Text(text = cardInfo.groceryItem.name, fontWeight = FontWeight.ExtraBold)
-                Text(text = cardInfo.groceryItem.description, maxLines = 1, overflow = TextOverflow.Ellipsis)
+                Text(
+                    text = cardInfo.groceryItem.description,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
             }
             Row(
                 modifier = Modifier.fillMaxHeight(),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                if(cardInfo.groceryItem.imagePath != null){
+                if (cardInfo.groceryItem.imagePath != null) {
                     androidx.compose.foundation.Image(
                         painter = rememberAsyncImagePainter(cardInfo.groceryItem.imagePath),
                         contentDescription = null,
@@ -90,12 +106,30 @@ fun GroceryItemCard(
                     )
                 }
 
-                if(cardInfo.canFavorite){
+                if (cardInfo.canFavorite) {
                     IconButton(onClick = {
-                        if(cardInfo.groceryItem.isFavorite > 0){
-                            cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = cardInfo.groceryItem.id, name = cardInfo.groceryItem.name, description = cardInfo.groceryItem.description, cardInfo.groceryItem.categoryId, isFavorite = 0, cardInfo.groceryItem.imagePath))
-                        }else{
-                            cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = cardInfo.groceryItem.id, name = cardInfo.groceryItem.name, description = cardInfo.groceryItem.description, cardInfo.groceryItem.categoryId, isFavorite = 1, cardInfo.groceryItem.imagePath))
+                        if (cardInfo.groceryItem.isFavorite > 0) {
+                            cardInfo.viewModel.upsertGroceryItem(
+                                GroceryItem(
+                                    id = cardInfo.groceryItem.id,
+                                    name = cardInfo.groceryItem.name,
+                                    description = cardInfo.groceryItem.description,
+                                    cardInfo.groceryItem.categoryId,
+                                    isFavorite = 0,
+                                    cardInfo.groceryItem.imagePath
+                                )
+                            )
+                        } else {
+                            cardInfo.viewModel.upsertGroceryItem(
+                                GroceryItem(
+                                    id = cardInfo.groceryItem.id,
+                                    name = cardInfo.groceryItem.name,
+                                    description = cardInfo.groceryItem.description,
+                                    cardInfo.groceryItem.categoryId,
+                                    isFavorite = 1,
+                                    cardInfo.groceryItem.imagePath
+                                )
+                            )
                         }
                     }) {
                         Icon(
@@ -109,9 +143,9 @@ fun GroceryItemCard(
                         )
                     }
                 }
-                if(cardInfo.canDelete){
+                if (cardInfo.canDelete) {
                     IconButton(onClick = {
-                        cardInfo.viewModel.deleteGroceryItem(cardInfo.groceryItem)
+                        showDeleteDialog = true
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
@@ -122,6 +156,33 @@ fun GroceryItemCard(
                 }
             }
         }
+    }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteDialog = false },
+            title = { Text("Supprimer l'article ${cardInfo.groceryItem.name} ?") },
+            text = { Text("Êtes-vous sûr de vouloir supprimer cet article?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        cardInfo.viewModel.deleteGroceryItem(cardInfo.groceryItem)
+                        showDeleteDialog = false
+                    }
+                ) {
+                    Text("Oui")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        showDeleteDialog = false
+                    }
+                ) {
+                    Text("Non")
+                }
+            }
+        )
     }
 }
 
