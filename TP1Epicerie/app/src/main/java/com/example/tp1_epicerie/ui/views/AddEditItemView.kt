@@ -200,7 +200,10 @@ fun AddEditItemView(
             ) {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(10.dp, Alignment.CenterHorizontally)
+                    horizontalArrangement = Arrangement.spacedBy(
+                        10.dp,
+                        Alignment.CenterHorizontally
+                    )
                 ) {
                     Button(
                         onClick = { imagePickerLauncher.launch("image/*") },
@@ -209,7 +212,12 @@ fun AddEditItemView(
                     }
                     if (imageUri != null) {
                         Button(
-                            onClick = { imageUri = null },
+                            onClick = {
+                                imageUri = null
+                                if (groceryItem != null) {
+                                    viewModel.updateGroceryItem(groceryItem.copy(imagePath = null))
+                                }
+                            },
                         ) {
                             Text(stringResource(R.string.text_deleteImage))
                         }
