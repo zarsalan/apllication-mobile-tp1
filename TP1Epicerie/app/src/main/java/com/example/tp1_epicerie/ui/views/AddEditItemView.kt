@@ -98,7 +98,7 @@ fun AddEditItemView(
     Scaffold(
         topBar = {
             AppBarView(
-                title = if (id == 0L) Screen.AddEditItem.title else Screen.AddEditItem.title2,
+                title = if (id == 0L) Screen.AddEditItem.title() else Screen.AddEditItem.title2(),
                 onBackNavClicked = { navHostController.popBackStack() },
                 appBarMenuInfo = AppBarMenuInfo(
                     menus = if (id != 0L) {
