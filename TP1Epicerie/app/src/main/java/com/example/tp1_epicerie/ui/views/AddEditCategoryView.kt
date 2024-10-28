@@ -16,11 +16,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
+import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.Category
 import com.example.tp1_epicerie.ui.common.AppBarView
@@ -68,6 +70,8 @@ fun AddEditCategoryView(
             )
 
             if (id != 0L) {
+                val textCategoryUpdated: String = stringResource(R.string.text_categoryUpdated)
+                val textCategoryNotFound: String = stringResource(R.string.text_categoryNotFound)
                 Button(modifier = Modifier.padding(top = 15.dp),
                     onClick = {
                         if (category != null) {
@@ -79,26 +83,27 @@ fun AddEditCategoryView(
                             )
                             Toast.makeText(
                                 navHostController.context,
-                                "Catégorie mise à jour",
+                                textCategoryUpdated,
                                 Toast.LENGTH_SHORT
                             ).show()
                         } else {
                             Toast.makeText(
                                 navHostController.context,
-                                "Catégorie introuvable",
+                                textCategoryNotFound,
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
                         navHostController.popBackStack()
                     }) {
                     Text(
-                        text = "Enregistrer",
+                        text = stringResource(R.string.text_save),
                         style = TextStyle(
                             fontSize = 18.sp
                         )
                     )
                 }
             } else {
+                val textCategoryAdded: String = stringResource(R.string.text_categoryAdded)
                 Button(modifier = Modifier.padding(top = 15.dp),
                     onClick = {
                         viewModel.upsertCategory(
@@ -108,13 +113,13 @@ fun AddEditCategoryView(
                         )
                         Toast.makeText(
                             navHostController.context,
-                            "Catégorie ajoutée",
+                            textCategoryAdded,
                             Toast.LENGTH_SHORT
                         ).show()
                         navHostController.popBackStack()
                     }) {
                     Text(
-                        text = "Ajouter",
+                        text = stringResource(R.string.text_add),
                         style = TextStyle(
                             fontSize = 18.sp
                         )

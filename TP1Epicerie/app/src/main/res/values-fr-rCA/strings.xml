@@ -29,4 +29,24 @@
     <string name="addEdit_favorite">Ajouter dans mes favoris:</string>
     <string name="text_selectImage">Sélectionner une image\"</string>
     <string name="addItem_alert">Veuillez remplir tous les champs</string>
+    <string name="text_saveItem">Article enregistré</string>
+    <string name="text_save">Enregistrer</string>
+    <string name="text_categoryUpdated">Catégorie mise à jour</string>
+    <string name="text_categoryNotFound">Catégorie introuvable</string>
+    <string name="text_categoryAdded">Catégorie ajoutée</string>
+    <string name="text_add">Ajouter</string>
+    <string name="text_itemAdded">Article ajouté à la liste</string>
+    <string name="text_quantitySelection">Sélectionner la quantité</string>
+    <string name="text_cancel">Add</string>
+    <string name="text_removeItem">Supprimer l\'article</string>
+    <string name="text_deleteVerification">Êtes-vous sûr de vouloir supprimer cet article ?</string>
+    <string name="text_yes">Oui</string>
+    <string name="text_no">Non</string>
+    <string name="text_removeList">Supprimer la liste</string>
+    <string name="text_listVerification">Êtes-vous sûr de vouloir supprimer cette liste ?</string>
+    <string name="text_removeCategory">Supprimer le catégorie</string>
+    <string name="text_categoryVerification">Êtes-vous sûr de vouloir supprimer cette catégorie?</string>
+    <string name="text_nav1">Mes listes d\'articles d\'épicerie</string>
+    <string name="text_crossed">Coché</string>
+    <string name="text_uncrossed">Décoché</string>
 </resources>

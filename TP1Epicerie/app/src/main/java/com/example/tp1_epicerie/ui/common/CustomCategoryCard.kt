@@ -23,6 +23,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -30,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
+import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.Category
 import com.example.tp1_epicerie.data.GroceryList
@@ -100,15 +102,15 @@ fun CustomCategoryCard(
     if (showDeleteDialog) {
         AlertDialog(
             onDismissRequest = { showDeleteDialog = false },
-            title = { Text("Supprimer le catégorie ${cardInfo.title}?") },
-            text = { Text("Êtes-vous sûr de vouloir supprimer cette catégorie?") },
+            title = { Text(stringResource(R.string.text_removeCategory) + cardInfo.title + "?") },
+            text = { Text(stringResource(R.string.text_categoryVerification)) },
             confirmButton = {
                 Button(
                     onClick = {
                         viewModel.deleteCategory(cardInfo.category)
                         showDeleteDialog = false
                     }) {
-                    Text("Oui")
+                    Text(stringResource(R.string.text_yes))
                 }
             },
             dismissButton = {
@@ -116,7 +118,7 @@ fun CustomCategoryCard(
                     onClick = {
                         showDeleteDialog = false
                     }) {
-                    Text("Non")
+                    Text(stringResource(R.string.text_no))
                 }
             }
         )
