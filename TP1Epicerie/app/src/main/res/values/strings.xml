@@ -49,4 +49,14 @@
     <string name="text_nav1">My grocery item lists</string>
     <string name="text_checked">Checked</string>
     <string name="text_unchecked">Unchecked</string>
+    <string name="home_screen_title">My grocery lists</string>
+    <string name="add_list_title">Add a grocery list</string>
+    <string name="edit_list_title">Edit a grocery list</string>
+    <string name="all_items_title">All the  items</string>
+    <string name="menu_updateItem">Edit an item</string>
+    <string name="favorite_item">Favorite items</string>
+    <string name="menu_mylist">My grocery list</string>
+    <string name="create_list">Create a grocery list</string>
+    <string name="add_list">Add to a grocery list</string>
+    <string name="text_categories">The categories</string>
 </resources>

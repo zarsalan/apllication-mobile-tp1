@@ -55,7 +55,7 @@ fun AddEditCategoryView(
     Scaffold(
         topBar = {
             AppBarView(
-                title = if (category != null) Screen.AddEditCategory.title2 else Screen.AddEditCategory.title,
+                title = if (category != null) Screen.AddEditCategory.title2() else Screen.AddEditCategory.title(),
                 onBackNavClicked = { navHostController.popBackStack() })
         },
     ) {
