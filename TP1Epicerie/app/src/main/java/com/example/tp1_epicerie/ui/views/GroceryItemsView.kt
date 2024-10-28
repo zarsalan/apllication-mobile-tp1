@@ -41,7 +41,7 @@ fun GroceryItemsView(
     Scaffold(
         topBar = {
             AppBarView(
-                title = Screen.AllItems.title,
+                title = if (mode) Screen.AllItems.title else Screen.Favorites.title,
                 onBackNavClicked = { navHostController.popBackStack() },
                 appBarMenuInfo = if (mode) AppBarMenuInfo(menus = listOf(
                     AppBarMenu(
