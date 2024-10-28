@@ -178,6 +178,66 @@ abstract class GroceryDatabase : RoomDatabase() {
                     description = "Dessert pâtissier aux pommes",
                     categoryId = 9L,
                     isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Flocons d'avoine",
+                    description = "Céréales riches en fibres",
+                    categoryId = 10L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Spaghetti",
+                    description = "Pâtes italiennes longues",
+                    categoryId = 11L,
+                    isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Sauce tomate",
+                    description = "Sauce à base de tomates",
+                    categoryId = 12L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Thon en conserve",
+                    description = "Poisson en conserve",
+                    categoryId = 13L,
+                    isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Jambon",
+                    description = "Charcuterie de porc",
+                    categoryId = 14L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Huile d'olive",
+                    description = "Huile de cuisson saine",
+                    categoryId = 15L,
+                    isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Amandes",
+                    description = "Noix croquantes riches en protéines",
+                    categoryId = 16L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Café moulu",
+                    description = "Boisson énergisante du matin",
+                    categoryId = 17L,
+                    isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Pois chiches",
+                    description = "Légumineuse riche en protéines",
+                    categoryId = 18L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Petits pois surgelés",
+                    description = "Légume congelé pour les plats",
+                    categoryId = 19L,
+                    isFavorite = 1,
                 )
             )
 
