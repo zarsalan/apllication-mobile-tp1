@@ -27,6 +27,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.data.GroceryItem
 
@@ -36,8 +37,7 @@ data class GroceryItemCardInfo(
     val onClick: () -> Unit,
     val containerColor: Color,
     val canFavorite: Boolean = false,
-    val canDelete: Boolean = false,
-
+    val canDelete: Boolean = false
     )
 
 @Composable
