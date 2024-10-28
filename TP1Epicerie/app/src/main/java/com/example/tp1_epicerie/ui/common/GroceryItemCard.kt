@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.widthIn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -30,6 +31,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import coil.compose.rememberAsyncImagePainter
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.data.GroceryItem
 
@@ -72,7 +74,11 @@ fun GroceryItemCard(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 if(cardInfo.groceryItem.imagePath != null){
-                    //TODO
+                    androidx.compose.foundation.Image(
+                        painter = rememberAsyncImagePainter(cardInfo.groceryItem.imagePath),
+                        contentDescription = null,
+                        modifier = Modifier.size(50.dp)
+                    )
                 }
                 IconButton(onClick = {
                     //TODO

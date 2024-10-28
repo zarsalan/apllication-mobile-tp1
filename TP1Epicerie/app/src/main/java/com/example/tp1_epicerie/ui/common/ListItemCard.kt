@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
@@ -34,6 +35,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.data.GroceryItem
 import com.example.tp1_epicerie.data.ListItem
@@ -83,7 +85,11 @@ fun ListItemCard(
             ) {
                 Text(text = quantity.toString())
                 if(groceryItem.imagePath != null){
-                    //TODO
+                    androidx.compose.foundation.Image(
+                        painter = rememberAsyncImagePainter(groceryItem.imagePath),
+                        contentDescription = null,
+                        modifier = Modifier.size(50.dp)
+                    )
                 }
                 Column(
                     verticalArrangement = Arrangement.spacedBy(3.dp,
