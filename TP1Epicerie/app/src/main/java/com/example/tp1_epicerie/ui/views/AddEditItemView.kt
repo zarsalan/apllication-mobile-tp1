@@ -1,6 +1,7 @@
 package com.example.tp1_epicerie.ui.views
 
 import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -82,7 +83,7 @@ fun AddEditItemView(
     Scaffold(
         topBar = {
             AppBarView(
-                title = Screen.AddEditItem.title,
+                title = if (id == 0L) Screen.AddEditItem.title else Screen.AddEditItem.title2,
                 onBackNavClicked = { navHostController.popBackStack() })
         }
     ) {

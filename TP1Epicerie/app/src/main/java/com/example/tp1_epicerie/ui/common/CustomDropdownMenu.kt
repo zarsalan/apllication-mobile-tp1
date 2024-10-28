@@ -34,7 +34,6 @@ fun CustomDropdownMenu(
     customDropdownMenus: CustomDropdownMenus = CustomDropdownMenus(),
 ) {
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf(value) }
 
     Box(
         modifier = modifier
@@ -75,7 +74,7 @@ fun CustomDropdownMenu(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = selectedText,
+                                text = value,
                                 fontSize = 16.sp,
                                 color = Color.Black,
                             )
@@ -99,7 +98,6 @@ fun CustomDropdownMenu(
                         DropdownMenuItem(
                             text = { Text(menu.text) },
                             onClick = {
-                                selectedText = menu.text
                                 menu.onClick()
                                 expanded = false
                             },

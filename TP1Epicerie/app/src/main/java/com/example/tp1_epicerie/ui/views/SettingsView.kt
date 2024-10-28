@@ -1,5 +1,6 @@
 package com.example.tp1_epicerie.ui.views
 
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -42,6 +43,8 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
     darkMode = settings.darkMode == 1
     language = settings.language
 
+    Log.d("SettingsView", "darkMode: $darkMode, language: $language")
+
     Scaffold(topBar = {
         AppBarView(
             title = Screen.AddEditCategory.title,
@@ -71,7 +74,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
                                 language = it
                                 viewModel.upsertSettings(
                                     Settings(
-                                        darkMode = if (darkMode) 0 else 1,
+                                        darkMode = if (darkMode) 1 else 0,
                                         language = language
                                     )
                                 )
