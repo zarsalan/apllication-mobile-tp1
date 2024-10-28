@@ -23,4 +23,9 @@
     <string name="listCard_favorites">Favorites</string>
     <string name="listCard_viewFavorite">View favorite items</string>
     <string name="about_text">This app was developed by Arsalan and Antoine.</string>
+    <string name="text_name">Name</string>
+    <string name="text_category">Category</string>
+    <string name="addEdit_favorite">Add to my favorites:</string>
+    <string name="text_selectImage">Select an image</string>
+    <string name="addItem_alert">Please fill out all fields</string>
 </resources>

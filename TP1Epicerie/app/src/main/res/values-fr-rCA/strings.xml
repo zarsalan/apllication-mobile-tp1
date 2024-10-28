@@ -24,4 +24,9 @@
     <string name="listCard_favorites">Favoris</string>
     <string name="listCard_viewFavorite">Voir les articles favoris</string>
     <string name="about_text">Cette application a été développée par Arsalan et Antoine.</string>
+    <string name="text_name">Nom</string>
+    <string name="text_category">Catégorie</string>
+    <string name="addEdit_favorite">Ajouter dans mes favoris:</string>
+    <string name="text_selectImage">Sélectionner une image\"</string>
+    <string name="addItem_alert">Veuillez remplir tous les champs</string>
 </resources>
