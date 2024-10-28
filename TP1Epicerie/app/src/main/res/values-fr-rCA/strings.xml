@@ -44,6 +44,7 @@
     <string name="text_cancel">Add</string>
     <string name="text_removeItem">Supprimer l\'article</string>
     <string name="text_deleteVerification">Êtes-vous sûr de vouloir supprimer cet article ?</string>
+    <string name="text_delete_from_list_verification">Êtes-vous sûr de vouloir supprimer cet article de la liste ?</string>
     <string name="text_yes">Oui</string>
     <string name="text_no">Non</string>
     <string name="text_removeList">Supprimer la liste</string>

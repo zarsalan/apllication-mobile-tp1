@@ -43,6 +43,7 @@
     <string name="text_cancel">Cancel</string>
     <string name="text_removeItem">Remove item</string>
     <string name="text_deleteVerification">Are you sure you want to delete this item?</string>
+    <string name="text_delete_from_list_verification">Are you sure you want to remove this item from the list?</string>
     <string name="text_yes">Yes</string>
     <string name="text_no">No</string>
     <string name="text_removeList">Delete list</string>

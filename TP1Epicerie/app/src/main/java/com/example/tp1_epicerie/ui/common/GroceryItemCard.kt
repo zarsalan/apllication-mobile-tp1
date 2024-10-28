@@ -73,6 +73,7 @@ fun GroceryItemCard(
     val groceryLists =
         cardInfo.viewModel.getAllGroceryLists.collectAsState(initial = emptyList()).value
 
+    val itemDeletedText = stringResource(R.string.text_itemDeleted)
 
     val appBarMenuInfo: AppBarMenuInfo = AppBarMenuInfo(
         groceryLists.map { groceryList ->
@@ -283,7 +284,7 @@ fun GroceryItemCard(
 
                         Toast.makeText(
                             currentContext,
-                            textItemAdded + selectedGroceryList.title,
+                            textItemAdded + " ${selectedGroceryList.title}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
@@ -311,9 +312,10 @@ fun GroceryItemCard(
         onDismissRequest = { showDeleteDialog = false },
         title = stringResource(R.string.text_removeItem) + " ${cardInfo.groceryItem.name}?",
         message = stringResource(R.string.text_deleteVerification),
-        onYes = {
+        onYesWithContext = {context ->
             cardInfo.viewModel.deleteGroceryItem(cardInfo.groceryItem)
             showDeleteDialog = false
+            Toast.makeText(context, itemDeletedText, Toast.LENGTH_SHORT).show()
         },
         onNo = {
             showDeleteDialog = false
