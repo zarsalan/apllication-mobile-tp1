@@ -15,10 +15,9 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class, Settings::class],
-    version = 29,
+    version = 31,
     exportSchema = false
 )
-@TypeConverters(Converters::class)
 abstract class GroceryDatabase : RoomDatabase() {
     abstract fun groceryItemDao(): GroceryItemDao
     abstract fun listItemDao(): ListItemDao

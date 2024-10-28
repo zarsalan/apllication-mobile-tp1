@@ -81,7 +81,7 @@ class GroceryRepository(
     }
 
     suspend fun deleteGroceryList(groceryList: GroceryList) {
-        groceryListDao.deleteGroceryList(groceryList, listItemDao)
+        groceryListDao.deleteGroceryList(groceryList)
     }
 
     fun getGroceryListById(id: Long): Flow<GroceryList> {
@@ -89,6 +89,8 @@ class GroceryRepository(
     }
 
     fun getAllGroceryLists(): Flow<List<GroceryList>> = groceryListDao.getAllGroceryLists()
+
+    fun getGroceryListItems(id: Long): Flow<List<ListItem>> = groceryListDao.getGroceryListItems(id)
 
     //Section pour les Settings
     fun getSettings(): Flow<Settings?> = settingsDao.getSettings()

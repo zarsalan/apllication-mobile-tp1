@@ -128,6 +128,10 @@ class GroceryViewModel(
         return groceryRepository.getGroceryListById(id)
     }
 
+    fun getGroceryListItems(id: Long): Flow<List<ListItem>>{
+        return groceryRepository.getGroceryListItems(id)
+    }
+
     fun upsertGroceryList(groceryList: GroceryList){
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.upsertAGroceryList(groceryList = groceryList)

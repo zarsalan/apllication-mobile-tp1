@@ -253,7 +253,7 @@ fun GroceryItemCard(
                             viewModel.upsertListItem(
                                 ListItem(
                                     groceryListId = selectedGroceryList.id,
-                                    itemId = cardInfo.groceryItem.id,
+                                    groceryItemId = cardInfo.groceryItem.id,
                                     quantity = selectedQuantity
                                 )
                             )
