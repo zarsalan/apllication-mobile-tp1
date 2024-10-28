@@ -4,12 +4,15 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -109,30 +112,39 @@ fun GroceryItemCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(
-                modifier = Modifier
-                    .padding(16.dp)
-                    .widthIn(max = 200.dp)
-            ) {
-                Text(text = cardInfo.groceryItem.name, fontWeight = FontWeight.ExtraBold)
-                Text(
-                    text = cardInfo.groceryItem.description,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-            }
             Row(
-                modifier = Modifier.fillMaxHeight(),
-                horizontalArrangement = Arrangement.End,
+                modifier = Modifier
+                    .padding(start = 15.dp, end = 0.dp, top = 10.dp, bottom = 10.dp)
+                    .widthIn(min = 256.dp, max = 240.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Text(
+                        text = cardInfo.groceryItem.name,
+                        fontWeight = FontWeight.ExtraBold,
+                        overflow = TextOverflow.Ellipsis,
+                        maxLines = 1
+                    )
+                    Text(
+                        text = cardInfo.groceryItem.description,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
                 if (cardInfo.groceryItem.imagePath != null) {
-                    androidx.compose.foundation.Image(
+                    Image(
                         painter = rememberAsyncImagePainter(cardInfo.groceryItem.imagePath),
                         contentDescription = null,
                         modifier = Modifier.size(50.dp)
                     )
                 }
+            }
+
+            Row(
+                modifier = Modifier.fillMaxSize(),
+                horizontalArrangement = Arrangement.Center,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
                 IconButton(onClick = {
                     menuExpanded = true
                 }) {

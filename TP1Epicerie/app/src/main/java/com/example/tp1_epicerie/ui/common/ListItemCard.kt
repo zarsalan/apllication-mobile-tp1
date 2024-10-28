@@ -1,11 +1,13 @@
 package com.example.tp1_epicerie.ui.common
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
@@ -84,35 +86,53 @@ fun ListItemCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(
+            Row(
                 modifier = Modifier
-                    .padding(10.dp)
-                    .widthIn(max = 160.dp)
+                    .padding(
+                        start = 15.dp,
+                        end = 10.dp,
+                        top = 10.dp,
+                        bottom = 10.dp
+                    )
+                    .widthIn(
+                        min = 160.dp, max = 160.dp
+                    ),
+                verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(
-                    text = groceryItem.name,
-                    fontWeight = FontWeight.ExtraBold,
-                    fontSize = 18.sp,
-                    maxLines = 1,
-                    overflow = TextOverflow.Ellipsis
-                )
-                Text(text = groceryItem.description, maxLines = 2, overflow = TextOverflow.Ellipsis)
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                ) {
+                    Text(
+                        text = groceryItem.name,
+                        fontWeight = FontWeight.ExtraBold,
+                        fontSize = 18.sp,
+                        maxLines = 1,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                    Text(
+                        text = groceryItem.description,
+                        maxLines = 2,
+                        overflow = TextOverflow.Ellipsis
+                    )
+                }
+
+                if (groceryItem.imagePath != null) {
+                    Image(
+                        modifier = Modifier.size(50.dp),
+                        painter = rememberAsyncImagePainter(groceryItem.imagePath),
+                        contentDescription = null,
+                    )
+                }
             }
+
             Row(
                 modifier = Modifier.fillMaxHeight(),
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Text(text = listItem.quantity.toString())
-                if (groceryItem.imagePath != null) {
-                    androidx.compose.foundation.Image(
-                        painter = rememberAsyncImagePainter(groceryItem.imagePath),
-                        contentDescription = null,
-                        modifier = Modifier.size(50.dp)
-                    )
-                }
-
                 // Colonne pour changer la quantité
+                Text(text = listItem.quantity.toString())
                 Column(
                     verticalArrangement = Arrangement.spacedBy(
                         1.dp,
@@ -194,7 +214,7 @@ fun ListItemCard(
     CustomYesNoDialog(
         visible = showDeleteDialog,
         onDismissRequest = { showDeleteDialog = false },
-        title = stringResource(R.string.text_removeItem) + " ${groceryItem.name}?" ,
+        title = stringResource(R.string.text_removeItem) + " ${groceryItem.name}?",
         message = stringResource(R.string.text_deleteVerification),
         onYes = {
             viewModel.deleteListItem(listItem)

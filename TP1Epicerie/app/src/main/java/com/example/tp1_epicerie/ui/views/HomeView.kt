@@ -70,7 +70,8 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         title = stringResource(R.string.menu_about),
                         onClick = { showAboutDialog = true }
                     )
-                )))
+                ))
+            )
         },
         floatingActionButton = {
             FloatingActionButton(
