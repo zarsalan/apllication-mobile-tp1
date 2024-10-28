@@ -19,10 +19,18 @@ import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,6 +42,8 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.data.GroceryItem
+import com.example.tp1_epicerie.data.GroceryList
+import com.example.tp1_epicerie.data.ListItem
 
 data class GroceryItemCardInfo(
     val groceryItem: GroceryItem,
@@ -48,6 +58,25 @@ data class GroceryItemCardInfo(
 fun GroceryItemCard(
     cardInfo: GroceryItemCardInfo
 ){
+    var menuExpanded by remember { mutableStateOf(false) }
+    val groceryLists = cardInfo.viewModel.getAllGroceryLists.collectAsState(initial = emptyList()).value
+    val appBarMenuInfo: AppBarMenuInfo = AppBarMenuInfo(
+        groceryLists.map { groceryList ->
+            AppBarMenu(
+                title = groceryList.title,
+                onClick = {
+                    cardInfo.viewModel.upsertListItem(
+                        ListItem(
+                            itemId = cardInfo.groceryItem.id,
+                            quantity = 1,
+                            isCrossed = 0
+                        )
+                    )
+                }
+            )
+        }
+    )
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,7 +110,7 @@ fun GroceryItemCard(
                     )
                 }
                 IconButton(onClick = {
-                    //TODO
+                    menuExpanded = true
                 }) {
                     Icon(
                         imageVector = Icons.Default.Add,
@@ -89,6 +118,23 @@ fun GroceryItemCard(
                         tint = Color.Black
                     )
                 }
+                if(groceryLists.isNotEmpty()){
+                    DropdownMenu(
+                        expanded = menuExpanded,
+                        onDismissRequest = { menuExpanded = false }
+                    ) {
+                        appBarMenuInfo.menus.forEach { menu ->
+                            DropdownMenuItem(
+                                onClick = {
+                                    menu.onClick.invoke()
+                                    menuExpanded = false
+                                },
+                                text = { Text(text = menu.title) }
+                            )
+                        }
+                    }
+                }
+
 
                 if(cardInfo.canFavorite){
                     IconButton(onClick = {
