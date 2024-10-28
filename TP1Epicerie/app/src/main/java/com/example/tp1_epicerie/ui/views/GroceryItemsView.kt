@@ -54,7 +54,7 @@ fun GroceryItemsView(viewModel: GroceryViewModel, navHostController: NavHostCont
                     GroceryItemCardInfo(
                         groceryItem = groceryItem,
                         viewModel = viewModel,
-                        onClick = { /*Lien vers la page de l'item*/ },
+                        onClick = { navHostController.navigate(Screen.AddEditCategory.route + "/${groceryItem.id}") },
                         containerColor = Color.White,
                         canFavorite = true,
                         canDelete = true
