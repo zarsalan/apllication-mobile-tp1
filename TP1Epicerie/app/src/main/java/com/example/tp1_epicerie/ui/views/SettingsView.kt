@@ -1,5 +1,6 @@
 package com.example.tp1_epicerie.ui.views
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,6 +16,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.GroceryViewModel
@@ -28,6 +30,7 @@ import com.example.tp1_epicerie.ui.common.CustomDropdownMenus
 fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostController) {
     var darkMode by remember { mutableStateOf(false) }
     var language by remember { mutableStateOf("Français") }
+    val currentContext = LocalContext.current
 
     val settings = viewModel.getSettings().collectAsState(initial = Settings()).value ?: Settings()
 
@@ -50,15 +53,28 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
             CustomDropdownMenu(
                 modifier = Modifier.padding(start = 25.dp, top = 10.dp, end = 25.dp),
                 label = "Langue",
-                value = "",
+                value = language,
                 customDropdownMenus = CustomDropdownMenus(
                     menus = listOf(
                         "Français",
                         "English"
-                    ).map { language ->
+                    ).map { it ->
                         CustomDropdownMenu(
-                            text = language,
-                            onClick = {}
+                            text = it,
+                            onClick = {
+                                language = it
+                                viewModel.upsertSettings(
+                                    Settings(
+                                        darkMode = if (darkMode) 0 else 1,
+                                        language = language
+                                    )
+                                )
+                                Toast.makeText(
+                                    currentContext,
+                                    "Vos paramètres ont été mis à jour",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         )
                     },
                 )
@@ -67,7 +83,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
             CustomDropdownMenu(
                 modifier = Modifier.padding(start = 25.dp, top = 10.dp, end = 25.dp),
                 label = "Thème",
-                value = "",
+                value = if (darkMode) "Sombre" else "Clair",
                 customDropdownMenus = CustomDropdownMenus(
                     menus = listOf(
                         "Clair",
@@ -75,7 +91,20 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
                     ).map { theme ->
                         CustomDropdownMenu(
                             text = theme,
-                            onClick = {}
+                            onClick = {
+                                darkMode = theme == "Sombre"
+                                viewModel.upsertSettings(
+                                    Settings(
+                                        darkMode = if (theme == "Sombre") 1 else 0,
+                                        language = language
+                                    )
+                                )
+                                Toast.makeText(
+                                    currentContext,
+                                    "Vos paramètres ont été mis à jour",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         )
                     },
                 )

@@ -141,4 +141,10 @@ class GroceryViewModel(
             groceryRepository.updateSettings(settings = settings)
         }
     }
+
+    fun upsertSettings(settings: Settings){
+        viewModelScope.launch(Dispatchers.IO) {
+            groceryRepository.upsertSettings(settings = settings)
+        }
+    }
 }

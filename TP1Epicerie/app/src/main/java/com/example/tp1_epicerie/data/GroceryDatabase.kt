@@ -9,11 +9,13 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 @Database(
     entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class, Settings::class],
-    version = 13,
+    version = 15,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -65,22 +67,19 @@ abstract class GroceryDatabase : RoomDatabase() {
                         val groceryItemDao = database.groceryItemDao()
                         val settingsDao = database.settingsDao()
 
-                        categoryDao.getAllCategories().collect() { categories ->
-                            if (categories.isEmpty()) {
-                                populateCategories(categoryDao)
-                            }
+                        val settings = settingsDao.getSettings().firstOrNull()
+                        if (settings == null) {
+                            populateSettings(settingsDao)
                         }
 
-                        groceryItemDao.getAllGroceryItems().collect() { groceryItems ->
-                            if (groceryItems.isEmpty()) {
-                                populateGroceryItems(groceryItemDao)
-                            }
+                        val categories = categoryDao.getAllCategories().first()
+                        if (categories.isEmpty()) {
+                            populateCategories(categoryDao)
                         }
 
-                        settingsDao.getSettings().collect() { settings ->
-                            if (settings == null) {
-                                populateSettings(settingsDao)
-                            }
+                        val groceryItems = groceryItemDao.getAllGroceryItems().first()
+                        if (groceryItems.isEmpty()) {
+                            populateGroceryItems(groceryItemDao)
                         }
                     }
                 }

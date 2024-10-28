@@ -93,4 +93,8 @@ class GroceryRepository(
     suspend fun updateSettings(settings: Settings) {
         settingsDao.updateSettings(settings)
     }
+
+    suspend fun upsertSettings(settings: Settings) {
+        settingsDao.upsertSettings(settings)
+    }
 }
