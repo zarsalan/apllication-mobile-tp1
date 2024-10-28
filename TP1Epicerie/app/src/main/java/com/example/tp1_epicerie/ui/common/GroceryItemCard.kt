@@ -273,7 +273,10 @@ fun GroceryItemCard(
                 }
             },
             dismissButton = {
-                Button(onClick = { showQuantityDialog = false }) {
+                Button(onClick = {
+                    showQuantityDialog = false
+                    selectedQuantity = 1
+                }) {
                     Text("Annuler")
                 }
             }
