@@ -72,13 +72,22 @@ fun CustomListCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Column(modifier = Modifier.padding(16.dp).widthIn(max = 256.dp)) {
+            Column(
+                modifier = Modifier
+                    .padding(16.dp)
+                    .weight(1f)
+            ) {
                 Text(text = cardInfo.title, fontWeight = FontWeight.ExtraBold, fontSize = 20.sp)
                 Text(text = cardInfo.description, overflow = TextOverflow.Ellipsis, maxLines = 1)
             }
 
             if (cardInfo.canDelete || cardInfo.canEdit) {
-                Row {
+                Row(
+                    modifier = Modifier
+                        .padding(end = 5.dp),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
                     if (cardInfo.canEdit) {
                         IconButton(onClick = {
                             navHostController.navigate(Screen.AddEditListScreen.route + "/${cardInfo.listId}")

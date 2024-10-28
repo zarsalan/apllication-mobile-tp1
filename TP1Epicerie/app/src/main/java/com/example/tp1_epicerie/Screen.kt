@@ -14,7 +14,7 @@ sealed class Screen(val route: String, val title: String, val title2: String = "
 
     // Page pours les articles d'épicerie de base
     data object AllItems :
-        Screen("all_items", "Les articles") // Affichage des items d'épicerie de base
+        Screen("all_items", "Tous les articles") // Affichage des items d'épicerie de base
 
     data object AddEditItem :
         Screen(

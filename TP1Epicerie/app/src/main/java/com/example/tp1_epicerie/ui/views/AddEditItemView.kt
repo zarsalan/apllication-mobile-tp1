@@ -1,10 +1,11 @@
 package com.example.tp1_epicerie.ui.views
 
+import android.content.Intent
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,7 +18,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
@@ -31,16 +31,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
@@ -105,7 +107,10 @@ fun AddEditItemView(
                     .fillMaxWidth(),
                 verticalArrangement = Arrangement.spacedBy(3.dp, Alignment.CenterVertically)
             ) {
-                CustomTextField(stringResource(R.string.text_name), name, onValueChanged = { newValue -> name = newValue })
+                CustomTextField(
+                    stringResource(R.string.text_name),
+                    name,
+                    onValueChanged = { newValue -> name = newValue })
                 CustomTextField(
                     stringResource(R.string.text_description),
                     description,
@@ -116,7 +121,7 @@ fun AddEditItemView(
                 modifier = Modifier
                     .width(300.dp)
                     .padding(top = 8.dp),
-                label = stringResource(R.string.text_category)+ ":",
+                label = stringResource(R.string.text_category) + ":",
                 value = selectedCategory,
                 customDropdownMenus = CustomDropdownMenus(
                     menus = categories.map { category ->
@@ -181,12 +186,18 @@ fun AddEditItemView(
                 }
 
                 imageUri?.let { uri ->
-                    androidx.compose.foundation.Image(
-                        painter = rememberAsyncImagePainter(uri),
+                    AsyncImage(
+                        model = ImageRequest.Builder(currentContext)
+                            .data(uri)
+                            .crossfade(true)
+                            .build(),
                         contentDescription = null,
-                        modifier = Modifier.size(200.dp)
+                        modifier = Modifier.size(200.dp),
+                        placeholder = painterResource(R.drawable.baseline_image_24),
+                        error = painterResource(R.drawable.baseline_broken_image_24)
                     )
                 }
+
                 val textAlert: String = stringResource(R.string.addItem_alert)
                 val textItemSaved: String = stringResource(R.string.text_saveItem)
                 Button(
@@ -228,7 +239,11 @@ fun AddEditItemView(
                         navHostController.popBackStack()
                     }
                 ) {
-                    Text(text = stringResource(R.string.text_save), fontWeight = FontWeight.Bold, fontSize = 24.sp)
+                    Text(
+                        text = stringResource(R.string.text_save),
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 24.sp
+                    )
                 }
             }
         }
