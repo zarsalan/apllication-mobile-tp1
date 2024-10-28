@@ -36,7 +36,7 @@ abstract class ListItemDao {
     @Query("Select * from `listItem_table` WHERE id=:id")
     abstract fun getListItemById(id: Long): Flow<ListItem>
 
-    @Query("SELECT * FROM `listItem_table` WHERE `listItem_groceryList_id` = :groceryListId AND `listItem_item_id` = :groceryItemId LIMIT 1")
+    @Query("SELECT * FROM `listItem_table` WHERE `listItem_groceryList_id` = :groceryListId AND `listItem_grocery_item_id` = :groceryItemId LIMIT 1")
     abstract fun getListItemByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem?>
 
     @Upsert
@@ -77,22 +77,17 @@ abstract class GroceryListDao {
     @Query("Select * from `groceryList_table` WHERE id=:id")
     abstract fun getGroceryListById(id: Long): Flow<GroceryList>
 
+    @Query("Select * from `listItem_table` WHERE `listItem_groceryList_id` = :id")
+    abstract fun getGroceryListItems(id: Long): Flow<List<ListItem>>
+
     @Upsert
     abstract suspend fun upsertAGroceryList(groceryListEntity: GroceryList)
 
     @Update
     abstract suspend fun updateGroceryList(groceryListEntity: GroceryList)
 
-    @Transaction
-    open suspend fun deleteGroceryList(groceryListEntity: GroceryList, listItemDao: ListItemDao) {
-        groceryListEntity.listItems?.forEach {
-            listItemDao.deleteListItemById(it)
-        }
-        deleteGroceryListEntity(groceryListEntity)
-    }
-
     @Delete
-    protected abstract suspend fun deleteGroceryListEntity(groceryListEntity: GroceryList) // Peut être exécuté par seulement GroceryListDao
+    abstract suspend fun deleteGroceryList(groceryListEntity: GroceryList)
 }
 
 @Dao

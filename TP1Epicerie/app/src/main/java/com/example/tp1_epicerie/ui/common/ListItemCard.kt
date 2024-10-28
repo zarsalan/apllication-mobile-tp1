@@ -53,7 +53,7 @@ fun ListItemCard(
     cardInfo: ListItemCardInfo
     ){
     val listItem = cardInfo.listItem
-    val groceryItem: GroceryItem = cardInfo.viewModel.getGroceryItemById(listItem.itemId)
+    val groceryItem: GroceryItem = cardInfo.viewModel.getGroceryItemById(listItem.groceryItemId)
         .collectAsState(initial = GroceryItem(0L, "", "", 0L, 0, null)).value
 
     val quantity by remember { mutableIntStateOf(listItem.quantity) }
@@ -96,7 +96,7 @@ fun ListItemCard(
                     Alignment.CenterVertically)
                 ) {
                     IconButton(onClick = {
-                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, itemId = listItem.itemId,  quantity = listItem.quantity + 1, isCrossed = listItem.isCrossed))
+                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, groceryItemId = listItem.groceryItemId,  quantity = listItem.quantity + 1, isCrossed = listItem.isCrossed))
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowUp,
@@ -106,7 +106,7 @@ fun ListItemCard(
                     }
                     IconButton(onClick = {
                         if(listItem.quantity > 1){
-                            cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, itemId = listItem.itemId,  quantity = listItem.quantity + 1, isCrossed = listItem.isCrossed))
+                            cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, groceryItemId = listItem.groceryItemId,  quantity = listItem.quantity + 1, isCrossed = listItem.isCrossed))
                         }else{
                             cardInfo.viewModel.deleteListItem(listItem)
                         }
@@ -120,9 +120,9 @@ fun ListItemCard(
                 }
                 IconButton(onClick = {
                     if(listItem.isCrossed > 0){
-                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, itemId = listItem.itemId,  quantity = listItem.quantity, isCrossed = 0))
+                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, groceryItemId = listItem.groceryItemId,  quantity = listItem.quantity, isCrossed = 0))
                     }else{
-                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, itemId = listItem.itemId,  quantity = listItem.quantity, isCrossed = 1))
+                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, groceryItemId = listItem.groceryItemId,  quantity = listItem.quantity, isCrossed = 1))
                     }
                 }) {
                     Icon(

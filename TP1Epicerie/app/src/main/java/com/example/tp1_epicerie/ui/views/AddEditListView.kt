@@ -60,7 +60,8 @@ fun AddEditListView(
     ) {
         Column(
             modifier = Modifier
-                .padding(it).padding(top = 15.dp)
+                .padding(it)
+                .padding(top = 15.dp)
                 .wrapContentSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
@@ -91,7 +92,6 @@ fun AddEditListView(
                                     id = id,
                                     title = title.trim(),
                                     description = description.trim(),
-                                    listItems = groceryList.listItems
                                 )
                             )
                             Toast.makeText(
@@ -123,7 +123,6 @@ fun AddEditListView(
                             GroceryList(
                                 title = title.trim(),
                                 description = description.trim(),
-                                listItems = emptyList<Long>()
                             )
                         )
                         Toast.makeText(

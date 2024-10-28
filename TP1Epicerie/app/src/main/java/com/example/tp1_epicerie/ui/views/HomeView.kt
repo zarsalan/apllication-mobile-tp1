@@ -86,7 +86,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
         },
     ) {
 
-        val groceryList = viewModel.getAllGroceryLists.collectAsState(initial = emptyList())
+        val groceryLists = viewModel.getAllGroceryLists.collectAsState(initial = emptyList())
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
@@ -133,7 +133,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                 }
             }
 
-            items(groceryList.value) { grocery ->
+            items(groceryLists.value) { grocery ->
                 CustomListCard(
                     viewModel,
                     navHostController,

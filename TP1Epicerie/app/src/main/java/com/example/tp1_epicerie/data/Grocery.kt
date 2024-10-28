@@ -40,19 +40,25 @@ data class GroceryItem(
     tableName = "listItem_table",
     foreignKeys = [
         ForeignKey(
+            entity = GroceryList::class,
+            parentColumns = ["id"],
+            childColumns = ["listItem_groceryList_id"],
+            onDelete = ForeignKey.CASCADE
+        ),
+        ForeignKey(
             entity = GroceryItem::class,
             parentColumns = ["id"],
-            childColumns = ["listItem_item_id"],
+            childColumns = ["listItem_grocery_item_id"],
             onDelete = ForeignKey.CASCADE
         )
     ],
-    indices = [Index(value = ["listItem_item_id"])]
+    indices = [Index(value = ["listItem_grocery_item_id"]), Index(value = ["listItem_groceryList_id"])]
 )
 data class ListItem(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0L,
-    @ColumnInfo(name = "listItem_item_id")
-    val itemId: Long = 0L,
+    @ColumnInfo(name = "listItem_grocery_item_id")
+    val groceryItemId: Long = 0L,
     @ColumnInfo(name = "listItem_groceryList_id")
     val groceryListId: Long = 0L,
     @ColumnInfo(name = "listItem_quantity")
@@ -77,8 +83,6 @@ data class GroceryList(
     val title: String = "",
     @ColumnInfo(name = "groceryList_description")
     val description: String = "",
-    @ColumnInfo(name = "groceryList_listItem")
-    val listItems: List<Long>? = emptyList()//TypeConverter
 )
 
 @Entity(tableName = "settings_table")
@@ -92,15 +96,15 @@ data class Settings(
 )
 
 // Permet la conversion de list pour le stockage dans SQLite
-class Converters {
-    @TypeConverter
-    fun fromList(list: List<Long>?): String {
-        return Gson().toJson(list)
-    }
-
-    @TypeConverter
-    fun toList(data: String?): List<Long> {
-        val listType = object : TypeToken<List<Long>>() {}.type
-        return Gson().fromJson(data, listType)
-    }
-}
+//class Converters {
+//    @TypeConverter
+//    fun fromList(list: List<Long>?): String {
+//        return Gson().toJson(list)
+//    }
+//
+//    @TypeConverter
+//    fun toList(data: String?): List<Long> {
+//        val listType = object : TypeToken<List<Long>>() {}.type
+//        return Gson().fromJson(data, listType)
+//    }
+//}

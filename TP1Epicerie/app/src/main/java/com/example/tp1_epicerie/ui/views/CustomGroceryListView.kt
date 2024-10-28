@@ -1,5 +1,6 @@
 package com.example.tp1_epicerie.ui.views
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -44,6 +45,7 @@ import com.example.tp1_epicerie.ui.common.CustomListCardInfo
 import com.example.tp1_epicerie.ui.common.ListItemCard
 import com.example.tp1_epicerie.ui.common.ListItemCardInfo
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 
 @Composable
 fun CustomGroceryListView(
@@ -52,8 +54,9 @@ fun CustomGroceryListView(
     navHostController: NavHostController
 ) {
     // On obtient les informations de la liste
-    val groceryList = viewModel.getGroceryListById(id)
-        .collectAsState(initial = GroceryList(0L, "", "", listOf())).value
+    val groceryList = viewModel.getGroceryListById(id).collectAsState(initial = GroceryList()).value
+    val groceryListItems = viewModel.getGroceryListItems(id)
+        .collectAsState(initial = listOf(ListItem())).value
 
     val crossedItems = remember { mutableStateListOf<ListItem>() }
     val nonCrossedItems = remember { mutableStateListOf<ListItem>() }
@@ -61,13 +64,11 @@ fun CustomGroceryListView(
     val itemsByCategory = remember { mutableMapOf<Category, MutableList<ListItem>>() }
 
     LaunchedEffect(groceryList) {
-        groceryList.listItems?.forEach { itemId ->
-            viewModel.getListItemById(itemId).collect { listItem ->
-                if (listItem.isCrossed == 1) {
-                    crossedItems.add(listItem)
-                } else {
-                    nonCrossedItems.add(listItem)
-                }
+        groceryListItems.forEach { listItem ->
+            if (listItem.isCrossed == 1) {
+                crossedItems.add(listItem)
+            } else {
+                nonCrossedItems.add(listItem)
             }
         }
     }
@@ -75,16 +76,19 @@ fun CustomGroceryListView(
     val indexCrossed = remember { mutableStateOf(false) }
     val itemsToShow = if (indexCrossed.value) crossedItems else nonCrossedItems
 
-
     LaunchedEffect(itemsToShow, indexCrossed.value) {
         itemsByCategory.clear()
         itemsToShow
             .filter { it.isCrossed == if (indexCrossed.value) 1 else 0 }
             .forEach { listItem ->
-                val groceryItem = viewModel.getGroceryItemById(listItem.itemId).first()
-                val category = viewModel.getCategoryById(groceryItem.categoryId ?: 0L).first()
+                val groceryItem = viewModel.getGroceryItemById(listItem.groceryItemId).firstOrNull()
 
-                itemsByCategory.getOrPut(category) { mutableListOf() }.add(listItem)
+                if (groceryItem != null) {
+                    Log.d("OBTAINED", "listItem: $listItem")
+                    val category = viewModel.getCategoryById(groceryItem.categoryId ?: 0L).first()
+                    itemsByCategory.getOrPut(category) { mutableListOf() }.add(listItem)
+                    Log.d("OBTAINED", "itemsByCategory: $itemsByCategory")
+                }
             }
     }
 
@@ -155,7 +159,9 @@ fun CustomGroceryListView(
                             text = category.title,
                             fontWeight = FontWeight.Bold,
                             fontSize = 22.sp,
-                            modifier = Modifier.padding(8.dp).fillMaxWidth()
+                            modifier = Modifier
+                                .padding(8.dp)
+                                .fillMaxWidth()
                         )
                     }
 

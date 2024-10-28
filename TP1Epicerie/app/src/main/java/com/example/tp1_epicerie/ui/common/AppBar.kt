@@ -86,7 +86,7 @@ data class AppBarMenu(
 )
 
 data class AppBarMenuInfo(
-    val menus: List<AppBarMenu>
+    val menus: List<AppBarMenu> = emptyList()
 )
 
 @Preview(showBackground = true)

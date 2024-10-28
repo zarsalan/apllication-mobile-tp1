@@ -254,7 +254,7 @@ fun GroceryItemCard(
                             viewModel.upsertListItem(
                                 ListItem(
                                     groceryListId = selectedGroceryList.id,
-                                    itemId = cardInfo.groceryItem.id,
+                                    groceryItemId = cardInfo.groceryItem.id,
                                     quantity = selectedQuantity
                                 )
                             )
@@ -274,7 +274,10 @@ fun GroceryItemCard(
                 }
             },
             dismissButton = {
-                Button(onClick = { showQuantityDialog = false }) {
+                Button(onClick = {
+                    showQuantityDialog = false
+                    selectedQuantity = 1
+                }) {
                     Text(stringResource(R.string.text_cancel))
                 }
             }
