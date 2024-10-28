@@ -9,11 +9,13 @@ import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.firstOrNull
 import kotlinx.coroutines.launch
 
 @Database(
-    entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class],
-    version = 12,
+    entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class, Settings::class],
+    version = 15,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -22,6 +24,7 @@ abstract class GroceryDatabase : RoomDatabase() {
     abstract fun listItemDao(): ListItemDao
     abstract fun categoryDao(): CategoryDao
     abstract fun groceryListDao(): GroceryListDao
+    abstract fun settingsDao(): SettingsDao
 
     companion object {
         @Volatile
@@ -51,6 +54,7 @@ abstract class GroceryDatabase : RoomDatabase() {
                     scope.launch(Dispatchers.IO) {
                         populateCategories(database.categoryDao())
                         populateGroceryItems(database.groceryItemDao())
+                        populateSettings(database.settingsDao())
                     }
                 }
             }
@@ -61,17 +65,21 @@ abstract class GroceryDatabase : RoomDatabase() {
                     scope.launch(Dispatchers.IO) {
                         val categoryDao = database.categoryDao()
                         val groceryItemDao = database.groceryItemDao()
+                        val settingsDao = database.settingsDao()
 
-                        categoryDao.getAllCategories().collect(){
-                            categories -> if (categories.isEmpty()) {
-                                populateCategories(categoryDao)
-                            }
+                        val settings = settingsDao.getSettings().firstOrNull()
+                        if (settings == null) {
+                            populateSettings(settingsDao)
                         }
 
-                        groceryItemDao.getAllGroceryItems().collect(){
-                            groceryItems -> if (groceryItems.isEmpty()) {
-                                populateGroceryItems(groceryItemDao)
-                            }
+                        val categories = categoryDao.getAllCategories().first()
+                        if (categories.isEmpty()) {
+                            populateCategories(categoryDao)
+                        }
+
+                        val groceryItems = groceryItemDao.getAllGroceryItems().first()
+                        if (groceryItems.isEmpty()) {
+                            populateGroceryItems(groceryItemDao)
                         }
                     }
                 }
@@ -186,6 +194,11 @@ abstract class GroceryDatabase : RoomDatabase() {
             groceryItems.forEach { groceryItem ->
                 groceryItemDao.upsertGroceryItem(groceryItem)
             }
+        }
+
+        suspend fun populateSettings(settingsDao: SettingsDao) {
+            val settings = Settings(id = 1, darkMode = 0)
+            settingsDao.upsertSettings(settings)
         }
     }
 }

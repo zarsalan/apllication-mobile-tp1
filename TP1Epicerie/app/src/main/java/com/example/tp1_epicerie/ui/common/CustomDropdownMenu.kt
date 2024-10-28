@@ -31,10 +31,7 @@ fun CustomDropdownMenu(
     modifier: Modifier = Modifier,
     label: String = "",
     value: String = "",
-    customDropdownMenus: CustomDropdownMenus = CustomDropdownMenus(
-        menus = listOf(),
-        containerColor = Color.Gray
-    ),
+    customDropdownMenus: CustomDropdownMenus = CustomDropdownMenus(),
 ) {
     var expanded by remember { mutableStateOf(false) }
     var selectedText by remember { mutableStateOf(value) }
@@ -61,9 +58,9 @@ fun CustomDropdownMenu(
                 Box(
                     modifier = Modifier
                         .background(
-                            if (expanded) Color.Gray else Color.LightGray,
+                            if (expanded) customDropdownMenus.expandedColor else customDropdownMenus.collapsedColor,
                             shape = RoundedCornerShape(8.dp)
-                        ) // Rounded corners
+                        )
                         .clickable { expanded = !expanded }
                         .padding(horizontal = 12.dp, vertical = 8.dp)
                         .defaultMinSize(minWidth = 120.dp)
@@ -120,8 +117,9 @@ data class CustomDropdownMenu(
 )
 
 data class CustomDropdownMenus(
-    val menus: List<CustomDropdownMenu>,
-    val containerColor: Color
+    val menus: List<CustomDropdownMenu> = listOf(),
+    val collapsedColor: Color = Color.LightGray,
+    val expandedColor: Color = Color.Gray,
 )
 
 @Preview(showBackground = true)
@@ -132,7 +130,6 @@ fun CustomDropdownMenuPreview() {
         label = "Catégorie:",
         value = "Test",
         CustomDropdownMenus(
-            containerColor = Color.Gray,
             menus = listOf(
                 CustomDropdownMenu(
                     text = "Fruits",

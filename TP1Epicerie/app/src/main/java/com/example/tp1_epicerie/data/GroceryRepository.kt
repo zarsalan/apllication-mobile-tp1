@@ -7,25 +7,27 @@ class GroceryRepository(
     private val groceryItemDao: GroceryItemDao,
     private val listItemDao: ListItemDao,
     private val categoryDao: CategoryDao,
-    private val groceryListDao: GroceryListDao
-){
+    private val groceryListDao: GroceryListDao,
+    private val settingsDao: SettingsDao
+) {
 
     //Section pour le GroceryItemDao
-    suspend fun upsertGroceryItem(groceryItem: GroceryItem){
+    suspend fun upsertGroceryItem(groceryItem: GroceryItem) {
         groceryItemDao.upsertGroceryItem(groceryItem)
     }
 
-    suspend fun updateGroceryItem(groceryItem: GroceryItem){
+    suspend fun updateGroceryItem(groceryItem: GroceryItem) {
         groceryItemDao.updateGroceryItem(groceryItem)
     }
 
-    fun getFavoriteGroceryItems(): Flow<List<GroceryItem>> = groceryItemDao.getFavoriteGroceryItems()
+    fun getFavoriteGroceryItems(): Flow<List<GroceryItem>> =
+        groceryItemDao.getFavoriteGroceryItems()
 
-    suspend fun deleteGroceryItem(groceryItem: GroceryItem){
+    suspend fun deleteGroceryItem(groceryItem: GroceryItem) {
         groceryItemDao.deleteGroceryItem(groceryItem)
     }
 
-    fun getGroceryItemById(id: Long): Flow<GroceryItem>{
+    fun getGroceryItemById(id: Long): Flow<GroceryItem> {
         return groceryItemDao.getGroceryItemById(id)
     }
 
@@ -33,33 +35,33 @@ class GroceryRepository(
 
 
     //Section pour le ListItemDao
-    suspend fun upsertListItem(listItem: ListItem){
+    suspend fun upsertListItem(listItem: ListItem) {
         listItemDao.upsertListItem(listItem)
     }
 
-    suspend fun deleteListItem(listItem: ListItem){
+    suspend fun deleteListItem(listItem: ListItem) {
         listItemDao.deleteListItem(listItem)
     }
 
-    fun getListItemById(id: Long): Flow<ListItem>{
+    fun getListItemById(id: Long): Flow<ListItem> {
         return listItemDao.getListItemById(id)
     }
 
 
     //Section pour le CategoryDao
-    suspend fun upsertCategory(category: Category){
+    suspend fun upsertCategory(category: Category) {
         categoryDao.upsertCategory(category)
     }
 
-    suspend fun updateCategory(category: Category){
+    suspend fun updateCategory(category: Category) {
         categoryDao.updateCategory(category)
     }
 
-    suspend fun deleteCategory(category: Category){
+    suspend fun deleteCategory(category: Category) {
         categoryDao.deleteCategory(category)
     }
 
-    fun getCategoryById(id: Long): Flow<Category>{
+    fun getCategoryById(id: Long): Flow<Category> {
         return categoryDao.getCategoryById(id)
     }
 
@@ -67,21 +69,32 @@ class GroceryRepository(
 
 
     //Section pour le GroceryListDao
-    suspend fun upsertAGroceryList(groceryList: GroceryList){
+    suspend fun upsertAGroceryList(groceryList: GroceryList) {
         groceryListDao.upsertAGroceryList(groceryList)
     }
 
-    suspend fun updateGroceryList(groceryList: GroceryList){
+    suspend fun updateGroceryList(groceryList: GroceryList) {
         groceryListDao.updateGroceryList(groceryList)
     }
 
-    suspend fun deleteGroceryList(groceryList: GroceryList){
+    suspend fun deleteGroceryList(groceryList: GroceryList) {
         groceryListDao.deleteGroceryList(groceryList, listItemDao)
     }
 
-    fun getGroceryListById(id: Long): Flow<GroceryList>{
+    fun getGroceryListById(id: Long): Flow<GroceryList> {
         return groceryListDao.getGroceryListById(id)
     }
 
     fun getAllGroceryLists(): Flow<List<GroceryList>> = groceryListDao.getAllGroceryLists()
+
+    //Section pour les Settings
+    fun getSettings(): Flow<Settings?> = settingsDao.getSettings()
+
+    suspend fun updateSettings(settings: Settings) {
+        settingsDao.updateSettings(settings)
+    }
+
+    suspend fun upsertSettings(settings: Settings) {
+        settingsDao.upsertSettings(settings)
+    }
 }
