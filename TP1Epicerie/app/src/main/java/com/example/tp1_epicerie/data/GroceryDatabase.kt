@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class, Settings::class],
-    version = 15,
+    version = 19,
     exportSchema = false
 )
 @TypeConverters(Converters::class)
@@ -88,28 +88,28 @@ abstract class GroceryDatabase : RoomDatabase() {
 
         suspend fun populateCategories(categoryDao: CategoryDao) {
             val categories = listOf(
-                Category(id = 0L, title = "Non défini"),
-                Category(id = 1L, title = "Pain"),
-                Category(id = 2L, title = "Fruit"),
-                Category(id = 3L, title = "Légume"),
-                Category(id = 4L, title = "Produits Laitiers"),
-                Category(id = 5L, title = "Viande"),
-                Category(id = 6L, title = "Poisson"),
-                Category(id = 7L, title = "Epices"),
-                Category(id = 8L, title = "Boisson"),
-                Category(id = 9L, title = "Collations"),
-                Category(id = 10L, title = "Desserts"),
-                Category(id = 11L, title = "Céréales"),
-                Category(id = 12L, title = "Pâtes"),
-                Category(id = 13L, title = "Sauces"),
-                Category(id = 14L, title = "Conserves"),
-                Category(id = 15L, title = "Charcuterie"),
-                Category(id = 16L, title = "Huile"),
-                Category(id = 17L, title = "Noix"),
-                Category(id = 18L, title = "Café"),
-                Category(id = 19L, title = "Légumineuses"),
-                Category(id = 20L, title = "Produits Congelés"),
-                Category(id = 21L, title = "Pâtisserie")
+                Category(id = 1L, title = "Non défini"),
+                Category(title = "Pain"),
+                Category(title = "Fruit"),
+                Category(title = "Légume"),
+                Category(title = "Produits Laitiers"),
+                Category(title = "Viande"),
+                Category(title = "Poisson"),
+                Category(title = "Epices"),
+                Category(title = "Boisson"),
+                Category(title = "Collations"),
+                Category(title = "Desserts"),
+                Category(title = "Céréales"),
+                Category(title = "Pâtes"),
+                Category(title = "Sauces"),
+                Category(title = "Conserves"),
+                Category(title = "Charcuterie"),
+                Category(title = "Huile"),
+                Category(title = "Noix"),
+                Category(title = "Café"),
+                Category(title = "Légumineuses"),
+                Category(title = "Produits Congelés"),
+                Category(title = "Pâtisserie")
             )
 
             categories.forEach { category ->
@@ -120,73 +120,123 @@ abstract class GroceryDatabase : RoomDatabase() {
         suspend fun populateGroceryItems(groceryItemDao: GroceryItemDao) {
             val groceryItems = listOf(
                 GroceryItem(
-                    id = 1L,
                     name = "Baguette",
                     description = "Pain français",
-                    categoryId = 0L,
+                    categoryId = 1L,
                     isFavorite = 1,
                 ),
                 GroceryItem(
-                    id = 2L,
                     name = "Banane",
                     description = "Fruit tropical",
                     categoryId = 1L,
                     isFavorite = 0,
                 ),
                 GroceryItem(
-                    id = 3L,
                     name = "Carotte",
                     description = "Légume frais riche en vitamines",
                     categoryId = 2L,
                     isFavorite = 1,
                 ),
                 GroceryItem(
-                    id = 4L,
                     name = "Yaourt nature",
                     description = "Produit laitier sans sucre",
                     categoryId = 3L,
                     isFavorite = 0,
                 ),
                 GroceryItem(
-                    id = 5L,
                     name = "Steak de boeuf",
                     description = "Viande rouge",
                     categoryId = 4L,
                     isFavorite = 0,
                 ),
                 GroceryItem(
-                    id = 6L,
                     name = "Saumon fumé",
                     description = "Poisson riche en oméga-3",
                     categoryId = 5L,
                     isFavorite = 1,
                 ),
                 GroceryItem(
-                    id = 7L,
                     name = "Poivre noir",
                     description = "Epice pour relever le goût",
                     categoryId = 6L,
                     isFavorite = 0,
                 ),
                 GroceryItem(
-                    id = 8L,
                     name = "Jus d'orange",
                     description = "Boisson vitaminée sans sucre ajouté",
                     categoryId = 7L,
                     isFavorite = 1,
                 ),
                 GroceryItem(
-                    id = 9L,
                     name = "Chips",
                     description = "Collation croustillante salée",
                     categoryId = 8L,
                     isFavorite = 0,
                 ),
                 GroceryItem(
-                    id = 10L,
                     name = "Tarte aux pommes",
                     description = "Dessert pâtissier aux pommes",
                     categoryId = 9L,
+                    isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Flocons d'avoine",
+                    description = "Céréales riches en fibres",
+                    categoryId = 10L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Spaghetti",
+                    description = "Pâtes italiennes longues",
+                    categoryId = 11L,
+                    isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Sauce tomate",
+                    description = "Sauce à base de tomates",
+                    categoryId = 12L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Thon en conserve",
+                    description = "Poisson en conserve",
+                    categoryId = 13L,
+                    isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Jambon",
+                    description = "Charcuterie de porc",
+                    categoryId = 14L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Huile d'olive",
+                    description = "Huile de cuisson saine",
+                    categoryId = 15L,
+                    isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Amandes",
+                    description = "Noix croquantes riches en protéines",
+                    categoryId = 16L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Café moulu",
+                    description = "Boisson énergisante du matin",
+                    categoryId = 17L,
+                    isFavorite = 1,
+                ),
+                GroceryItem(
+                    name = "Pois chiches",
+                    description = "Légumineuse riche en protéines",
+                    categoryId = 18L,
+                    isFavorite = 0,
+                ),
+                GroceryItem(
+                    name = "Petits pois surgelés",
+                    description = "Légume congelé pour les plats",
+                    categoryId = 19L,
                     isFavorite = 1,
                 )
             )
