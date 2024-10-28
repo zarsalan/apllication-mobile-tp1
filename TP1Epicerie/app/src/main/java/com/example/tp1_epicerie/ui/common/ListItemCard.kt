@@ -90,7 +90,7 @@ fun ListItemCard(
                     Alignment.CenterVertically)
                 ) {
                     IconButton(onClick = {
-                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id,  quantity = listItem.quantity + 1))
+                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, itemId = listItem.itemId,  quantity = listItem.quantity + 1, isCrossed = listItem.isCrossed))
                     }) {
                         Icon(
                             imageVector = Icons.Default.KeyboardArrowUp,
@@ -100,7 +100,7 @@ fun ListItemCard(
                     }
                     IconButton(onClick = {
                         if(listItem.quantity > 1){
-                            cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, quantity = listItem.quantity - 1))
+                            cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, itemId = listItem.itemId,  quantity = listItem.quantity + 1, isCrossed = listItem.isCrossed))
                         }else{
                             cardInfo.viewModel.deleteListItem(listItem)
                         }
@@ -114,9 +114,9 @@ fun ListItemCard(
                 }
                 IconButton(onClick = {
                     if(listItem.isCrossed > 0){
-                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, isCrossed = 0))
+                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, itemId = listItem.itemId,  quantity = listItem.quantity, isCrossed = 0))
                     }else{
-                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, isCrossed = 1))
+                        cardInfo.viewModel.upsertListItem(ListItem(id = listItem.id, itemId = listItem.itemId,  quantity = listItem.quantity, isCrossed = 1))
                     }
                 }) {
                     Icon(
@@ -128,14 +128,14 @@ fun ListItemCard(
 
                 IconButton(onClick = {
                     if(groceryItem.isFavorite > 0){
-                        cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 0))
+                        cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, name = groceryItem.name, description = groceryItem.description, groceryItem.categoryId, isFavorite = 0, groceryItem.imagePath))
                     }else{
-                        cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, isFavorite = 1))
+                        cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = groceryItem.id, name = groceryItem.name, description = groceryItem.description, groceryItem.categoryId, isFavorite = 1, groceryItem.imagePath))
                     }
                 }) {
                     Icon(
-                        imageVector = if (groceryItem.isFavorite < 0) {
-                            Icons.Default.Favorite
+                        imageVector = if (groceryItem.isFavorite > 0) {
+                            Icons.Filled.Favorite
                         } else {
                             Icons.Default.FavoriteBorder
                         },

@@ -1,5 +1,8 @@
 package com.example.tp1_epicerie.ui.common
 
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,6 +26,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.data.GroceryItem
 
@@ -40,6 +44,7 @@ data class GroceryItemCardInfo(
 fun GroceryItemCard(
     cardInfo: GroceryItemCardInfo
 ){
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -81,14 +86,14 @@ fun GroceryItemCard(
                 if(cardInfo.canFavorite){
                     IconButton(onClick = {
                         if(cardInfo.groceryItem.isFavorite > 0){
-                            cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = cardInfo.groceryItem.id, isFavorite = 0))
+                            cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = cardInfo.groceryItem.id, name = cardInfo.groceryItem.name, description = cardInfo.groceryItem.description, cardInfo.groceryItem.categoryId, isFavorite = 0, cardInfo.groceryItem.imagePath))
                         }else{
-                            cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = cardInfo.groceryItem.id, isFavorite = 1))
+                            cardInfo.viewModel.upsertGroceryItem(GroceryItem(id = cardInfo.groceryItem.id, name = cardInfo.groceryItem.name, description = cardInfo.groceryItem.description, cardInfo.groceryItem.categoryId, isFavorite = 1, cardInfo.groceryItem.imagePath))
                         }
                     }) {
                         Icon(
-                            imageVector = if (cardInfo.groceryItem.isFavorite < 0) {
-                                Icons.Default.Favorite
+                            imageVector = if (cardInfo.groceryItem.isFavorite > 0) {
+                                Icons.Filled.Favorite
                             } else {
                                 Icons.Default.FavoriteBorder
                             },
@@ -99,7 +104,7 @@ fun GroceryItemCard(
                 }
                 if(cardInfo.canDelete){
                     IconButton(onClick = {
-                        //TODO
+                        cardInfo.viewModel.deleteGroceryItem(cardInfo.groceryItem)
                     }) {
                         Icon(
                             imageVector = Icons.Default.Delete,
