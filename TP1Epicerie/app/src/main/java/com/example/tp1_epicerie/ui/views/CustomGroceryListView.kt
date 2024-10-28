@@ -41,6 +41,8 @@ import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.Category
 import com.example.tp1_epicerie.data.GroceryList
 import com.example.tp1_epicerie.data.ListItem
+import com.example.tp1_epicerie.ui.common.AppBarMenu
+import com.example.tp1_epicerie.ui.common.AppBarMenuInfo
 import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.ListItemCard
 import com.example.tp1_epicerie.ui.common.ListItemCardInfo
@@ -109,7 +111,17 @@ fun CustomGroceryListView(
         topBar = {
             AppBarView(
                 title = groceryList.title,
-                onBackNavClicked = { navHostController.popBackStack() }
+                onBackNavClicked = { navHostController.popBackStack() },
+                appBarMenuInfo = AppBarMenuInfo(menus = listOf(
+                    AppBarMenu(
+                        title = stringResource(R.string.menu_addItem),
+                        onClick = { navHostController.navigate(Screen.AllItems.route) }
+                    ),
+                    AppBarMenu(
+                        title = stringResource(R.string.menu_modifyThisList),
+                        onClick = { navHostController.navigate(Screen.AddEditListScreen.route + "/${groceryList.id ?: 1L}") }
+                    ),
+                ))
             )
         }
     ) {

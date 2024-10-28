@@ -16,6 +16,7 @@
     <string name="menu_addList">Ajouter une liste</string>
     <string name="menu_addCategory">Ajouter une catégorie</string>
     <string name="menu_modifyCategories">Modifier les catégories</string>
+    <string name="menu_modifyThisList">Modifier cette liste</string>
     <string name="menu_settings">Paramètres</string>
     <string name="menu_about">À propos</string>
     <string name="menu_close">Fermer</string>
