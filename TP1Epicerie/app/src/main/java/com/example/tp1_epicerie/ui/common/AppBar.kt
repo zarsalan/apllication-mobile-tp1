@@ -32,7 +32,7 @@ fun AppBarView(
     var menuExpanded by remember { mutableStateOf(false) }
 
     val navigationIcon: (@Composable () -> Unit) = {
-        if (!title.contains(Screen.HomeScreen.title)) {
+        if (!title.contains(Screen.HomeScreen.title())) {
             IconButton(onClick = { onBackNavClicked() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -92,5 +92,5 @@ data class AppBarMenuInfo(
 @Preview(showBackground = true)
 @Composable
 fun AppBarPreview() {
-    AppBarView(title = Screen.HomeScreen.title)
+    AppBarView(title = Screen.HomeScreen.title())
 }

@@ -56,7 +56,7 @@ fun AddEditListView(
     Scaffold(
         topBar = {
             AppBarView(
-                title = if (groceryList != null) Screen.AddEditListScreen.title2 else Screen.AddEditListScreen.title,
+                title = if (groceryList != null) Screen.AddEditListScreen.title2() else Screen.AddEditListScreen.title(),
                 onBackNavClicked = { navHostController.popBackStack() })
         },
     ) {

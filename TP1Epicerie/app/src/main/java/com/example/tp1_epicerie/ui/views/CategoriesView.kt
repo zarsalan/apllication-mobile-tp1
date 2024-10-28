@@ -28,7 +28,7 @@ fun CategoriesView(viewModel: GroceryViewModel, navHostController: NavHostContro
     Scaffold(
         topBar = {
             AppBarView(
-                title = Screen.Categories.title,
+                title = Screen.Categories.title(),
                 onBackNavClicked = { navHostController.popBackStack() }
             )
         },

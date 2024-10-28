@@ -1,54 +1,79 @@
 package com.example.tp1_epicerie
 
-sealed class Screen(val route: String, val title: String, val title2: String = "") {
-    // Page d'accueil
-    data object HomeScreen :
-        Screen("home_screen", "Mes listes d'articles d'épicerie") // Affichage de tous les listes
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.res.stringResource
 
-    data object AddEditListScreen :
-        Screen(
-            "add_edit_list_screen",
-            "Ajouter une liste d'articles d'épicerie",
-            "Modifier une liste d'articles d'épicerie"
-        ) // Ajout d'une liste
+sealed class Screen(val route: String) {
+
+    @Composable
+    open fun title(): String = ""
+    @Composable
+    open fun title2(): String = ""
+
+    // Page d'accueil
+    object HomeScreen : Screen("home_screen") {
+        @Composable
+        override fun title() = stringResource(R.string.home_screen_title)
+    }
+
+    object AddEditListScreen : Screen("add_edit_list_screen") {
+        @Composable
+        override fun title() = stringResource(R.string.add_list_title)
+        @Composable
+        override fun title2() = stringResource(R.string.edit_list_title)
+    }
 
     // Page pours les articles d'épicerie de base
-    data object AllItems :
-        Screen("all_items", "Tous les articles") // Affichage des items d'épicerie de base
+    object AllItems : Screen("all_items") {
+        @Composable
+        override fun title() = stringResource(R.string.all_items_title)
+    }
 
-    data object AddEditItem :
-        Screen(
-            "add_edit_item",
-            "Ajouter un article",
-            "Modifier un article"
-        ) // Ajout d'un item d'épicerie de base
+    object AddEditItem : Screen("add_edit_item") {
+        @Composable
+        override fun title() = stringResource(R.string.menu_addItem)
+        @Composable
+        override fun title2() = stringResource(R.string.menu_updateItem)
+    }
 
     // Page favoris
-    data object Favorites : Screen("favorites", "Articles favoris") // Affichage des items favoris
-
+    object Favorites : Screen("favorites") {
+        @Composable
+        override fun title() = stringResource(R.string.favorite_item)
+    }
     // Page pour les listes d'épicerie custom
-    data object GroceryList : Screen(
-        "grocery_list",
-        "Ma liste d'épicerie"
-    ) // Affichage des items ajoutés dans une liste custom
+    object GroceryList : Screen("grocery_list") {
+        @Composable
+        override fun title() = stringResource(R.string.menu_mylist)
+    }
 
-    data object CreateGroceryList :
-        Screen("create_grocery_list", "Créer une liste d'épicerie") // Création d'une liste custom
+    object CreateGroceryList : Screen("create_grocery_list") {
+        @Composable
+        override fun title() = stringResource(R.string.create_list)
+    }
 
-    data object AddToGroceryList : Screen(
-        "add_to_grocery_list",
-        "Ajouter à une liste d'épicerie"
-    ) // Ajout des items dans une liste custom (Affiché à la suite de GroceryList)
+    object AddToGroceryList : Screen("add_to_grocery_list") {
+        @Composable
+        override fun title() = stringResource(R.string.add_list)
+    }
 
     // Page pour les catégories
-    data object AddEditCategory :
-        Screen("add_edit_category", "Créer une catégorie", "Modifier une catégorie") // Création d'une catégorie
+    object AddEditCategory : Screen("add_edit_category") {
+        @Composable
+        override fun title() = stringResource(R.string.menu_addCategory)
+        @Composable
+        override fun title2() = stringResource(R.string.menu_modifyCategories)
+    }
 
     // Affichage de tous les catégories
-    data object Categories :
-        Screen("all_categories", "Les catégories") // Affichage des catégories
+    object Categories : Screen("all_categories") {
+        @Composable
+        override fun title() = stringResource(R.string.text_categories)
+    }
 
     // Page pour les paramètres
-    data object Settings :
-        Screen("settings", "Paramètres") // Affichage des paramètres
+    object Settings : Screen("settings") {
+        @Composable
+        override fun title() = stringResource(R.string.menu_settings)
+    }
 }
