@@ -1,16 +1,13 @@
 package com.example.tp1_epicerie.ui.common
 
 import android.net.Uri
-import android.util.Log
 import android.widget.Toast
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -46,10 +43,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.ImageLoader
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import coil.util.DebugLogger
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.data.GroceryItem
@@ -117,9 +112,11 @@ fun GroceryItemCard(
                     .weight(1.9f),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Column(modifier = Modifier
-                    .weight(1f)
-                    .fillMaxWidth()) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .fillMaxWidth()
+                ) {
                     Text(
                         text = cardInfo.groceryItem.name,
                         fontWeight = FontWeight.ExtraBold,
@@ -143,7 +140,7 @@ fun GroceryItemCard(
                             .size(50.dp)
                             .align(Alignment.CenterVertically),
                         placeholder = painterResource(R.drawable.baseline_image_24),
-                        error = painterResource(R.drawable.baseline_broken_image_24)
+                        error = painterResource(R.drawable.baseline_broken_image_24),
                     )
                 }
             }

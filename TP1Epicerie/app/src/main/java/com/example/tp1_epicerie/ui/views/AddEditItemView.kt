@@ -89,9 +89,15 @@ fun AddEditItemView(
 
     // Launcher pour récupérer une image
     val imagePickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
+        contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri: Uri? ->
-            imageUri = uri
+            uri?.let {
+                imageUri = it
+                currentContext.contentResolver.takePersistableUriPermission(
+                    it,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
         }
     )
 
@@ -109,7 +115,7 @@ fun AddEditItemView(
                             )
                         )
                     } else {
-                        emptyList() // Provide an empty list or any fallback for when id == 0L
+                        emptyList()
                     }
                 )
             )
@@ -206,7 +212,7 @@ fun AddEditItemView(
                     )
                 ) {
                     Button(
-                        onClick = { imagePickerLauncher.launch("image/*") },
+                        onClick = { imagePickerLauncher.launch(arrayOf("image/*")) },
                     ) {
                         Text(stringResource(R.string.text_selectImage))
                     }
