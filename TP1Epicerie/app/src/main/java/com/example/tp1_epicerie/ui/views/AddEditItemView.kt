@@ -68,7 +68,7 @@ fun AddEditItemView(
         categoryId = it.categoryId
         selectedCategory = categories.find { category -> category.id == it.categoryId }?.title ?: ""
         isFavorite = it.isFavorite == 1
-        imageUri = Uri.parse(it.imagePath)
+        imageUri = it.imagePath?.let { imagePath -> Uri.parse(imagePath) }
     }
 
     // Launcher pour récupérer une image
