@@ -15,7 +15,9 @@ import androidx.compose.ui.platform.LocalContext
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFFECECEC),
     primaryContainer = Color(0xFFB9B9B9),
+    onPrimary = Color(0xFF383838),
     secondary = Color(0xFFB5C7B3),
+    secondaryContainer = Color(0xFF000000),
     tertiary = Color(0xFFC59F9F),
     background = Color(0xFF1C1C1C)
 )
@@ -23,9 +25,11 @@ private val DarkColorScheme = darkColorScheme(
 private val LightColorScheme = lightColorScheme(
     primary = Color(0xFF000000),
     primaryContainer = Color(0xFFFFFFFF),
+    onPrimary = Color(0xFFD5D5D5),
     secondary = Color(0xFFE3F2E1),
+    secondaryContainer = Color(0xFF1C1C1C),
     tertiary = Color(0xFFF6D8CE),
-    background = Color(0xFF1C1C1C)
+    background = Color(0xFFEFEFEF)
 
     /* Other default colors to override
     surface = Color(0xFFFFFBFE),
