@@ -58,6 +58,7 @@ data class GroceryItemCardInfo(
     val containerColor: Color,
 )
 
+// Composant de carte d'élément d'épicerie
 @Composable
 fun GroceryItemCard(
     viewModel: GroceryViewModel,

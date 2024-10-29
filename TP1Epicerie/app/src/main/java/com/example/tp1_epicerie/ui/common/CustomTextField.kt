@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.tp1_epicerie.R
 
+// Composant de champ de texte personnalisé
 @Composable
 fun CustomTextField(
     label: String,

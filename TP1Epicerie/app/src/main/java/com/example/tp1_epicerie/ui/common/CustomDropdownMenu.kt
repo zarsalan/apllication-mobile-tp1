@@ -26,6 +26,7 @@ import androidx.compose.ui.unit.DpOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
+// Composante de menu déroulant personnalisé réutilisable
 @Composable
 fun CustomDropdownMenu(
     modifier: Modifier = Modifier,
@@ -41,6 +42,7 @@ fun CustomDropdownMenu(
             .fillMaxWidth()
             .padding(horizontal = 8.dp, vertical = 8.dp)
     ) {
+        // Row pour afficher le label et le menu déroulant
         Row(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -55,6 +57,7 @@ fun CustomDropdownMenu(
             )
 
             Box(modifier = Modifier.padding(start = 8.dp)) {
+                // Affichage de l'option sélectionnée et de la flèche de menu déroulant
                 Box(
                     modifier = Modifier
                         .background(
@@ -88,6 +91,7 @@ fun CustomDropdownMenu(
                     }
                 }
 
+                // Menu déroulant
                 DropdownMenu(
                     expanded = expanded,
                     onDismissRequest = { expanded = false },

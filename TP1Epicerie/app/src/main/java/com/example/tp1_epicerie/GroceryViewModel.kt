@@ -31,30 +31,8 @@ class GroceryViewModel(
 
     private val groceryRepository: GroceryRepository = Graph.groceryRepository
 ) : ViewModel() {
-
-    private val _isDarkTheme = mutableStateOf(false)
-    val isDarkTheme: State<Boolean> = _isDarkTheme
-
-    init {
-        viewModelScope.launch {
-            groceryRepository.getSettings()
-                .map { settings -> settings?.darkMode == 1 }
-                .collect { isDark -> _isDarkTheme.value = isDark }
-        }
-    }
-
-    fun updateDarkMode(enabled: Boolean) {
-        viewModelScope.launch {
-            val currentSettings = groceryRepository.getSettings().first() ?: Settings()
-            groceryRepository.updateSettings(
-                currentSettings.copy(darkMode = if (enabled) 1 else 0)
-            )
-        }
-    }
-
-    //Section pour les GroceryItems -------------------------------------
+    //Section pour les GroceryItems -----------------------------------------------------
     lateinit var getAllGroceryItems: Flow<List<GroceryItem>>
-
     init {
         viewModelScope.launch {
             getAllGroceryItems = groceryRepository.getAllGroceryItems()
@@ -62,7 +40,6 @@ class GroceryViewModel(
     }
 
     lateinit var getFavoriteGroceryItems: Flow<List<GroceryItem>>
-
     init {
         viewModelScope.launch {
             getFavoriteGroceryItems = groceryRepository.getFavoriteGroceryItems()
@@ -100,7 +77,7 @@ class GroceryViewModel(
         return groceryRepository.getGroceryItemById(id)
     }
 
-    //Section pour les ListItem -------------------------------------
+    //Section pour les ListItem --------------------------------------------------------------------------
     fun upsertListItem(listItem: ListItem) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.upsertListItem(listItem = listItem)
@@ -147,6 +124,7 @@ class GroceryViewModel(
         }
     }
 
+    // On coche ou décoche un item de la liste et enlève les duplicats
     private suspend fun updateListItemCrossed(listItem: ListItem){
         if (listItem.isCrossed == 1) {
             // On doit decocher l'item
@@ -185,7 +163,7 @@ class GroceryViewModel(
         }
     }
 
-    //Section pour les Categories
+    //Section pour les Categories -------------------------------------
     fun upsertCategory(category: Category) {
         viewModelScope.launch(Dispatchers.IO) {
             groceryRepository.upsertCategory(category = category)
@@ -216,10 +194,8 @@ class GroceryViewModel(
         }
     }
 
-
-    //Section pour les GroceryLists
+    //Section pour les GroceryLists -------------------------------------
     lateinit var getAllGroceryLists: Flow<List<GroceryList>>
-
     init {
         viewModelScope.launch {
             getAllGroceryLists = groceryRepository.getAllGroceryLists()
@@ -252,8 +228,7 @@ class GroceryViewModel(
         }
     }
 
-
-    //Section pour les Settings
+    // Section pour les Settings -------------------------------------
     fun getSettings(): Flow<Settings?> {
         return groceryRepository.getSettings()
     }
@@ -270,4 +245,24 @@ class GroceryViewModel(
         }
     }
 
+    // Dark mode, on initialise et obtient la valeur _isDarkTheme ----
+    private val _isDarkTheme = mutableStateOf(false)
+    val isDarkTheme: State<Boolean> = _isDarkTheme
+
+    init {
+        viewModelScope.launch {
+            groceryRepository.getSettings()
+                .map { settings -> settings?.darkMode == 1 }
+                .collect { isDark -> _isDarkTheme.value = isDark }
+        }
+    }
+
+    fun updateDarkMode(enabled: Boolean) {
+        viewModelScope.launch {
+            val currentSettings = groceryRepository.getSettings().first() ?: Settings()
+            groceryRepository.updateSettings(
+                currentSettings.copy(darkMode = if (enabled) 1 else 0)
+            )
+        }
+    }
 }

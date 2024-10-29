@@ -5,6 +5,8 @@ import android.app.Application
 class GroceryApp : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        // On initialise le graph
         Graph.provide(this)
     }
 }

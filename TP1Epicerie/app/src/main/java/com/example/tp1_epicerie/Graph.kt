@@ -9,9 +9,9 @@ import kotlinx.coroutines.SupervisorJob
 
 object Graph {
     private val applicationScope = CoroutineScope(SupervisorJob())
+    private lateinit var database: GroceryDatabase
 
-    lateinit var database: GroceryDatabase
-
+    // On initialise le repository avec les DAOs de la base de données
     val groceryRepository by lazy {
         GroceryRepository(
             groceryItemDao = database.groceryItemDao(),
@@ -22,6 +22,7 @@ object Graph {
         )
     }
 
+    // On initialise la base de données
     fun provide(context: Context) {
         database = GroceryDatabase.getDatabase(context, applicationScope)
     }
