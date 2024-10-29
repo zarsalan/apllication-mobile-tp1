@@ -20,17 +20,18 @@ import com.example.tp1_epicerie.R
 @Composable
 fun CustomTextField(
     label: String,
+    labelColor: Color = Color.Black,
     value: String,
     onValueChanged: (String) -> Unit
 ) {
     OutlinedTextField(
         value = value,
         onValueChange = onValueChanged,
-        label = { Text(text = label, color = Color.Black) },
+        label = { Text(text = label, color = labelColor) },
         modifier = Modifier.fillMaxWidth().padding(start = 6.dp, end = 6.dp, top = 3.dp, bottom = 3.dp),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
         colors = OutlinedTextFieldDefaults.colors(
-            unfocusedBorderColor = Color.Black,
+            unfocusedBorderColor = labelColor,
             focusedBorderColor = colorResource(id = R.color.app_bar),
         )
     )

@@ -181,7 +181,7 @@ fun CustomGroceryListView(
             ) {
                 HorizontalDivider(
                     thickness = 2.dp,
-                    color = Color.Black,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .align(Alignment.Center)
                         .width(150.dp)
@@ -210,7 +210,7 @@ fun CustomGroceryListView(
                             cardInfo = ListItemCardInfo(
                                 listItem = listItem,
                                 onClick = {navHostController.navigate(Screen.AddEditItem.route + "/${listItem.value.groceryItemId}")},
-                                containerColor = MaterialTheme.colorScheme.primary
+                                containerColor = MaterialTheme.colorScheme.primaryContainer
                             )
                         )
                     }

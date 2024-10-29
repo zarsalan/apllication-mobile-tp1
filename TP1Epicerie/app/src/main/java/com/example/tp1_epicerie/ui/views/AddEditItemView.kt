@@ -5,6 +5,7 @@ import android.net.Uri
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -14,12 +15,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -100,7 +103,7 @@ fun AddEditItemView(
             }
         }
     )
-
+    val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
             AppBarView(
@@ -124,7 +127,9 @@ fun AddEditItemView(
         Column(
             modifier = Modifier
                 .padding(it)
-                .fillMaxWidth(),
+                .fillMaxWidth()
+                .verticalScroll(scrollState),
+
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Column(
@@ -134,10 +139,12 @@ fun AddEditItemView(
             ) {
                 CustomTextField(
                     stringResource(R.string.text_name),
+                    labelColor = MaterialTheme.colorScheme.primary,
                     name,
                     onValueChanged = { newValue -> name = newValue })
                 CustomTextField(
                     stringResource(R.string.text_description),
+                    labelColor = MaterialTheme.colorScheme.primary,
                     description,
                     onValueChanged = { newValue -> description = newValue })
             }
@@ -147,6 +154,7 @@ fun AddEditItemView(
                     .width(300.dp)
                     .padding(top = 8.dp),
                 label = stringResource(R.string.text_category) + ":",
+                labelColor = MaterialTheme.colorScheme.primary,
                 value = selectedCategory,
                 customDropdownMenus = CustomDropdownMenus(
                     menus = categories.map { category ->
@@ -193,7 +201,7 @@ fun AddEditItemView(
                                 )
                             }
                         },
-                    tint = if (isFavorite) colorResource(id = R.color.app_bar) else androidx.compose.ui.graphics.Color.Black
+                    tint = if (isFavorite) colorResource(id = R.color.app_bar) else MaterialTheme.colorScheme.primary
                 )
             }
 
@@ -214,7 +222,9 @@ fun AddEditItemView(
                     Button(
                         onClick = { imagePickerLauncher.launch(arrayOf("image/*")) },
                     ) {
-                        Text(stringResource(R.string.text_selectImage))
+                        Text(
+                            text =  stringResource(R.string.text_selectImage),
+                            color = MaterialTheme.colorScheme.background)
                     }
                     if (imageUri != null) {
                         Button(

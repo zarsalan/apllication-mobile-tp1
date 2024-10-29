@@ -21,6 +21,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.HorizontalDivider
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -102,7 +103,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         title = stringResource(R.string.listCard_allItem),
                         description = stringResource(R.string.listCard_seeItem),
                         onClick = { navHostController.navigate(Screen.AllItems.route) },
-                        containerColor = colorResource(id = R.color.all_items)
+                        containerColor = MaterialTheme.colorScheme.tertiary
                     )
                 )
             }
@@ -114,7 +115,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         title = stringResource(R.string.listCard_favorites),
                         description = stringResource(R.string.listCard_viewFavorite),
                         onClick = { navHostController.navigate(Screen.Favorites.route) },
-                        containerColor = colorResource(id = R.color.favorite_items)
+                        containerColor = MaterialTheme.colorScheme.secondary
                     )
                 )
             }
@@ -144,7 +145,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         title = grocery.title,
                         description = grocery.description,
                         onClick = { navHostController.navigate(Screen.GroceryList.route + "/${grocery.id}") },
-                        containerColor = Color.White,
+                        containerColor = MaterialTheme.colorScheme.primaryContainer,
                         canEdit = true,
                         canDelete = true,
                         groceryList = grocery,

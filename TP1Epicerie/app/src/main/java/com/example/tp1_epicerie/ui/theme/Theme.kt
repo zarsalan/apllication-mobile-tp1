@@ -13,17 +13,19 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Color(0x00363636),
-    secondary = Color(0x00FFFBFE),
-    tertiary = Color(0x002A2A2A),
-    background = Color(0x00646363)
+    primary = Color(0xFFECECEC),
+    primaryContainer = Color(0xFFB9B9B9),
+    secondary = Color(0xFFB5C7B3),
+    tertiary = Color(0xFFC59F9F),
+    background = Color(0xFF1C1C1C)
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Color(0xFFFFFBFE),
-    secondary = Color(0xFF000000),
-    tertiary = Color(0xFFFFFBFE),
-    background = Color(0xFFEFEFEF)
+    primary = Color(0xFF000000),
+    primaryContainer = Color(0xFFFFFFFF),
+    secondary = Color(0xFFE3F2E1),
+    tertiary = Color(0xFFF6D8CE),
+    background = Color(0xFF1C1C1C)
 
     /* Other default colors to override
     surface = Color(0xFFFFFBFE),
@@ -39,7 +41,7 @@ private val LightColorScheme = lightColorScheme(
 fun TP1EpicerieTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {

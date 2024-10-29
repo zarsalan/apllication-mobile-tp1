@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -71,6 +72,7 @@ fun AddEditListView(
         ) {
             CustomTextField(
                 label = stringResource(R.string.text_title),
+                labelColor = MaterialTheme.colorScheme.primary,
                 value = title,
                 onValueChanged = { newValue ->
                     title = newValue
@@ -78,6 +80,7 @@ fun AddEditListView(
             )
             CustomTextField(
                 label = stringResource(R.string.text_description),
+                labelColor = MaterialTheme.colorScheme.primary,
                 value = description,
                 onValueChanged = { newValue ->
                     description = newValue
