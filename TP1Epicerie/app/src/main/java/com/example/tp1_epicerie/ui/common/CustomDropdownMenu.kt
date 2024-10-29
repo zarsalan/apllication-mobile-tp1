@@ -30,6 +30,7 @@ import androidx.compose.ui.unit.sp
 fun CustomDropdownMenu(
     modifier: Modifier = Modifier,
     label: String = "",
+    labelColor: Color = Color.Black,
     value: String = "",
     customDropdownMenus: CustomDropdownMenus = CustomDropdownMenus(),
 ) {
@@ -49,7 +50,7 @@ fun CustomDropdownMenu(
             Text(
                 text = label,
                 fontSize = 16.sp,
-                color = Color.Black,
+                color = labelColor,
                 modifier = Modifier.padding(end = 8.dp)
             )
 
@@ -126,6 +127,7 @@ fun CustomDropdownMenuPreview() {
     CustomDropdownMenu(
         modifier = Modifier.width(300.dp),
         label = "Catégorie:",
+        labelColor = Color.Black,
         value = "Test",
         CustomDropdownMenus(
             menus = listOf(
