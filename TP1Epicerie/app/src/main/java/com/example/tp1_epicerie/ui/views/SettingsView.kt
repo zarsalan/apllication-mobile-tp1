@@ -114,6 +114,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
                                         language = language
                                     )
                                 )
+                                viewModel.updateDarkMode(if (theme == "Sombre") true else false)
                                 Toast.makeText(
                                     currentContext,
                                     "Vos paramètres ont été mis à jour",
