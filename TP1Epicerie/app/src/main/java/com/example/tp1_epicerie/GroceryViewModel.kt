@@ -3,6 +3,7 @@ package com.example.tp1_epicerie
 import android.content.Context
 import android.content.res.Configuration
 import android.content.res.Resources
+import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -19,7 +20,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
 import java.util.Locale
 
@@ -27,6 +30,26 @@ class GroceryViewModel(
 
     private val groceryRepository: GroceryRepository = Graph.groceryRepository
 ) : ViewModel() {
+
+    private val _isDarkTheme = mutableStateOf(false)
+    val isDarkTheme: State<Boolean> = _isDarkTheme
+
+    init {
+        viewModelScope.launch {
+            groceryRepository.getSettings()
+                .map { settings -> settings?.darkMode == 1 }
+                .collect { isDark -> _isDarkTheme.value = isDark }
+        }
+    }
+
+    fun updateDarkMode(enabled: Boolean) {
+        viewModelScope.launch {
+            val currentSettings = groceryRepository.getSettings().first() ?: Settings()
+            groceryRepository.updateSettings(
+                currentSettings.copy(darkMode = if (enabled) 1 else 0)
+            )
+        }
+    }
 
     //Section pour les GroceryItems -------------------------------------
     lateinit var getAllGroceryItems: Flow<List<GroceryItem>>
