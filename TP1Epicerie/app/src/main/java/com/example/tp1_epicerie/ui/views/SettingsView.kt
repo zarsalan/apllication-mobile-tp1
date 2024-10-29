@@ -98,7 +98,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
 //Nouveau manqué de temps pour le thème
             CustomDropdownMenu(
                 modifier = Modifier.padding(start = 25.dp, top = 10.dp, end = 25.dp),
-                label = "Thème",
+                label = stringResource(R.string.text_theme),
                 labelColor = MaterialTheme.colorScheme.primary,
                 value = if (darkMode) "Sombre" else "Clair",
                 customDropdownMenus = CustomDropdownMenus(
