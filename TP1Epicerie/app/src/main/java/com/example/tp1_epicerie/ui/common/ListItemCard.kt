@@ -42,13 +42,17 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.data.GroceryItem
@@ -69,6 +73,7 @@ fun ListItemCard(
     val groceryItem: GroceryItem = viewModel.getGroceryItemById(listItem.groceryItemId)
         .collectAsState(initial = GroceryItem()).value
     var showDeleteDialog by remember { mutableStateOf(false) }
+    val currentContext = LocalContext.current
 
     Card(
         modifier = Modifier
@@ -90,14 +95,13 @@ fun ListItemCard(
                 modifier = Modifier
                     .padding(
                         start = 15.dp,
-                        end = 10.dp,
-                        top = 10.dp,
-                        bottom = 10.dp
+                        end = 3.dp,
+                        top = 1.dp,
+                        bottom = 1.dp
                     )
-                    .widthIn(
-                        min = 160.dp, max = 160.dp
-                    ),
-                verticalAlignment = Alignment.CenterVertically
+                    .weight(1f),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Column(
                     modifier = Modifier
@@ -118,110 +122,118 @@ fun ListItemCard(
                 }
 
                 if (groceryItem.imagePath != null) {
-                    Image(
-                        modifier = Modifier.size(50.dp),
-                        painter = rememberAsyncImagePainter(groceryItem.imagePath),
+                    AsyncImage(
+                        model = ImageRequest.Builder(currentContext)
+                            .data(groceryItem.imagePath)
+                            .crossfade(true)
+                            .build(),
                         contentDescription = null,
+                        modifier = Modifier
+                            .size(50.dp)
+                            .padding(end = 10.dp),
+                        placeholder = painterResource(R.drawable.baseline_image_24),
+                        error = painterResource(R.drawable.baseline_broken_image_24)
                     )
                 }
-            }
 
-            Row(
-                modifier = Modifier.fillMaxHeight(),
-                horizontalArrangement = Arrangement.End,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                // Colonne pour changer la quantité
-                Text(text = listItem.quantity.toString())
-                Column(
-                    verticalArrangement = Arrangement.spacedBy(
-                        1.dp,
-                        Alignment.CenterVertically
-                    )
+                Row(
+                    modifier = Modifier.fillMaxHeight(),
+                    horizontalArrangement = Arrangement.End,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    IconButton(onClick = {
-                        viewModel.updateListItem(listItem.copy(quantity = listItem.quantity + 1))
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.KeyboardArrowUp,
-                            contentDescription = "Add",
-                            tint = Color.Black
-                        )
+                    // Colonne pour changer la quantité
+                    Column(
+                        verticalArrangement = Arrangement.spacedBy(
+                            0.dp,
+                            Alignment.CenterVertically
+                        ),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        IconButton(onClick = {
+                            viewModel.updateListItem(listItem.copy(quantity = listItem.quantity + 1))
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowUp,
+                                contentDescription = "Add",
+                                tint = Color.Black
+                            )
+                        }
+                        Text(text = listItem.quantity.toString())
+                        IconButton(onClick = {
+                            if (listItem.quantity > 1) {
+                                viewModel.updateListItem(listItem.copy(quantity = listItem.quantity - 1))
+                            }
+                        }) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowDown,
+                                contentDescription = "Substract",
+                                tint = Color.Black
+                            )
+                        }
                     }
+
+                    // Icône pour marquer/cocher l'item
                     IconButton(onClick = {
-                        if (listItem.quantity > 1) {
-                            viewModel.updateListItem(listItem.copy(quantity = listItem.quantity - 1))
+                        if (listItem.isCrossed > 0) {
+                            viewModel.updateListItem(listItem.copy(isCrossed = 0))
+                        } else {
+                            viewModel.updateListItem(listItem.copy(isCrossed = 1))
                         }
                     }) {
                         Icon(
-                            imageVector = Icons.Default.KeyboardArrowDown,
-                            contentDescription = "Substract",
+                            imageVector = if (listItem.isCrossed > 0) Icons.Filled.CheckCircle else Icons.Filled.Check,
+                            contentDescription = "Checkmark",
+                            tint = colorResource(id = R.color.check_mark)
+                        )
+                    }
+
+                    // Icône pour marquer l'item comme favori
+                    IconButton(onClick = {
+                        if (groceryItem.isFavorite > 0) {
+                            viewModel.updateGroceryItem(groceryItem.copy(isFavorite = 0))
+                        } else {
+                            viewModel.updateGroceryItem(groceryItem.copy(isFavorite = 1))
+                        }
+                    }) {
+                        Icon(
+                            imageVector = if (groceryItem.isFavorite > 0) {
+                                Icons.Filled.Favorite
+                            } else {
+                                Icons.Default.FavoriteBorder
+                            },
+                            contentDescription = "Favorite",
+                            tint = if (groceryItem.isFavorite > 0) Color.Red else Color.Black,
+                        )
+                    }
+
+                    // Icône pour supprimer l'item
+                    IconButton(onClick = {
+                        showDeleteDialog = true
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Delete,
+                            contentDescription = "Delete",
                             tint = Color.Black
                         )
                     }
                 }
 
-                // Icône pour marquer/cocher l'item
-                IconButton(onClick = {
-                    if (listItem.isCrossed > 0) {
-                        viewModel.updateListItem(listItem.copy(isCrossed = 0))
-                    } else {
-                        viewModel.updateListItem(listItem.copy(isCrossed = 1))
-                    }
-                }) {
-                    Icon(
-                        imageVector = if (listItem.isCrossed > 0) Icons.Filled.CheckCircle else Icons.Filled.Check,
-                        contentDescription = "Checkmark",
-                        tint = colorResource(id = R.color.check_mark)
-                    )
-                }
-
-                // Icône pour marquer l'item comme favori
-                IconButton(onClick = {
-                    if (groceryItem.isFavorite > 0) {
-                        viewModel.updateGroceryItem(groceryItem.copy(isFavorite = 0))
-                    } else {
-                        viewModel.updateGroceryItem(groceryItem.copy(isFavorite = 1))
-                    }
-                }) {
-                    Icon(
-                        imageVector = if (groceryItem.isFavorite > 0) {
-                            Icons.Filled.Favorite
-                        } else {
-                            Icons.Default.FavoriteBorder
-                        },
-                        contentDescription = "Favorite",
-                        tint = if (groceryItem.isFavorite > 0) Color.Red else Color.Black,
-                    )
-                }
-
-                // Icône pour supprimer l'item
-                IconButton(onClick = {
-                    showDeleteDialog = true
-                }) {
-                    Icon(
-                        imageVector = Icons.Default.Delete,
-                        contentDescription = "Delete",
-                        tint = Color.Black
-                    )
-                }
             }
-
         }
-    }
 
-    // Dialog de suppression
-    CustomYesNoDialog(
-        visible = showDeleteDialog,
-        onDismissRequest = { showDeleteDialog = false },
-        title = stringResource(R.string.text_removeItem) + " ${groceryItem.name}?",
-        message = stringResource(R.string.text_deleteVerification),
-        onYes = {
-            viewModel.deleteListItem(listItem)
-            showDeleteDialog = false
-        },
-        onNo = {
-            showDeleteDialog = false
-        },
-    )
+        // Dialog de suppression
+        CustomYesNoDialog(
+            visible = showDeleteDialog,
+            onDismissRequest = { showDeleteDialog = false },
+            title = stringResource(R.string.text_removeItem) + " ${groceryItem.name}?",
+            message = stringResource(R.string.text_deleteVerification),
+            onYes = {
+                viewModel.deleteListItem(listItem)
+                showDeleteDialog = false
+            },
+            onNo = {
+                showDeleteDialog = false
+            },
+        )
+    }
 }
