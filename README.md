@@ -11,3 +11,4 @@ Fonctionnalités supplémentaires:
   - Logo
   - Modification des éléments dynamique
   - Popup About
+  - Utilisation de compose jetpack
