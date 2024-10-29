@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class, Settings::class],
-    version = 32,
+    version = 33,
     exportSchema = false
 )
 abstract class GroceryDatabase : RoomDatabase() {

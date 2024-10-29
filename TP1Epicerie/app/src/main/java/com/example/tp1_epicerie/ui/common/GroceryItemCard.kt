@@ -83,7 +83,7 @@ fun GroceryItemCard(
                     selectedGroceryList = groceryList
                     showQuantityDialog = true
                     menuExpanded = false
-                    viewModel.fetchListItem(selectedGroceryList.id, cardInfo.groceryItem.id)
+                    viewModel.fetchUncrossedListItem(selectedGroceryList.id, cardInfo.groceryItem.id)
                 }
             )
         }
@@ -265,7 +265,7 @@ fun GroceryItemCard(
             },
             confirmButton = {
                 Button(onClick = {
-                    viewModel.listItem.let { it ->
+                    viewModel.uncrossedListItem.let { it ->
                         val listItem = it.value
 
                         if (listItem != null) {

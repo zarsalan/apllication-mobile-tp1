@@ -10,6 +10,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.room.util.copy
 import com.example.tp1_epicerie.data.Category
 import com.example.tp1_epicerie.data.GroceryItem
 import com.example.tp1_epicerie.data.GroceryList
@@ -131,11 +132,57 @@ class GroceryViewModel(
         }
     }
 
+    private val _uncrossedListItem = MutableStateFlow<ListItem?>(null)
+    val uncrossedListItem: StateFlow<ListItem?> = _uncrossedListItem
+
+    fun fetchUncrossedListItem(groceryListId: Long = 1L, groceryItemId: Long = 1L) {
+        viewModelScope.launch {
+            _uncrossedListItem.value = getListItemByGroceryListId(groceryListId, groceryItemId, true).firstOrNull()
+        }
+    }
+
+    fun updateListItemCrossedState(listItem: ListItem) {
+        viewModelScope.launch {
+            updateListItemCrossed(listItem)
+        }
+    }
+
+    private suspend fun updateListItemCrossed(listItem: ListItem){
+        if (listItem.isCrossed == 1) {
+            // On doit decocher l'item
+            val uncrossedSameListItem = groceryRepository.getUncrossedListItemByGroceryListId(listItem.groceryListId, listItem.groceryItemId).firstOrNull()
+
+            if (uncrossedSameListItem != null) {
+                groceryRepository.updateListItem(uncrossedSameListItem.copy(quantity = uncrossedSameListItem.quantity + listItem.quantity))
+                groceryRepository.deleteListItem(listItem)
+            } else {
+                groceryRepository.updateListItem(listItem.copy(isCrossed = 0))
+            }
+        }
+        else {
+            // On doit cocher l'item
+            val crossedSameListItem = groceryRepository.getCrossedListItemsByGroceryListId(listItem.groceryListId, listItem.groceryItemId).firstOrNull()
+
+            if (crossedSameListItem != null) {
+                groceryRepository.updateListItem(crossedSameListItem.copy(quantity = crossedSameListItem.quantity + listItem.quantity))
+                groceryRepository.deleteListItem(listItem)
+            } else {
+                groceryRepository.updateListItem(listItem.copy(isCrossed = 1))
+            }
+        }
+    }
+
+    // On obtient un ListItem qui est cochée ou non cochée
     private fun getListItemByGroceryListId(
         groceryListId: Long,
-        groceryItemId: Long
+        groceryItemId: Long,
+        uncrossed: Boolean = false
     ): Flow<ListItem?> {
-        return groceryRepository.getListItemByGroceryListId(groceryListId, groceryItemId)
+        return if (uncrossed) {
+            groceryRepository.getUncrossedListItemByGroceryListId(groceryListId, groceryItemId)
+        } else {
+            groceryRepository.getListItemByGroceryListId(groceryListId, groceryItemId)
+        }
     }
 
     //Section pour les Categories

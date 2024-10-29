@@ -55,6 +55,14 @@ class GroceryRepository(
         return listItemDao.getListItemByGroceryListId(groceryListId, groceryItemId)
     }
 
+    fun getUncrossedListItemByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem> {
+        return listItemDao.getUncrossedListItemByGroceryListId(groceryListId, groceryItemId)
+    }
+
+    fun getCrossedListItemsByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem> {
+        return listItemDao.getCrossedListItemsByGroceryListId(groceryListId, groceryItemId)
+    }
+
     //Section pour le CategoryDao
     suspend fun upsertCategory(category: Category) {
         categoryDao.upsertCategory(category)

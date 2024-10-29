@@ -39,6 +39,12 @@ abstract class ListItemDao {
     @Query("SELECT * FROM `listItem_table` WHERE `listItem_groceryList_id` = :groceryListId AND `listItem_grocery_item_id` = :groceryItemId LIMIT 1")
     abstract fun getListItemByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem?>
 
+    @Query("SELECT * FROM `listItem_table` WHERE `listItem_groceryList_id` = :groceryListId AND `listItem_grocery_item_id` = :groceryItemId AND `listItem_isCrossed` = 0 LIMIT 1")
+    abstract fun getUncrossedListItemByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem>
+
+    @Query("SELECT * FROM `listItem_table` WHERE `listItem_groceryList_id` = :groceryListId AND `listItem_grocery_item_id` = :groceryItemId AND `listItem_isCrossed` = 1 LIMIT 1")
+    abstract fun getCrossedListItemsByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem>
+
     @Upsert
     abstract suspend fun upsertListItem(listItemEntity: ListItem)
 
