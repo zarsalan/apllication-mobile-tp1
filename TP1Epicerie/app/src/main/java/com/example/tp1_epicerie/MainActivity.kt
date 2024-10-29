@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import com.example.tp1_epicerie.ui.theme.TP1EpicerieTheme
 
+// L'activité principale de l'application
 class MainActivity : ComponentActivity() {
     private val settingsViewModel: GroceryViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {

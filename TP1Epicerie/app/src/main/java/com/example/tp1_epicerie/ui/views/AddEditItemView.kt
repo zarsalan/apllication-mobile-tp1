@@ -59,6 +59,7 @@ import com.example.tp1_epicerie.ui.common.CustomTextField
 import com.example.tp1_epicerie.ui.common.CustomYesNoDialog
 import com.example.tp1_epicerie.ui.theme.submitButtonColors
 
+// La page pour ajouter ou modifier un item
 @Composable
 fun AddEditItemView(
     id: Long = 0L,
@@ -103,6 +104,8 @@ fun AddEditItemView(
             }
         }
     )
+
+    // ScrollState pour le scroll vertical si l'écran est trop petit
     val scrollState = rememberScrollState()
     Scaffold(
         topBar = {
@@ -132,6 +135,7 @@ fun AddEditItemView(
 
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            // Colonne pour afficher le nom et la description de l'item
             Column(
                 modifier = Modifier
                     .fillMaxWidth(),
@@ -149,6 +153,7 @@ fun AddEditItemView(
                     onValueChanged = { newValue -> description = newValue })
             }
 
+            // Dropdown pour sélectionner la catégorie
             CustomDropdownMenu(
                 modifier = Modifier
                     .width(300.dp)
@@ -168,6 +173,7 @@ fun AddEditItemView(
                     })
             )
 
+            // Row pour ajouter ou retirer l'item des favoris
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -205,6 +211,7 @@ fun AddEditItemView(
                 )
             }
 
+            // Colonne pour ajouter ou supprimer une image ainsi que le bouton pour sauvegarder l'item
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -212,6 +219,7 @@ fun AddEditItemView(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
             ) {
+                // Boutton pour ajouter ou supprimer une image
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(
@@ -238,6 +246,7 @@ fun AddEditItemView(
                     }
                 }
 
+                // Affichage de l'image
                 imageUri?.let { uri ->
                     AsyncImage(
                         model = ImageRequest.Builder(currentContext)
@@ -251,6 +260,7 @@ fun AddEditItemView(
                     )
                 }
 
+                // Boutton pour sauvegarder l'item
                 val textAlert: String = stringResource(R.string.addItem_alert)
                 val textItemSaved: String = stringResource(R.string.text_saveItem)
                 Button(
@@ -265,6 +275,7 @@ fun AddEditItemView(
                             return@Button
                         }
 
+                        // Si l'item existe déjà, on le met à jour, sinon on l'ajoute
                         if (groceryItem != null) {
                             viewModel.updateGroceryItem(
                                 GroceryItem(

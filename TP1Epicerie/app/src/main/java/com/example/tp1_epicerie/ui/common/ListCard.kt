@@ -72,6 +72,7 @@ fun CustomListCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Titre et description
             Column(
                 modifier = Modifier
                     .padding(16.dp)
@@ -81,6 +82,7 @@ fun CustomListCard(
                 Text(text = cardInfo.description, overflow = TextOverflow.Ellipsis, maxLines = 1)
             }
 
+            // Boutons d'édition et de suppression
             if (cardInfo.canDelete || cardInfo.canEdit) {
                 Row(
                     modifier = Modifier

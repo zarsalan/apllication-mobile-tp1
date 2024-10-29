@@ -30,6 +30,7 @@ import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenu
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenus
 
+// La page pour les paramètres de l'application
 @Composable
 fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostController) {
     val context = LocalContext.current

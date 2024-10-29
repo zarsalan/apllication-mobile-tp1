@@ -39,6 +39,7 @@ import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomListCardInfo
 import com.example.tp1_epicerie.ui.common.CustomListCard
 
+// La page d'accueil ou on affiche les listes d'épicerie et les options
 @Composable
 fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) {
     var showAboutDialog by remember { mutableStateOf(false) }

@@ -35,6 +35,7 @@ import com.example.tp1_epicerie.ui.common.CustomTextField
 import com.example.tp1_epicerie.ui.theme.submitButtonColors
 import okhttp3.internal.wait
 
+// La page pour ajouter ou modifier une catégorie
 @Composable
 fun AddEditCategoryView(
     id: Long = 0L,
@@ -69,6 +70,7 @@ fun AddEditCategoryView(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
+            // Champ de texte pour la catégorie
             CustomTextField(
                 label = "Titre",
                 value = title,
@@ -78,6 +80,7 @@ fun AddEditCategoryView(
                 }
             )
 
+            // Bouton pour ajouter ou modifier la catégorie
             if (id != 0L) {
                 val textCategoryUpdated: String = stringResource(R.string.text_categoryUpdated)
                 val textCategoryNotFound: String = stringResource(R.string.text_categoryNotFound)
@@ -112,6 +115,7 @@ fun AddEditCategoryView(
                     )
                 }
             } else {
+                // Bouton pour ajouter la catégorie
                 val textCategoryAdded: String = stringResource(R.string.text_categoryAdded)
                 Button(modifier = Modifier.padding(top = 15.dp),
                     colors = ButtonDefaults.submitButtonColors(),
