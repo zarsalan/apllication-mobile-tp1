@@ -89,7 +89,7 @@ fun GroceryItemsView(
         topBar = {
             AppBarView(
                 title = if (mode) Screen.AllItems.title() else Screen.Favorites.title(),
-                onBackNavClicked = { navHostController.popBackStack() },
+                navHostController = navHostController,
                 appBarMenuInfo = if (mode) AppBarMenuInfo(menus = listOf(
                     AppBarMenu(
                         title = stringResource(R.string.menu_addItem),

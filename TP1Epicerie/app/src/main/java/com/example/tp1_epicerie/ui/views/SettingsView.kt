@@ -50,8 +50,10 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
     Scaffold(topBar = {
         AppBarView(
             title = Screen.AddEditCategory.title(),
-            onBackNavClicked = { navHostController.popBackStack() })
-    }) {
+            navHostController = navHostController
+        )
+    }
+    ) {
         Column(
             modifier = Modifier
                 .padding(it)

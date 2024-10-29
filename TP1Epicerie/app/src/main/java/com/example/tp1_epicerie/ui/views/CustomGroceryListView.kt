@@ -111,7 +111,7 @@ fun CustomGroceryListView(
         topBar = {
             AppBarView(
                 title = groceryList.title,
-                onBackNavClicked = { navHostController.popBackStack() },
+                navHostController = navHostController,
                 appBarMenuInfo = AppBarMenuInfo(menus = listOf(
                     AppBarMenu(
                         title = stringResource(R.string.menu_addItem),

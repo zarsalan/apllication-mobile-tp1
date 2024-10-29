@@ -19,6 +19,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 
@@ -26,6 +27,7 @@ import com.example.tp1_epicerie.Screen
 @Composable
 fun AppBarView(
     title: String,
+    navHostController: NavHostController,
     onBackNavClicked: () -> Unit = {},
     appBarMenuInfo: AppBarMenuInfo = AppBarMenuInfo(emptyList())
 ) {
@@ -33,14 +35,16 @@ fun AppBarView(
 
     val navigationIcon: (@Composable () -> Unit) = {
         if (!title.contains(Screen.HomeScreen.title())) {
-            IconButton(onClick = { onBackNavClicked() }) {
+            IconButton(onClick = {
+                onBackNavClicked()
+                if (navHostController.previousBackStackEntry != null) navHostController.popBackStack()
+            }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     tint = Color.White,
                     contentDescription = null
                 )
             }
-
         }
     }
 
@@ -88,9 +92,3 @@ data class AppBarMenu(
 data class AppBarMenuInfo(
     val menus: List<AppBarMenu> = emptyList()
 )
-
-@Preview(showBackground = true)
-@Composable
-fun AppBarPreview() {
-    AppBarView(title = Screen.HomeScreen.title())
-}
