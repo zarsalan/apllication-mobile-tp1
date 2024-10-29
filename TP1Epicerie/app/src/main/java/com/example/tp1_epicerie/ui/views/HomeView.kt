@@ -103,7 +103,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         title = stringResource(R.string.listCard_allItem),
                         description = stringResource(R.string.listCard_seeItem),
                         onClick = { navHostController.navigate(Screen.AllItems.route) },
-                        containerColor = colorResource(id = R.color.all_items)
+                        containerColor = MaterialTheme.colorScheme.tertiary
                     )
                 )
             }
@@ -115,7 +115,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                         title = stringResource(R.string.listCard_favorites),
                         description = stringResource(R.string.listCard_viewFavorite),
                         onClick = { navHostController.navigate(Screen.Favorites.route) },
-                        containerColor = colorResource(id = R.color.favorite_items)
+                        containerColor = MaterialTheme.colorScheme.secondary
                     )
                 )
             }

@@ -222,7 +222,9 @@ fun AddEditItemView(
                     Button(
                         onClick = { imagePickerLauncher.launch(arrayOf("image/*")) },
                     ) {
-                        Text(stringResource(R.string.text_selectImage))
+                        Text(
+                            text =  stringResource(R.string.text_selectImage),
+                            color = MaterialTheme.colorScheme.background)
                     }
                     if (imageUri != null) {
                         Button(
