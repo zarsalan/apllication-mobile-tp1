@@ -226,7 +226,7 @@ fun ListItemCard(
             visible = showDeleteDialog,
             onDismissRequest = { showDeleteDialog = false },
             title = stringResource(R.string.text_removeItem) + " ${groceryItem.name}?",
-            message = stringResource(R.string.text_deleteVerification),
+            message = stringResource(R.string.text_delete_from_list_verification),
             onYes = {
                 viewModel.deleteListItem(listItem)
                 showDeleteDialog = false

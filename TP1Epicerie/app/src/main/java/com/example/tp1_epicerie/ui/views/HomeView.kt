@@ -45,6 +45,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
     Scaffold(
         topBar = {
             AppBarView(title = Screen.HomeScreen.title(),
+                navHostController = navHostController,
                 appBarMenuInfo = AppBarMenuInfo(menus = listOf(
                     AppBarMenu(
                         title = stringResource(R.string.menu_addItem),

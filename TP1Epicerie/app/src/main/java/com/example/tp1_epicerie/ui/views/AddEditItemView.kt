@@ -47,10 +47,13 @@ import com.example.tp1_epicerie.GroceryViewModel
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 import com.example.tp1_epicerie.data.GroceryItem
+import com.example.tp1_epicerie.ui.common.AppBarMenu
+import com.example.tp1_epicerie.ui.common.AppBarMenuInfo
 import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenu
 import com.example.tp1_epicerie.ui.common.CustomDropdownMenus
 import com.example.tp1_epicerie.ui.common.CustomTextField
+import com.example.tp1_epicerie.ui.common.CustomYesNoDialog
 import com.example.tp1_epicerie.ui.theme.submitButtonColors
 
 @Composable
@@ -70,7 +73,10 @@ fun AddEditItemView(
         ?.collectAsState(GroceryItem())
         ?.value
     val categories = viewModel.getAllCategories.collectAsState(initial = emptyList()).value
+    var showDeleteDialog by remember { mutableStateOf(false) }
     val currentContext = LocalContext.current
+
+    val itemDeletedText = stringResource(R.string.text_itemDeleted)
 
     groceryItem?.let {
         name = it.name
@@ -83,9 +89,15 @@ fun AddEditItemView(
 
     // Launcher pour récupérer une image
     val imagePickerLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.GetContent(),
+        contract = ActivityResultContracts.OpenDocument(),
         onResult = { uri: Uri? ->
-            imageUri = uri
+            uri?.let {
+                imageUri = it
+                currentContext.contentResolver.takePersistableUriPermission(
+                    it,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
         }
     )
 
@@ -93,7 +105,20 @@ fun AddEditItemView(
         topBar = {
             AppBarView(
                 title = if (id == 0L) Screen.AddEditItem.title() else Screen.AddEditItem.title2(),
-                onBackNavClicked = { navHostController.popBackStack() })
+                navHostController = navHostController,
+                appBarMenuInfo = AppBarMenuInfo(
+                    menus = if (id != 0L) {
+                        listOf(
+                            AppBarMenu(
+                                title = stringResource(R.string.menu_delete_this_item),
+                                onClick = { showDeleteDialog = true }
+                            )
+                        )
+                    } else {
+                        emptyList()
+                    }
+                )
+            )
         }
     ) {
         Column(
@@ -179,10 +204,30 @@ fun AddEditItemView(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.spacedBy(16.dp, Alignment.CenterVertically)
             ) {
-                Button(
-                    onClick = { imagePickerLauncher.launch("image/*") },
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.spacedBy(
+                        10.dp,
+                        Alignment.CenterHorizontally
+                    )
                 ) {
-                    Text(stringResource(R.string.text_selectImage))
+                    Button(
+                        onClick = { imagePickerLauncher.launch(arrayOf("image/*")) },
+                    ) {
+                        Text(stringResource(R.string.text_selectImage))
+                    }
+                    if (imageUri != null) {
+                        Button(
+                            onClick = {
+                                imageUri = null
+                                if (groceryItem != null) {
+                                    viewModel.updateGroceryItem(groceryItem.copy(imagePath = null))
+                                }
+                            },
+                        ) {
+                            Text(stringResource(R.string.text_deleteImage))
+                        }
+                    }
                 }
 
                 imageUri?.let { uri ->
@@ -248,4 +293,27 @@ fun AddEditItemView(
             }
         }
     }
+
+    // Dialog de suppression
+    CustomYesNoDialog(
+        visible = showDeleteDialog,
+        onDismissRequest = { showDeleteDialog = false },
+        title = stringResource(R.string.text_removeItem) + " ${groceryItem?.name ?: name}?",
+        message = stringResource(R.string.text_deleteVerification),
+        onYesWithContext = { context ->
+            if (groceryItem != null) {
+                viewModel.deleteGroceryItem(groceryItem)
+            }
+            showDeleteDialog = false
+            navHostController.popBackStack()
+            Toast.makeText(
+                context,
+                itemDeletedText,
+                Toast.LENGTH_SHORT
+            ).show()
+        },
+        onNo = {
+            showDeleteDialog = false
+        },
+    )
 }

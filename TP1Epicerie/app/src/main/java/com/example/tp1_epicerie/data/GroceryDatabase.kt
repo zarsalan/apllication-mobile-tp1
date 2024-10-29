@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 @Database(
     entities = [GroceryItem::class, ListItem::class, Category::class, GroceryList::class, Settings::class],
-    version = 31,
+    version = 32,
     exportSchema = false
 )
 abstract class GroceryDatabase : RoomDatabase() {
@@ -65,6 +65,7 @@ abstract class GroceryDatabase : RoomDatabase() {
                         val categoryDao = database.categoryDao()
                         val groceryItemDao = database.groceryItemDao()
                         val settingsDao = database.settingsDao()
+                        val groceryListDao = database.groceryListDao()
 
                         val settings = settingsDao.getSettings().firstOrNull()
                         if (settings == null) {
@@ -79,6 +80,11 @@ abstract class GroceryDatabase : RoomDatabase() {
                         val groceryItems = groceryItemDao.getAllGroceryItems().first()
                         if (groceryItems.isEmpty()) {
                             populateGroceryItems(groceryItemDao)
+                        }
+
+                        val groceryLists = groceryListDao.getAllGroceryLists().first()
+                        if (groceryLists.isEmpty()) {
+                            populateGroceryLists(groceryListDao)
                         }
                     }
                 }
@@ -248,6 +254,16 @@ abstract class GroceryDatabase : RoomDatabase() {
         suspend fun populateSettings(settingsDao: SettingsDao) {
             val settings = Settings(id = 1, darkMode = 0)
             settingsDao.upsertSettings(settings)
+        }
+
+        suspend fun populateGroceryLists(groceryListDao: GroceryListDao){
+            val groceryLists = listOf(
+                GroceryList(title = "Liste de courses maison", description = "Liste de courses pour la semaine"),
+                GroceryList(title = "Liste de courses chalet", description = "Liste de courses pour le chalet"),
+            )
+            groceryLists.forEach { groceryList ->
+                groceryListDao.upsertAGroceryList(groceryList)
+            }
         }
     }
 }

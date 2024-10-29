@@ -29,7 +29,7 @@ fun CategoriesView(viewModel: GroceryViewModel, navHostController: NavHostContro
         topBar = {
             AppBarView(
                 title = Screen.Categories.title(),
-                onBackNavClicked = { navHostController.popBackStack() }
+                navHostController = navHostController,
             )
         },
         floatingActionButton = {
