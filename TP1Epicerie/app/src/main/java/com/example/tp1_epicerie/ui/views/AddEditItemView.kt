@@ -202,7 +202,9 @@ fun AddEditItemView(
                                         id = id,
                                         name = name.trim(),
                                         description = description.trim(),
-                                        isFavorite = isFavorite.compareTo(false)
+                                        categoryId = categoryId,
+                                        isFavorite = isFavorite.compareTo(false),
+                                        imagePath = imageUri?.toString()
                                     )
                                 )
                             }
