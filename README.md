@@ -10,3 +10,4 @@ Fonctionnalités supplémentaires:
   - Sauvegarde des paramètres
   - Logo
   - Modification des éléments dynamique
+  - Popup About
