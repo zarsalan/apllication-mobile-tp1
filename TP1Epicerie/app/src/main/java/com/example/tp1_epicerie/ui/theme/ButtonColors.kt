@@ -7,6 +7,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.colorResource
 import com.example.tp1_epicerie.R
 
+// Couleurs par défaut pour les boutons de type sauvegarder
 @Composable
 fun ButtonDefaults.submitButtonColors(): ButtonColors {
     return buttonColors(

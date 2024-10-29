@@ -47,7 +47,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 
-
+// La vue pour afficher les articles d'épicerie (tous ou favoris)
 @Composable
 fun GroceryItemsView(
     viewModel: GroceryViewModel,
@@ -104,6 +104,7 @@ fun GroceryItemsView(
                 ))
             )
         },
+        // Boutton flottant pour ajouter un article
         floatingActionButton = {
             if (mode) {
                 FloatingActionButton(
@@ -119,6 +120,7 @@ fun GroceryItemsView(
             }
         },
     ) {
+        // Affichage des items dans un LazyColumn (comme recyclerView mais bien meilleur)
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

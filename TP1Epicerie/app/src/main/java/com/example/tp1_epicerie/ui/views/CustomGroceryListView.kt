@@ -51,6 +51,7 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.firstOrNull
 import kotlin.math.log
 
+// La vue pour afficher une liste d'épicerie (liste d'articles à acheter)
 @Composable
 fun CustomGroceryListView(
     id: Long,
@@ -69,6 +70,7 @@ fun CustomGroceryListView(
     var indexCrossed by remember { mutableStateOf(false) }
     val itemsToShow = if (indexCrossed) crossedItems else nonCrossedItems
 
+    // Mise à jour des items par catégorie
     suspend fun updateItemsByCategory() {
         val updatedItemsByCategory = mutableMapOf<Category, MutableList<MutableState<ListItem>>>()
 
@@ -131,13 +133,14 @@ fun CustomGroceryListView(
                 .fillMaxSize()
                 .padding(it)
         ) {
-            // Section de sélection Crossed / Uncrossed
+            // Section de sélection de liste coché / non cochées
             Row(
                 modifier = Modifier
                     .fillMaxWidth(),
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Boutton pour afficher les items non cochés
                 Box(
                     modifier = Modifier
                         .clickable { indexCrossed = false }
@@ -156,6 +159,7 @@ fun CustomGroceryListView(
                     )
                 }
 
+                // Boutton pour afficher les items cochés
                 Box(
                     modifier = Modifier
                         .clickable { indexCrossed = true }
@@ -175,6 +179,7 @@ fun CustomGroceryListView(
                 }
             }
 
+            // Un divider pour séparer les boutons de la liste
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -188,6 +193,7 @@ fun CustomGroceryListView(
                 )
             }
 
+            // Affichage de la liste d'items dynamiquement dans une LazyColumn (comme un RecyclerView mais bien meilleur)
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()

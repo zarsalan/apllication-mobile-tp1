@@ -84,6 +84,8 @@ fun GroceryItemCard(
                     selectedGroceryList = groceryList
                     showQuantityDialog = true
                     menuExpanded = false
+
+                    // On récupère l'élément d'épicerie non barré correspondant à l'élément sélectionné
                     viewModel.fetchUncrossedListItem(selectedGroceryList.id, cardInfo.groceryItem.id)
                 }
             )
@@ -107,6 +109,7 @@ fun GroceryItemCard(
                 .fillMaxHeight(),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Affichage du nom, de la description et de l'image de l'élément d'épicerie
             Row(
                 modifier = Modifier
                     .padding(start = 15.dp, top = 10.dp, bottom = 10.dp)
@@ -114,6 +117,7 @@ fun GroceryItemCard(
                     .weight(1.9f),
                 verticalAlignment = Alignment.CenterVertically
             ) {
+                // Affichage du nom et de la description de l'élément d'épicerie un par dessus l'autre
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -147,6 +151,7 @@ fun GroceryItemCard(
                 }
             }
 
+            // Affichage des boutons d'ajout, de favoris et de suppression
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -155,6 +160,7 @@ fun GroceryItemCard(
                 horizontalArrangement = Arrangement.End,
                 verticalAlignment = Alignment.CenterVertically,
             ) {
+                // Bouton d'ajout
                 IconButton(onClick = {
                     menuExpanded = true
                 }) {
@@ -164,7 +170,7 @@ fun GroceryItemCard(
                         tint = Color.Black
                     )
                 }
-
+                // On affiche le menu déroulant des listes d'épicerie
                 if (groceryLists.isNotEmpty()) {
                     DropdownMenu(
                         expanded = menuExpanded,
@@ -181,6 +187,7 @@ fun GroceryItemCard(
                     }
                 }
 
+                // Bouton de favoris
                 IconButton(onClick = {
                     if (cardInfo.groceryItem.isFavorite > 0) {
                         cardInfo.viewModel.upsertGroceryItem(
@@ -217,6 +224,7 @@ fun GroceryItemCard(
                     )
                 }
 
+                // Bouton de suppression
                 IconButton(onClick = {
                     showDeleteDialog = true
                 }) {
@@ -231,7 +239,7 @@ fun GroceryItemCard(
     }
 
     val textItemAdded: String = stringResource(R.string.text_itemAdded)
-    // Dialogue pour sélectionner la quantité
+    // Dialogue pour sélectionner la quantité à ajouter
     if (showQuantityDialog) {
         AlertDialog(
             onDismissRequest = { showQuantityDialog = false },
@@ -269,11 +277,13 @@ fun GroceryItemCard(
                     viewModel.uncrossedListItem.let { it ->
                         val listItem = it.value
 
+                        // Si l'élément est déjà dans la liste, on incrémente la quantité
                         if (listItem != null) {
                             viewModel.upsertListItem(
                                 listItem.copy(quantity = listItem.quantity + selectedQuantity)
                             )
                         } else {
+                            // Sinon, on ajoute l'élément à la liste
                             viewModel.upsertListItem(
                                 ListItem(
                                     groceryListId = selectedGroceryList.id,

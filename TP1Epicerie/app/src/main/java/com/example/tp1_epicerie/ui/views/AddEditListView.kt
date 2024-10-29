@@ -33,6 +33,7 @@ import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomTextField
 import com.example.tp1_epicerie.ui.theme.submitButtonColors
 
+// La page pour ajouter ou modifier une liste
 @Composable
 fun AddEditListView(
     id: Long = 0L,
@@ -62,6 +63,7 @@ fun AddEditListView(
             )
         },
     ) {
+        // Titre et description de la liste avec un bouton pour ajouter ou modifier
         Column(
             modifier = Modifier
                 .padding(it)
@@ -87,6 +89,7 @@ fun AddEditListView(
                 }
             )
 
+            // Bouton pour ajouter ou modifier la liste
             if (id != 0L) {
                 val textNotFound: String = stringResource(R.string.addlist_notFound)
                 val textUpdated: String = stringResource(R.string.addlist_updated)
