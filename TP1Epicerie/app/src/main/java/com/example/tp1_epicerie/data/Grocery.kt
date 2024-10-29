@@ -9,6 +9,7 @@ import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
+// Entité pour les éléments de base l'épicerie
 @Entity(
     tableName = "groceryItem_table",
     foreignKeys = [
@@ -36,6 +37,7 @@ data class GroceryItem(
     val imagePath: String?= null
 )
 
+// Entité pour les éléments à cocher de la liste d'épicerie
 @Entity(
     tableName = "listItem_table",
     foreignKeys = [
@@ -67,6 +69,7 @@ data class ListItem(
     val isCrossed: Int = 0
 )
 
+// Entité pour les catégories
 @Entity(tableName = "category_table")
 data class Category(
     @PrimaryKey(autoGenerate = true)
@@ -75,6 +78,7 @@ data class Category(
     val title: String = ""
 )
 
+// Entité pour les listes d'épicerie
 @Entity(tableName = "groceryList_table")
 data class GroceryList(
     @PrimaryKey(autoGenerate = true)
@@ -85,6 +89,7 @@ data class GroceryList(
     val description: String = "",
 )
 
+// Entité pour les paramètres de l'application
 @Entity(tableName = "settings_table")
 data class Settings(
     @PrimaryKey

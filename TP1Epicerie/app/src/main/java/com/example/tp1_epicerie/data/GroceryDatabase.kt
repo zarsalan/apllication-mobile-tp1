@@ -25,6 +25,7 @@ abstract class GroceryDatabase : RoomDatabase() {
     abstract fun groceryListDao(): GroceryListDao
     abstract fun settingsDao(): SettingsDao
 
+    // Initiation de la base de données
     companion object {
         @Volatile
         private var INSTANCE: GroceryDatabase? = null
@@ -47,6 +48,7 @@ abstract class GroceryDatabase : RoomDatabase() {
         private class GroceryDatabaseCallback(
             private val scope: CoroutineScope
         ) : RoomDatabase.Callback() {
+            // On intialise la base de données avec des données de base
             override fun onCreate(db: androidx.sqlite.db.SupportSQLiteDatabase) {
                 super.onCreate(db)
                 INSTANCE?.let { database ->
@@ -58,6 +60,7 @@ abstract class GroceryDatabase : RoomDatabase() {
                 }
             }
 
+            // On ajoute des données de base si la base de données est vide
             override fun onOpen(db: SupportSQLiteDatabase) {
                 super.onOpen(db)
                 INSTANCE?.let { database ->
@@ -91,6 +94,7 @@ abstract class GroceryDatabase : RoomDatabase() {
             }
         }
 
+        // Population des catégories
         suspend fun populateCategories(categoryDao: CategoryDao) {
             val categories = listOf(
                 Category(title = "Non défini"),
@@ -122,6 +126,7 @@ abstract class GroceryDatabase : RoomDatabase() {
             }
         }
 
+        // Population des items d'épicerie
         suspend fun populateGroceryItems(groceryItemDao: GroceryItemDao) {
             val groceryItems = listOf(
                 GroceryItem(
@@ -251,15 +256,23 @@ abstract class GroceryDatabase : RoomDatabase() {
             }
         }
 
+        // Population des paramètres
         suspend fun populateSettings(settingsDao: SettingsDao) {
             val settings = Settings(id = 1, darkMode = 0)
             settingsDao.upsertSettings(settings)
         }
 
-        suspend fun populateGroceryLists(groceryListDao: GroceryListDao){
+        // Population des listes de courses
+        suspend fun populateGroceryLists(groceryListDao: GroceryListDao) {
             val groceryLists = listOf(
-                GroceryList(title = "Liste de courses maison", description = "Liste de courses pour la semaine"),
-                GroceryList(title = "Liste de courses chalet", description = "Liste de courses pour le chalet"),
+                GroceryList(
+                    title = "Liste de courses maison",
+                    description = "Liste de courses pour la semaine"
+                ),
+                GroceryList(
+                    title = "Liste de courses chalet",
+                    description = "Liste de courses pour le chalet"
+                ),
             )
             groceryLists.forEach { groceryList ->
                 groceryListDao.upsertAGroceryList(groceryList)

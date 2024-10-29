@@ -9,6 +9,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.example.tp1_epicerie.R
 
+// Composant de boîte de dialogue personnalisée avec boutons Oui et Non
 @Composable
 fun CustomYesNoDialog(
     visible: Boolean = false,

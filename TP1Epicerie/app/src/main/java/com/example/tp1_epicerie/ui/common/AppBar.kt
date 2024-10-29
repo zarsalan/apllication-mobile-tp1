@@ -23,6 +23,7 @@ import androidx.navigation.NavHostController
 import com.example.tp1_epicerie.R
 import com.example.tp1_epicerie.Screen
 
+// Composant réutilisable pour la barre d'application
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AppBarView(
@@ -33,6 +34,7 @@ fun AppBarView(
 ) {
     var menuExpanded by remember { mutableStateOf(false) }
 
+    // Affichage de la flèche de retour si on n'est pas sur l'écran d'accueil
     val navigationIcon: (@Composable () -> Unit) = {
         if (!title.contains(Screen.HomeScreen.title())) {
             IconButton(onClick = {
@@ -54,6 +56,7 @@ fun AppBarView(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = colorResource(id = R.color.app_bar),
         ),
+        // Affichage du menu si des menus sont présents
         actions = {
             if (appBarMenuInfo.menus.isNotEmpty()) {
                 IconButton(onClick = { menuExpanded = true }) {

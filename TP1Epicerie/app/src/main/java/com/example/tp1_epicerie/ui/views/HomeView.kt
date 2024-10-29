@@ -44,6 +44,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
     var showAboutDialog by remember { mutableStateOf(false) }
 
     Scaffold(
+        // Barre d'application avec le titre et les menus
         topBar = {
             AppBarView(title = Screen.HomeScreen.title(),
                 navHostController = navHostController,
@@ -75,6 +76,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
                 ))
             )
         },
+        // Boutton flottant pour ajouter une liste
         floatingActionButton = {
             FloatingActionButton(
                 modifier = Modifier.padding(all = 20.dp),
@@ -88,7 +90,7 @@ fun HomeView(viewModel: GroceryViewModel, navHostController: NavHostController) 
             }
         },
     ) {
-
+        // Affichage des listes dans un LazyColumn (comme un recyclerView mais bien meilleur)
         val groceryLists = viewModel.getAllGroceryLists.collectAsState(initial = emptyList())
         LazyColumn(
             modifier = Modifier
