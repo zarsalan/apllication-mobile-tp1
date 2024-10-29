@@ -103,6 +103,7 @@ fun ListItemCard(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
+                // Colonne pour afficher le nom et la description de l'item
                 Column(
                     modifier = Modifier
                         .weight(1f)
@@ -121,6 +122,7 @@ fun ListItemCard(
                     )
                 }
 
+                // Image de l'item
                 if (groceryItem.imagePath != null) {
                     AsyncImage(
                         model = ImageRequest.Builder(currentContext)
@@ -136,6 +138,7 @@ fun ListItemCard(
                     )
                 }
 
+                // Colonne pour afficher la quantité et les boutons de modification
                 Row(
                     modifier = Modifier.fillMaxHeight(),
                     horizontalArrangement = Arrangement.End,
@@ -174,11 +177,7 @@ fun ListItemCard(
 
                     // Icône pour marquer/cocher l'item
                     IconButton(onClick = {
-                        if (listItem.isCrossed > 0) {
-                            viewModel.updateListItem(listItem.copy(isCrossed = 0))
-                        } else {
-                            viewModel.updateListItem(listItem.copy(isCrossed = 1))
-                        }
+                        viewModel.updateListItemCrossedState(listItem)
                     }) {
                         Icon(
                             imageVector = if (listItem.isCrossed > 0) Icons.Filled.CheckCircle else Icons.Filled.Check,

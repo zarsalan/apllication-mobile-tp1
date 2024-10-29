@@ -11,7 +11,7 @@ class GroceryRepository(
     private val settingsDao: SettingsDao
 ) {
 
-    //Section pour le GroceryItemDao
+    //Section pour le GroceryItemDao ----------------------------------------------
     suspend fun upsertGroceryItem(groceryItem: GroceryItem) {
         groceryItemDao.upsertGroceryItem(groceryItem)
     }
@@ -34,7 +34,7 @@ class GroceryRepository(
     fun getAllGroceryItems(): Flow<List<GroceryItem>> = groceryItemDao.getAllGroceryItems()
 
 
-    //Section pour le ListItemDao
+    //Section pour le ListItemDao ----------------------------------------------
     suspend fun upsertListItem(listItem: ListItem) {
         listItemDao.upsertListItem(listItem)
     }
@@ -55,7 +55,15 @@ class GroceryRepository(
         return listItemDao.getListItemByGroceryListId(groceryListId, groceryItemId)
     }
 
-    //Section pour le CategoryDao
+    fun getUncrossedListItemByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem> {
+        return listItemDao.getUncrossedListItemByGroceryListId(groceryListId, groceryItemId)
+    }
+
+    fun getCrossedListItemsByGroceryListId(groceryListId: Long, groceryItemId: Long): Flow<ListItem> {
+        return listItemDao.getCrossedListItemsByGroceryListId(groceryListId, groceryItemId)
+    }
+
+    //Section pour le CategoryDao ----------------------------------------------
     suspend fun upsertCategory(category: Category) {
         categoryDao.upsertCategory(category)
     }
@@ -75,7 +83,7 @@ class GroceryRepository(
     fun getAllCategories(): Flow<List<Category>> = categoryDao.getAllCategories()
 
 
-    //Section pour le GroceryListDao
+    //Section pour le GroceryListDao ----------------------------------------------
     suspend fun upsertAGroceryList(groceryList: GroceryList) {
         groceryListDao.upsertAGroceryList(groceryList)
     }
@@ -96,7 +104,7 @@ class GroceryRepository(
 
     fun getGroceryListItems(id: Long): Flow<List<ListItem>> = groceryListDao.getGroceryListItems(id)
 
-    //Section pour les Settings
+    //Section pour les Settings ----------------------------------------------
     fun getSettings(): Flow<Settings?> = settingsDao.getSettings()
 
     suspend fun updateSettings(settings: Settings) {

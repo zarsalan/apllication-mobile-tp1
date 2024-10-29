@@ -24,6 +24,7 @@ import com.example.tp1_epicerie.ui.common.AppBarView
 import com.example.tp1_epicerie.ui.common.CustomCategoryCard
 import com.example.tp1_epicerie.ui.common.CustomCategoryCardInfo
 
+// La page pour afficher les catégories
 @Composable
 fun CategoriesView(viewModel: GroceryViewModel, navHostController: NavHostController) {
     Scaffold(
@@ -48,6 +49,7 @@ fun CategoriesView(viewModel: GroceryViewModel, navHostController: NavHostContro
     ) {
         val categoriesList = viewModel.getAllCategories.collectAsState(listOf()).value
 
+        // Affichage des catégories dans un LazyColumn (comme recyclerView mais bien meilleur)
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

@@ -42,6 +42,7 @@ data class CustomCategoryCardInfo(
     val containerColor: Color,
 )
 
+// Carte pour afficher les catégories
 @Composable
 fun CustomCategoryCard(
     viewModel: GroceryViewModel,
@@ -68,6 +69,7 @@ fun CustomCategoryCard(
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
+            // Affichage du titre de la catégorie
             Text(
                 text = cardInfo.title,
                 fontWeight = FontWeight.ExtraBold,
@@ -79,6 +81,7 @@ fun CustomCategoryCard(
                 overflow = TextOverflow.Ellipsis
             )
 
+            // Affichage des boutons pour modifier et supprimer la catégorie
             Row(modifier = Modifier.padding(end = 3.dp), horizontalArrangement = Arrangement.End) {
                 IconButton(onClick = {
                     navHostController.navigate(Screen.AddEditCategory.route + "/${cardInfo.categoryId}")
