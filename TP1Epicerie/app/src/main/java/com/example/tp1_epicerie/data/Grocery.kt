@@ -92,19 +92,5 @@ data class Settings(
     @ColumnInfo(name = "dark_mode")
     val darkMode: Int = 0,
     @ColumnInfo(name = "language")
-    val language: String = "Français"
+    val language: String = "fr"
 )
-
-// Permet la conversion de list pour le stockage dans SQLite
-//class Converters {
-//    @TypeConverter
-//    fun fromList(list: List<Long>?): String {
-//        return Gson().toJson(list)
-//    }
-//
-//    @TypeConverter
-//    fun toList(data: String?): List<Long> {
-//        val listType = object : TypeToken<List<Long>>() {}.type
-//        return Gson().fromJson(data, listType)
-//    }
-//}
