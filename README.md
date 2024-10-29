@@ -1,0 +1,12 @@
+Fonctionnalités supplémentaires:
+  - Gestion de liste 
+  - Structure viewModel
+  - Séparer les items de la liste selon leurs catégories
+  - Ajouter des items à une liste de favoris
+  - Gestion de la langue entre l'anglais et le français canadien (langue du téléphone)
+  - Ajouter un thème de mode sombre
+  - Ajouter une page de paramètres
+  - Gestion des catégories
+  - Sauvegarde des paramètres
+  - Logo
+  - Modification des éléments dynamique
