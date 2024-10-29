@@ -63,4 +63,5 @@
     <string name="create_list">Create a grocery list</string>
     <string name="add_list">Add to a grocery list</string>
     <string name="text_categories">The categories</string>
+    <string name="text_theme">Theme</string>
 </resources>
