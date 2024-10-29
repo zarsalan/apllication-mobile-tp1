@@ -14,11 +14,11 @@ import androidx.compose.ui.platform.LocalContext
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color(0xFFECECEC),
-    primaryContainer = Color(0xFFE1E1E1),
+    primaryContainer = Color(0xFFEAEAEA),
     onPrimary = Color(0xFF383838),
-    secondary = Color(0xFFD3E5D1),
+    secondary = Color(0xFFE3F2E1),
     secondaryContainer = Color(0xFF000000),
-    tertiary = Color(0xFFE3C1C1),
+    tertiary = Color(0xFFF6D8CE),
     background = Color(0xFF1C1C1C)
 )
 
