@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -98,6 +99,7 @@ fun SettingsView(viewModel: GroceryViewModel, navHostController: NavHostControll
             CustomDropdownMenu(
                 modifier = Modifier.padding(start = 25.dp, top = 10.dp, end = 25.dp),
                 label = "Thème",
+                labelColor = MaterialTheme.colorScheme.primary,
                 value = if (darkMode) "Sombre" else "Clair",
                 customDropdownMenus = CustomDropdownMenus(
                     menus = listOf(
