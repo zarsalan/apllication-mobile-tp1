@@ -10,6 +10,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -142,7 +143,7 @@ fun GroceryItemsView(
                             groceryItem = groceryItem,
                             viewModel = viewModel,
                             onClick = { navHostController.navigate(Screen.AddEditItem.route + "/${groceryItem.id}") },
-                            containerColor = Color.White,
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
                         )
                     )
                 }
