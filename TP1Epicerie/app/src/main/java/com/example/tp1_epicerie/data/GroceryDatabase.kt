@@ -35,7 +35,7 @@ abstract class GroceryDatabase : RoomDatabase() {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     GroceryDatabase::class.java,
-                    "grocery_database"
+                    "grocery_database3"
                 )
                     .fallbackToDestructiveMigration()
                     .addCallback(GroceryDatabaseCallback(scope))
@@ -53,9 +53,7 @@ abstract class GroceryDatabase : RoomDatabase() {
                 super.onCreate(db)
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        populateCategories(database.categoryDao())
-                        populateGroceryItems(database.groceryItemDao())
-                        populateSettings(database.settingsDao())
+                        populateDatabase(database)
                     }
                 }
             }
@@ -65,32 +63,36 @@ abstract class GroceryDatabase : RoomDatabase() {
                 super.onOpen(db)
                 INSTANCE?.let { database ->
                     scope.launch(Dispatchers.IO) {
-                        val categoryDao = database.categoryDao()
-                        val groceryItemDao = database.groceryItemDao()
-                        val settingsDao = database.settingsDao()
-                        val groceryListDao = database.groceryListDao()
-
-                        val settings = settingsDao.getSettings().firstOrNull()
-                        if (settings == null) {
-                            populateSettings(settingsDao)
-                        }
-
-                        val categories = categoryDao.getAllCategories().first()
-                        if (categories.isEmpty()) {
-                            populateCategories(categoryDao)
-                        }
-
-                        val groceryItems = groceryItemDao.getAllGroceryItems().first()
-                        if (groceryItems.isEmpty()) {
-                            populateGroceryItems(groceryItemDao)
-                        }
-
-                        val groceryLists = groceryListDao.getAllGroceryLists().first()
-                        if (groceryLists.isEmpty()) {
-                            populateGroceryLists(groceryListDao)
-                        }
+                        populateDatabase(database)
                     }
                 }
+            }
+        }
+
+        suspend fun populateDatabase(database: GroceryDatabase) {
+            val categoryDao = database.categoryDao()
+            val groceryItemDao = database.groceryItemDao()
+            val settingsDao = database.settingsDao()
+            val groceryListDao = database.groceryListDao()
+
+            val settings = settingsDao.getSettings().firstOrNull()
+            if (settings == null) {
+                populateSettings(settingsDao)
+            }
+
+            val categories = categoryDao.getAllCategories().first()
+            if (categories.isEmpty()) {
+                populateCategories(categoryDao)
+            }
+
+            val groceryItems = groceryItemDao.getAllGroceryItems().first()
+            if (groceryItems.isEmpty()) {
+                populateGroceryItems(groceryItemDao)
+            }
+
+            val groceryLists = groceryListDao.getAllGroceryLists().first()
+            if (groceryLists.isEmpty()) {
+                populateGroceryLists(groceryListDao)
             }
         }
 
