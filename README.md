@@ -20,5 +20,5 @@ Fonctionnalités supplémentaires :
 - Pop-up "À propos"
 - Flèche de retour adaptative
 
-https://rapidapi.com/remote-skills-remote-skills-default/api/grocery-pricing-api/playground/apiendpoint_0cd5f72c-4901-43b2-b352-049ad2ba08d5
-https://www.mealme.ai/data
+- https://rapidapi.com/remote-skills-remote-skills-default/api/grocery-pricing-api/playground/apiendpoint_0cd5f72c-4901-43b2-b352-049ad2ba08d5
+- https://www.mealme.ai/data
