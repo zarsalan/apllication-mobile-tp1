@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "238090682291",
+    "project_id": "tp2-epicerie",
+    "storage_bucket": "tp2-epicerie.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:238090682291:android:3f960bbb871b0ab9a795c6",
+        "android_client_info": {
+          "package_name": "com.example.tp1_epicerie"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASx-keR-pbA74O4eiQhgyIyqfNpab-B2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

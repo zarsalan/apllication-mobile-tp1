@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.gms.google.services)
 }
 
 android {
@@ -52,6 +53,7 @@ dependencies {
 
     // Conversion de list en gson
     implementation("com.google.code.gson:gson:2.10.1")
+    implementation(libs.firebase.firestore)
 
     // Processeur d'annotations pour Room
     ksp(libs.androidx.room.compiler.ksp)
