@@ -54,6 +54,7 @@ dependencies {
     // Conversion de list en gson
     implementation("com.google.code.gson:gson:2.10.1")
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.storage)
 
     // Processeur d'annotations pour Room
     ksp(libs.androidx.room.compiler.ksp)
